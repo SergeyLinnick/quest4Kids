@@ -5,6 +5,9 @@
 
 .primary {
   background: #34d471;
+  span {
+    color: red;
+  }
 }
 
 .secondary {

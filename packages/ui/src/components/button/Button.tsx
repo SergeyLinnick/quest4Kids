@@ -20,7 +20,7 @@ export const Button = ({
 
   return (
     <ButtonRadix className={`${styles.button} ${variantClass}`} type={type}>
-      {children}
+      <span>{children}</span>
     </ButtonRadix>
   );
 };

@@ -1,10 +1,11 @@
 import { Flex, Text } from "@radix-ui/themes";
-import { Button } from "@repo/ui";
+import { Button, ThemeChanger } from "@repo/ui";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <div className={styles.page}>
+      <ThemeChanger />
       <h1>Quest for Kids</h1>
       {/* <ThemeChanger /> */}
       <main className={styles.main}>

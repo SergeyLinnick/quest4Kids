@@ -1,4 +1,4 @@
-@import "@radix-ui/themes/styles.css" layer(base);
+@import "@radix-ui/themes/styles.css";
 
 :root {
   --font-sans: "Inter", sans-serif;

@@ -1,7 +1,13 @@
 /** @type {import('postcss-load-config').Config} */
 
-module.exports = {
+export default {
   plugins: {
-    "postcss-nesting": {},
+    "postcss-preset-env": {
+      stage: 3,
+      features: {
+        "nesting-rules": true,
+      },
+    },
+    autoprefixer: {},
   },
 };

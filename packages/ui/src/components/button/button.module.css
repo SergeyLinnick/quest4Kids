@@ -5,8 +5,11 @@
 
 .primary {
   background: #34d471;
-  span {
+  & span {
     color: red;
+  }
+  &:hover {
+    color: blue;
   }
 }
 

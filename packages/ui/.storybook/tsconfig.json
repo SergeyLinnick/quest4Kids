@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "allowJs": true,
+    "checkJs": true,
+    "module": "NodeNext"
+  },
+  "include": ["../.storybook/**/*", "../src/**/*"]
+}

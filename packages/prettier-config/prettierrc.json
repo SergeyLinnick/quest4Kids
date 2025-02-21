@@ -1,0 +1,19 @@
+{
+	"tabWidth": 4,
+	"useTabs": true,
+	"arrowParens": "avoid",
+	"trailingComma": "all",
+	"printWidth": 120,
+	"endOfLine": "lf",
+	"overrides": [
+		{
+			"files": "*.css",
+			"options": {
+				"useTabs": true
+			}
+		}
+	],
+	"plugins": [
+		"prettier-plugin-organize-imports"
+	]
+}

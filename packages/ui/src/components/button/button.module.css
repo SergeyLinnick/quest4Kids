@@ -1,18 +1,3 @@
-.button {
-  padding: 20px;
-  border: 2px solid #f00 !important;
-}
-
-.primary {
-  background: #34d471;
-  & span {
-    color: red;
-  }
-  &:hover {
-    color: blue;
-  }
-}
-
 .secondary {
   background: rgb(255, 88, 166);
 }

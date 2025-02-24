@@ -8,6 +8,7 @@ export interface ButtonProps {
   children: ReactNode;
   variant?: "primary" | "secondary";
   type?: "submit" | "button";
+  style?: React.CSSProperties;
   onClick?: () => void;
 }
 
@@ -15,6 +16,7 @@ export const Button = ({
   children,
   variant = "primary",
   type = "button",
+  style,
   onClick,
 }: ButtonProps) => {
   const variantClass =
@@ -25,8 +27,9 @@ export const Button = ({
       className={`${styles.button} ${variantClass}`}
       type={type}
       onClick={onClick}
+      style={style}
     >
-      <span>{children}</span>
+      {children}
     </ButtonRadix>
   );
 };

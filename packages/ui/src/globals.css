@@ -2,6 +2,8 @@
 
 :root {
   --font-sans: "Inter", sans-serif;
+  --header-height: 50px;
+  --sideBar-width: 250px;
 }
 
 :root,
@@ -10,6 +12,7 @@
 .radix-themes {
   --color-background: #fff;
   --bg-header: var(--violet-11);
+  --bg-sideBar: var(--gray-5);
 }
 
 .dark,
@@ -17,6 +20,7 @@
 :is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
   --color-background: #1f172c;
   --bg-header: var(--color-background);
+  --bg-sideBar: var(--gray-2);
 }
 
 :root,

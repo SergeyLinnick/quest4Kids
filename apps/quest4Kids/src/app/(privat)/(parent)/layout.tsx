@@ -1,5 +1,6 @@
 import { Header } from "@/components/layouts";
-import { Container } from "@radix-ui/themes";
+import { SideBar } from "@repo/ui";
+import styles from "./layout.module.css";
 
 export default function RootLayout({
   children,
@@ -9,7 +10,16 @@ export default function RootLayout({
   return (
     <>
       <Header />
-      <Container size="4">{children}</Container>
+      <div className={styles.mainLayout}>
+        <SideBar
+          menuItems={[
+            { label: "Home", href: "/" },
+            { label: "Kids", href: "/kids" },
+            { label: "Logout", href: "/" },
+          ]}
+        />
+        <main className={styles.container}>{children}</main>
+      </div>
     </>
   );
 }

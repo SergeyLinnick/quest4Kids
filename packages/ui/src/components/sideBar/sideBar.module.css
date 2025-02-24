@@ -1,3 +1,28 @@
 .sideBar {
-  /* Component styles */
+  grid-area: sidebar;
+  width: var(--sideBar-width);
+  height: calc(100vh - 60px);
+  position: sticky;
+  display: block;
+  overflow-y: auto;
+  top: var(--header-height);
+}
+
+.sideBarNav {
+  display: block;
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 999px;
+  user-select: none;
+  min-height: var(--space-6);
+  color: var(--gray-12);
+  margin-bottom: var(--space-2);
+
+  &.active,
+  &.active:hover {
+    background-color: var(--accent-a5);
+  }
+  &:hover {
+    background-color: var(--accent-a3);
+  }
 }

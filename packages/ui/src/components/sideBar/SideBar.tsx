@@ -1,12 +1,31 @@
+import { Box, ScrollArea } from "@radix-ui/themes";
+import SideBarLink from "./sideBarLink";
+
+import styles from "./sideBar.module.css";
+
 interface SideBarProps {
-  children: React.ReactNode;
+  menuItems: {
+    label: string;
+    href: string;
+  }[];
 }
-  
-export const SideBar = ({ children }: SideBarProps) => {
+
+export const SideBar = ({ menuItems }: SideBarProps) => {
   return (
-    <div>
-      <h1>SideBar Component</h1>
-      {children}
-    </div>
+    <aside className={styles.sideBar}>
+      <ScrollArea
+        type="hover"
+        scrollbars="vertical"
+        className={styles.sideBarScroll}
+      >
+        <Box px="4" py="4">
+          {menuItems.map((item, index) => (
+            <Box key={index}>
+              <SideBarLink href={item.href} label={item.label} />
+            </Box>
+          ))}
+        </Box>
+      </ScrollArea>
+    </aside>
   );
 };

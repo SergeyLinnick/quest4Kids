@@ -1,22 +1,9 @@
 {
   "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/icons/*": ["./src/icons/*"],
-      "@/layouts/*": ["./src/layouts/*"],
-      "@/utils/*": ["./src/utils/*"],
-      "@/constants/*": ["./src/constants/*"]
-    }
+    "outDir": "dist"
   },
   "include": ["src", "global.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
+

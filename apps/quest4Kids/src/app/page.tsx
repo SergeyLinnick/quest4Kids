@@ -1,27 +1,26 @@
-import { Flex, Text } from "@radix-ui/themes";
-import { Button, ThemeChanger } from "@repo/ui";
+import { Header } from "@/components/layouts";
+import { AspectRatio, Box, Flex, Text } from "@radix-ui/themes";
+import { Button } from "@repo/ui";
+import Image from "next/image";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <div className={styles.page}>
-      <ThemeChanger />
-      <h1>Quest for Kids</h1>
-      {/* <ThemeChanger /> */}
+      <Header />
       <main className={styles.main}>
-        <Flex direction="column" gap="2">
+        <div className={styles.banner}>
+          <Box className={styles.bannerImage}>
+            <AspectRatio ratio={16 / 9}>
+              <Image src="/banner.webp" alt="Quest for Kids" fill />
+            </AspectRatio>
+          </Box>
+        </div>
+        <Flex direction="column" gap="2" align="center">
           <Text>Hello from Radix Themes :)</Text>
           <Button>Lets go</Button>
+          <Button variant="secondary">Open alert</Button>
         </Flex>
-
-        <ol>
-          <li>
-            Get started by editing <code>apps/web/app/page.tsx</code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <Button variant="secondary">Open alert</Button>
       </main>
     </div>
   );

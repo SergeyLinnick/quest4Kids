@@ -1,0 +1,4 @@
+.header {
+  border-bottom: 1px solid var(--gray-a5);
+  background-color: var(--bg-header);
+}

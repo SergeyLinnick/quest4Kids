@@ -1,9 +1,9 @@
 "use client";
 
-import { THEME_MODE } from "@/constants/common";
-import { MoonIcon, SunIcon } from "@/icons";
-import { Button } from "@radix-ui/themes";
+import { Button, Theme } from "@radix-ui/themes";
 import { useTheme } from "next-themes";
+import { THEME_MODE } from "../../constants";
+import { MoonIcon, SunIcon } from "../../icons";
 
 export const ThemeChanger = () => {
   const { theme, setTheme } = useTheme();
@@ -13,10 +13,10 @@ export const ThemeChanger = () => {
   const icon = theme === THEME_MODE.LIGHT ? <SunIcon /> : <MoonIcon />;
 
   return (
-    <div>
-      <Button radius="full" variant="soft" onClick={toggleMode}>
+    <Theme accentColor="violet">
+      <Button radius="full" variant="solid" onClick={toggleMode}>
         {icon}
       </Button>
-    </div>
+    </Theme>
   );
 };

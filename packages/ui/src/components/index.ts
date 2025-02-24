@@ -1,3 +1,5 @@
-export * from "./button/Button";
-export * from "./spinner/Spinner";
-export * from "./themeChanger/ThemeChanger";
+export { Avatar } from "./avatar/Avatar";
+export { Button } from "./button/Button";
+export { SideBar } from "./sideBar/SideBar";
+export { Spinner } from "./spinner/Spinner";
+export { ThemeChanger } from "./themeChanger/ThemeChanger";

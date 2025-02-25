@@ -1,5 +1,6 @@
 "use client";
 
+import { useLogin } from "@repo/api";
 import { Button, Input } from "@repo/ui";
 import { useForm } from "react-hook-form";
 
@@ -10,9 +11,16 @@ interface LoginFormData {
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm<LoginFormData>();
+  const onSuccess = () => {
+    console.log("onSuccess");
+  };
+  const onError = () => {
+    console.log("onError");
+  };
+  const { login, isLoading } = useLogin(onSuccess, onError);
 
   const onSubmit = (data: LoginFormData) => {
-    console.log(data);
+    login(data);
   };
 
   return (
@@ -21,14 +29,14 @@ const LoginForm = () => {
         label="Email"
         id="email"
         placeholder="Type Email"
-        disabled={false}
+        disabled={isLoading}
         {...register("email")}
       />
       <Input
         label="Password"
         id="password"
         placeholder="Type Password"
-        disabled={false}
+        disabled={isLoading}
         {...register("password")}
       />
 

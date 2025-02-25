@@ -1,3 +1,4 @@
+import { ApiProvider } from "@repo/api";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -31,7 +32,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ThemeProvider attribute="class">
-          <Theme>{children}</Theme>
+          <Theme>
+            <ApiProvider>{children}</ApiProvider>
+          </Theme>
         </ThemeProvider>
       </body>
     </html>

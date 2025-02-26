@@ -10,9 +10,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/components/*": ["./src/components/*"],
-      "@/core/*": ["./src/core/*"],
-      "@/services/*": ["./src/services/*"],
-      "@/utils/*": ["./src/utils/*"]
+      "@/core/*": ["./src/core/*"]
     }
   },
   "include": [

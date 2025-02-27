@@ -17,13 +17,9 @@ const LoginForm = () => {
     reset,
   } = useForm<LoginFormData>();
 
-  const onSuccess = () => {
-    console.log("onSuccess");
-    reset();
-  };
-  const onError = () => {
-    console.log("onError");
-  };
+  const onSuccess = () => reset();
+  const onError = () => null;
+
   const { login, isLoading } = useLogin(onSuccess, onError);
 
   const onSubmit = (data: LoginFormData) => {

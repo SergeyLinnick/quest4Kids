@@ -17,13 +17,13 @@ const instance: AxiosInstance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // Example: Add authorization token to headers if available
-    // if (typeof window !== "undefined" && window.localStorage) {
-    // 	const token = localStorage.getItem("token");
-    // 	if (token) {
-    // 		config.headers.Authorization = `Bearer ${token}`;
-    // 	}
-    // }
+    // Add authorization token to headers if available
+    if (typeof window !== "undefined" && window.localStorage) {
+      const token = localStorage.getItem("token");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
     return config;
   },
   (error: AxiosError) => {
@@ -48,7 +48,7 @@ instance.interceptors.response.use(
           console.error("Unauthorized (401): Please log in again.");
           // Optional: Redirect to login or refresh token
           // localStorage.removeItem("token");
-          window.location.href = "/login";
+          // window.location.href = "/login";
           break;
 
         case 404:

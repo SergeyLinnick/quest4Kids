@@ -20,7 +20,15 @@ export default function Home() {
         <Flex direction="column" gap="2" align="center">
           <Text>Hello from Radix Themes :)</Text>
           <Link href={PAGE_PATH.DASHBOARD}>Lets go to Dashboard</Link>
-          <Button variant="secondary">Open alert</Button>
+          <Button>Button</Button>
+          <Button color="teal">Btn Teal</Button>
+          <Button variant="classic">Classic</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="soft">Soft</Button>
+          <Button variant="solid">Solid</Button>
+          <Button variant="surface">Surface</Button>
+          <Button variant="surface">Surface</Button>
         </Flex>
       </main>
     </div>

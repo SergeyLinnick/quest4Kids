@@ -44,7 +44,9 @@ const Input: React.FC<InputProps> = ({
           {...props}
         />
       </div>
-      {error && <p>{error}</p>}
+      {error && (
+        <p style={{ color: `${error ? "#e63946" : "default"}` }}>{error}</p>
+      )}
     </div>
   );
 };

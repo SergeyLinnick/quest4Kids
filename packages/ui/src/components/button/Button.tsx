@@ -1,33 +1,26 @@
-"use client";
-
 import { Button as ButtonRadix } from "@radix-ui/themes";
-import { ReactNode } from "react";
-import styles from "./button.module.css";
-
-export interface ButtonProps {
-  children: ReactNode;
-  variant?: "primary" | "secondary";
-  type?: "submit" | "button";
-  style?: React.CSSProperties;
-  onClick?: () => void;
-}
+import { BaseButtonProps } from "@radix-ui/themes/components/_internal/base-button";
+import clsx from "clsx";
 
 export const Button = ({
   children,
-  variant = "primary",
+  color = "violet",
   type = "button",
+  className,
+  variant,
   style,
+  disabled,
   onClick,
-}: ButtonProps) => {
-  const variantClass =
-    variant === "primary" ? styles.primary : styles.secondary;
-
+}: BaseButtonProps) => {
   return (
     <ButtonRadix
-      className={`${styles.button} ${variantClass}`}
+      className={clsx(className)}
       type={type}
       onClick={onClick}
       style={style}
+      disabled={disabled}
+      color={color}
+      variant={variant}
     >
       {children}
     </ButtonRadix>

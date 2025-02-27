@@ -10,9 +10,16 @@ interface LoginFormData {
 }
 
 const LoginForm = () => {
-  const { register, handleSubmit } = useForm<LoginFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty },
+    reset,
+  } = useForm<LoginFormData>();
+
   const onSuccess = () => {
     console.log("onSuccess");
+    reset();
   };
   const onError = () => {
     console.log("onError");
@@ -23,6 +30,8 @@ const LoginForm = () => {
     login(data);
   };
 
+  const isValidationError = Object.keys(errors).length > 0;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -30,17 +39,24 @@ const LoginForm = () => {
         id="email"
         placeholder="Type Email"
         disabled={isLoading}
-        {...register("email")}
+        {...register("email", { required: "Email is required" })}
+        error={errors.email?.message}
       />
       <Input
         label="Password"
         id="password"
         placeholder="Type Password"
         disabled={isLoading}
-        {...register("password")}
+        {...register("password", { required: "Password is required" })}
+        error={errors.password?.message}
+        type="password"
       />
 
-      <Button type="submit" style={{ width: "100%" }}>
+      <Button
+        style={{ width: "100%" }}
+        disabled={isValidationError || isLoading || !isDirty}
+        type="submit"
+      >
         Login
       </Button>
     </form>

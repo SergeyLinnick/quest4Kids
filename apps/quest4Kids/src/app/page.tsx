@@ -1,5 +1,6 @@
 import { Header } from "@/components/layouts";
-import { AspectRatio, Box, Flex, Text } from "@radix-ui/themes";
+import { PAGE_PATH } from "@/consts/pagePath";
+import { AspectRatio, Box, Flex, Link, Text } from "@radix-ui/themes";
 import { Button } from "@repo/ui";
 import Image from "next/image";
 import styles from "./page.module.css";
@@ -18,7 +19,7 @@ export default function Home() {
         </div>
         <Flex direction="column" gap="2" align="center">
           <Text>Hello from Radix Themes :)</Text>
-          <Button>Lets go</Button>
+          <Link href={PAGE_PATH.DASHBOARD}>Lets go to Dashboard</Link>
           <Button variant="secondary">Open alert</Button>
         </Flex>
       </main>

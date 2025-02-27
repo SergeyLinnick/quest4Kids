@@ -1,4 +1,6 @@
 import { Header } from "@/components/layouts";
+import { getMenuItems } from "@/consts/menu";
+import { RoleType } from "@/consts/roles";
 import { SideBar } from "@repo/ui";
 import styles from "./layout.module.css";
 
@@ -7,17 +9,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const role: RoleType = "parent";
+
   return (
     <>
       <Header />
       <div className={styles.mainLayout}>
-        <SideBar
-          menuItems={[
-            { label: "Home", href: "/" },
-            { label: "Kids", href: "/kids" },
-            { label: "Logout", href: "/" },
-          ]}
-        />
+        <SideBar menuItems={getMenuItems(role) || []} />
         <main className={styles.container}>{children}</main>
       </div>
     </>

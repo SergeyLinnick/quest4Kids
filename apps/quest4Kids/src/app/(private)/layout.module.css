@@ -7,4 +7,5 @@
 .container {
   grid-area: main;
   order: 1;
+  padding: 1.5rem 1.5rem 1.5rem 0;
 }

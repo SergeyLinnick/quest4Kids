@@ -1,3 +1,4 @@
+import { Heading } from "@radix-ui/themes";
 
 export default function RootLayout({
   children,
@@ -6,7 +7,9 @@ export default function RootLayout({
 }>) {
   return (
     <div>
-      <h1>Kids</h1>
+      <Heading mb="5" as="h1">
+        Kids
+      </Heading>
       {children}
     </div>
   );

@@ -1,0 +1,30 @@
+.page {
+  position: relative;
+  height: 100vh;
+}
+
+.pageBackground {
+  background-image: url("/questForKids.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  background-color: white;
+  padding: 40px 50px 60px 50px;
+  margin-bottom: 150px;
+}

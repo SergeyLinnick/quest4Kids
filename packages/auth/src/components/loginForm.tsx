@@ -3,6 +3,7 @@
 import { useLogin } from "@repo/api";
 import { Button, Input } from "@repo/ui";
 import { useForm } from "react-hook-form";
+import { navigate } from "./actions";
 
 interface LoginFormData {
   email: string;
@@ -17,7 +18,10 @@ const LoginForm = () => {
     reset,
   } = useForm<LoginFormData>();
 
-  const onSuccess = () => reset();
+  const onSuccess = () => {
+    reset();
+    navigate("/tasks");
+  };
   const onError = () => null;
 
   const { login, isLoading } = useLogin(onSuccess, onError);

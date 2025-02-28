@@ -1,0 +1,21 @@
+{
+	"name": "@repo/utils",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"check-types": "tsc --noEmit",
+		"lint": "eslint . --max-warnings 0"
+	},
+	"dependencies": {
+		"yup": "^1.6.1"
+	},
+	"devDependencies": {},
+	"author": "",
+	"description": "",
+	"keywords": [],
+	"license": "ISC",
+	"main": "index.ts",
+	"exports": {
+		".": "./src/index.ts"
+	}
+}

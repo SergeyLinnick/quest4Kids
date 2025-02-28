@@ -11,7 +11,8 @@ export const Button = ({
   style,
   disabled,
   onClick,
-}: BaseButtonProps) => {
+  isLoading,
+}: BaseButtonProps & { isLoading?: boolean }) => {
   return (
     <ButtonRadix
       className={clsx(className)}
@@ -21,6 +22,8 @@ export const Button = ({
       disabled={disabled}
       color={color}
       variant={variant}
+      size="3"
+      loading={isLoading}
     >
       {children}
     </ButtonRadix>

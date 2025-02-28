@@ -1,21 +1,29 @@
+import { Flex, Heading, Text } from "@radix-ui/themes";
 import Link from "next/link";
+import styles from "./notFound.module.css";
 
 export default function NotFound() {
-	return (
-		<div className="mx-auto flex h-screen flex-col items-center justify-center px-6 xl:px-0">
-			<div className="block md:max-w-lg">
-				{/* <img src="/images/illustrations/404.svg" alt="astronaut image"> */}
-			</div>
-			<div className="text-center xl:max-w-4xl">
-				<h1 className="mb-3 text-2xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white">
-					Page not found
-				</h1>
-				<p className="mb-5 text-base font-normal text-gray-500 md:text-lg dark:text-gray-300">
-					Oops! Looks like you followed a bad link. If you think this
-					is a problem with us, please tell us.
-				</p>
-				<Link href={"/"}>Go back home</Link>
-			</div>
-		</div>
-	);
+  return (
+    <Flex height="100vh" justify="center" align="center">
+      <Flex
+        direction="column"
+        gap="6"
+        align="center"
+        className={styles.container}
+      >
+        <Heading as="h1" size="8" weight="bold">
+          Nothing to see here
+        </Heading>
+        <Text size="4" color="gray" align="center">
+          The page you are trying to open does not exist. You may have mistyped
+          the address, or the page has been moved to another URL. If you think
+          this is an error, please contact support.
+        </Text>
+        <Link href="/">Go back home</Link>
+        <Text trim="both" className={styles.number}>
+          404
+        </Text>
+      </Flex>
+    </Flex>
+  );
 }

@@ -4,5 +4,8 @@ export const API_PATH = {
     REGISTER: "/auth/register",
     PROFILE: "/auth/profile",
   },
-  TASKS: `/tasks`,
+  USER: {
+    ADD_CHILD: "/user/create-child-account",
+    GET_CHILDREN: "/user/get-children-list",
+  },
 };

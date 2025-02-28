@@ -1,0 +1,14 @@
+.container {
+  width: 500px;
+  position: relative;
+}
+
+.number {
+  font-size: 400px;
+  font-weight: 900;
+  color: var(--404-color);
+  position: absolute;
+  top: -180px;
+  left: -110px;
+  z-index: -1;
+}

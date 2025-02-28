@@ -5,3 +5,5 @@ export { Spinner } from "./spinner/Spinner";
 export { ThemeChanger } from "./themeChanger/ThemeChanger";
 export { default as Input } from "./input/Input";
 
+
+export { FormField } from './formField/FormField';

@@ -1,0 +1,25 @@
+import { API_PATH } from "../_common/consts";
+import { request } from "../_common/request";
+import { IChild, ICreateChild } from "./types";
+
+const api = process.env.NEXT_PUBLIC_API_URL;
+
+export const userService = {
+  addChild: ({ email, password, name }: ICreateChild): Promise<IChild> => {
+    const options = {
+      method: "POST",
+      url: `${api}${API_PATH.USER.ADD_CHILD}`,
+      data: JSON.stringify({ email, password, name }),
+    };
+
+    return request(options);
+  },
+  getChildren: () => {
+    const options = {
+      method: "GET",
+      url: `${api}${API_PATH.USER.GET_CHILDREN}`,
+    };
+
+    return request(options);
+  },
+};

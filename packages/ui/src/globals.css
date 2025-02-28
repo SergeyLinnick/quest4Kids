@@ -4,6 +4,7 @@
   --font-sans: "Inter", sans-serif;
   --header-height: 50px;
   --sideBar-width: 250px;
+  --404-color: var(--gray-2);
 }
 
 :root,
@@ -21,6 +22,7 @@
   --color-background: #1f172c;
   --bg-header: var(--color-background);
   --bg-sideBar: var(--gray-2);
+  --404-color: var(--gray-5);
 }
 
 :root,

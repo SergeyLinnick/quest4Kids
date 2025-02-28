@@ -1,10 +1,12 @@
+"use server";
+
 import axios, {
   AxiosError,
   AxiosInstance,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { getCookie } from "./cookies";
+import { cookies } from "next/headers";
 
 // Create an Axios instance
 const instance: AxiosInstance = axios.create({
@@ -17,13 +19,14 @@ const instance: AxiosInstance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
+    const cookieStore = await cookies();
+
     // Add authorization token to headers if available
-    if (typeof window !== "undefined" && window.localStorage) {
-      const token = getCookie("token");
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+    const token = cookieStore.get("token")?.value;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error: AxiosError) => {
@@ -78,4 +81,4 @@ instance.interceptors.response.use(
   },
 );
 
-export { instance as axiosInstance };
+export { instance as axiosServerInstance };

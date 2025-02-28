@@ -1,5 +1,8 @@
 import { API_PATH } from "../_common/consts";
-import { request } from "../_common/request";
+import {
+  clientRequestWithAuth,
+  serverRequestWithAuth,
+} from "../_common/request";
 import { IChild, ICreateChild } from "./types";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
@@ -12,14 +15,15 @@ export const userService = {
       data: JSON.stringify({ email, password, name }),
     };
 
-    return request(options);
+    return clientRequestWithAuth(options);
   },
+
   getChildren: () => {
     const options = {
       method: "GET",
       url: `${api}${API_PATH.USER.GET_CHILDREN}`,
     };
 
-    return request(options);
+    return serverRequestWithAuth(options);
   },
 };

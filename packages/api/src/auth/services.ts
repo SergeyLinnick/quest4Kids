@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import { API_PATH } from "../_common/consts";
+import { setCookie } from "../_common/cookies";
 import { request } from "../_common/request";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
@@ -16,7 +17,7 @@ export const authService = {
     const response: { accessToken: string } = await request(options);
 
     if (response?.accessToken) {
-      localStorage.setItem("token", response.accessToken);
+      setCookie("token", response.accessToken);
     }
     return response;
   },

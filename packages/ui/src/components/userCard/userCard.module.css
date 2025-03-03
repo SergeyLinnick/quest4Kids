@@ -1,0 +1,3 @@
+.link:hover {
+  box-shadow: var(--shadow-3);
+}

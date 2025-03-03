@@ -19,7 +19,8 @@ instance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     // Add authorization token to headers if available
     if (typeof window !== "undefined" && window.localStorage) {
-      const token = getCookie("token");
+      const token = await getCookie("token");
+      //  const token = localStorage.getItem("token");
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

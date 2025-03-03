@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { API_PATH } from "../_common/consts";
 import {
   clientRequestWithAuth,
@@ -6,6 +7,7 @@ import {
 import { IChild, ICreateChild } from "./types";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
+export const getChildrenURL = `${api}${API_PATH.USER.GET_CHILDREN}`;
 
 export const userService = {
   addChild: ({ email, password, name }: ICreateChild): Promise<IChild> => {
@@ -18,7 +20,7 @@ export const userService = {
     return clientRequestWithAuth(options);
   },
 
-  getChildren: () => {
+  getChildren: (): Promise<AxiosResponse<IChild[]>> => {
     const options = {
       method: "GET",
       url: `${api}${API_PATH.USER.GET_CHILDREN}`,

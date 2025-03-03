@@ -1,5 +1,5 @@
 export interface IChild {
-  id: number;
+  id: string;
   name: string;
   email: string;
   password: string;
@@ -8,3 +8,5 @@ export interface IChild {
 export type ICreateChild = Omit<IChild, "id">;
 
 export type IUpdateChild = Partial<ICreateChild>;
+
+export type IUserCard = Omit<IChild, "password">;

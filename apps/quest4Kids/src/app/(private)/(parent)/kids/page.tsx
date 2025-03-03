@@ -1,13 +1,23 @@
-import { getChildrenList } from "@repo/api";
-import { cookies } from "next/headers";
+"use server";
+
+import { PAGE_PATH_PARENT } from "@/consts/pagePath";
+import { Flex } from "@radix-ui/themes";
+import { fetchChildren, IChild } from "@repo/api";
+import { UserCard } from "@repo/ui";
+import Link from "next/link";
 
 export default async function KidsPage() {
-  const children = await getChildrenList();
-  console.log("children", children);
-  const cookieStore = await cookies();
+  const children = await fetchChildren();
 
-  const token = cookieStore.get("token")?.value;
-  console.log("token", token);
+  return (
+    <Flex gap="5" direction="column" width="400px">
+      {children?.map((child: IChild) => (
+        <Link key={child.id} href={PAGE_PATH_PARENT.CHILD(child.id.toString())}>
+          <UserCard user={child} isLink />
+        </Link>
+      ))}
 
-  return <div>Kids list</div>;
+      <Link href={PAGE_PATH_PARENT.CHILD_NEW}>Add Kid</Link>
+    </Flex>
+  );
 }

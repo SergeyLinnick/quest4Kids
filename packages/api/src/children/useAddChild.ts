@@ -1,5 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { QUERY_KEY } from "../_common/queryKeys";
+import { useMutation } from "@tanstack/react-query";
+import { customRevalidatePath } from "../_common/revalidatePath";
+import { customRevalidateTag } from "../_common/revalidateTag";
 import { userService } from "./services";
 import { ICreateChild } from "./types";
 
@@ -8,7 +9,7 @@ export const useAddChild = ({
 }: {
   onSuccess?: () => void;
 } = {}) => {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const {
     mutate: addChild,
@@ -18,7 +19,10 @@ export const useAddChild = ({
     mutationFn: userService.addChild,
     onSuccess: (data) => {
       console.log("Child Added:", data);
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.CHILDREN] });
+      // queryClient.invalidateQueries({ queryKey: [QUERY_KEY.CHILDREN] });
+
+      customRevalidatePath("/kids");
+      customRevalidateTag("children-list");
 
       onSuccess?.();
       // toast.success("Child Added");

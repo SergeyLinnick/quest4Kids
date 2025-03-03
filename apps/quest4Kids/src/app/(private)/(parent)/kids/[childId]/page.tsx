@@ -4,7 +4,6 @@ interface ChildPageProps {
 
 export default async function ChildPage({ params }: ChildPageProps) {
   const childId = (await params).childId;
-  console.log("childId", childId);
 
-  return <div>Anna</div>;
+  return <div>{childId}</div>;
 }

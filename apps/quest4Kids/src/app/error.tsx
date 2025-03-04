@@ -1,19 +1,22 @@
 "use client";
 
+import { Flex, Heading, Text } from "@radix-ui/themes";
 import { Button } from "@repo/ui";
 
 type ErrorProps = {
-	error: Error;
-	reset?: () => void;
+  error: Error;
+  reset?: () => void;
 };
 
 export default function Error({ error, reset }: ErrorProps) {
-	return (
-		<main className="flex flex-col items-center justify-center gap-6">
-			<h1 className="text-3xl font-semibold">Something went wrong!</h1>
-			<p className="text-lg">{error.message}</p>
+  return (
+    <Flex height="100vh" justify="center" align="center">
+      <Flex direction="column" gap="6" align="center">
+        <Heading>Something went wrong!</Heading>
+        <Text>{error.message}</Text>
 
-			{reset && <Button onClick={reset}>Try again</Button>}
-		</main>
-	);
+        {reset && <Button onClick={reset}>Try again</Button>}
+      </Flex>
+    </Flex>
+  );
 }

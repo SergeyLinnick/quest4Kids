@@ -39,7 +39,7 @@ export const serverRequestWithAuth = async <T = unknown, R = unknown>(
       ...options,
       withCredentials: true,
     });
-
+    console.log("response:", response);
     return response.data;
   } catch (error) {
     console.error("Request Error:", error);

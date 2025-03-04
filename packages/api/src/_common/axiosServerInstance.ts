@@ -31,6 +31,8 @@ instance.interceptors.request.use(
   },
   (error: AxiosError) => {
     // Handle request errors here
+    console.log("error: ====>", error);
+
     return Promise.reject(error);
   },
 );
@@ -42,6 +44,8 @@ instance.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
+    console.log("error ===>", error);
+
     // Handle errors globally
     if (error.response) {
       const { status, data }: AxiosResponse = error.response;

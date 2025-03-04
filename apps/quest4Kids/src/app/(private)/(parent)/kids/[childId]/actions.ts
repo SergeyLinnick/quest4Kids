@@ -104,13 +104,13 @@ export async function addTask(
   }
 }
 
-export async function getTasks() {
+export async function getTasks(childId: string) {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
   try {
     const response = await fetch(
-      `https://quest4kids-a7fd24f91954.herokuapp.com/tasks`,
+      `https://quest4kids-a7fd24f91954.herokuapp.com/tasks?childId=${childId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -132,9 +132,25 @@ export async function getTasks() {
   }
 }
 
-export async function deleteTask(taskId: string) {
+export async function deleteTask(
+  state: FormState | undefined,
+  formData: FormData,
+): Promise<FormState> {
+  const errors = new Map<string, string>();
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
+
+  const childId = formData.get("childId");
+  if (!childId) {
+    errors.set("common", "Child ID is required");
+    return { errors };
+  }
+
+  const taskId = formData.get("taskId");
+  if (!taskId) {
+    errors.set("common", "Task ID is required");
+    return { errors };
+  }
 
   try {
     const response = await fetch(
@@ -154,7 +170,9 @@ export async function deleteTask(taskId: string) {
       );
     }
 
-    return { success: true };
+    revalidatePath(`/kids/${childId}`);
+
+    return { errors: new Map(), success: true };
   } catch (error) {
     console.error("Error deleting task:", error);
     throw new Error("Failed to delete task. Please try again later.");

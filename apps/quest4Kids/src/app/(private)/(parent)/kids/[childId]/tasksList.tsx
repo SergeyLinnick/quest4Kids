@@ -1,11 +1,13 @@
 import { Badge, Button, Flex, Table } from "@radix-ui/themes";
 import { ITask } from "@repo/api";
+import { RemoveTaskForm } from "./RemoveTaskForm";
 
 interface TasksListProps {
   tasks: ITask[];
+  childId: string;
 }
 
-export const TasksList = ({ tasks }: TasksListProps) => {
+export const TasksList = ({ tasks, childId }: TasksListProps) => {
   const getBadge = (status: string) => {
     switch (status) {
       case "IN_PROGRESS":
@@ -56,9 +58,7 @@ export const TasksList = ({ tasks }: TasksListProps) => {
                 <Button variant="outline" color="blue">
                   In Progress
                 </Button>
-                <Button variant="outline" color="red">
-                  Delete
-                </Button>
+                <RemoveTaskForm taskId={task.id} childId={childId} />
               </Flex>
             </Table.Cell>
           </Table.Row>

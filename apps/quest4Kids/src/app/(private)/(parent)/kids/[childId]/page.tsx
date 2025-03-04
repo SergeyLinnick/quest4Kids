@@ -10,7 +10,7 @@ interface ChildPageProps {
 export default async function ChildPage({ params }: ChildPageProps) {
   const childId = (await params).childId;
 
-  const tasksData = await getTasks().catch((error) => {
+  const tasksData = await getTasks(childId).catch((error) => {
     console.error("Error in page:", error);
     return { data: [] };
   });
@@ -21,7 +21,7 @@ export default async function ChildPage({ params }: ChildPageProps) {
         <Heading size="4">{childId}</Heading>
         <ButtonLink href={`/kids/${childId}/add-task`}>Add Task</ButtonLink>
       </Flex>
-      <TasksList tasks={tasksData?.data || []} />
+      <TasksList tasks={tasksData?.data || []} childId={childId} />
     </Flex>
   );
 }

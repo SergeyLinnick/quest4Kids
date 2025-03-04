@@ -14,7 +14,7 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty },
+    formState: { errors },
     reset,
   } = useForm<LoginFormData>();
 
@@ -39,22 +39,22 @@ const LoginForm = () => {
         id="email"
         placeholder="Type Email"
         disabled={isLoading}
-        {...register("email", { required: "Email is required" })}
         error={errors.email?.message}
+        {...register("email", { required: "Email is required" })}
       />
       <Input
         label="Password"
         id="password"
         placeholder="Type Password"
         disabled={isLoading}
-        {...register("password", { required: "Password is required" })}
         error={errors.password?.message}
         type="password"
+        {...register("password", { required: "Password is required" })}
       />
 
       <Button
         style={{ width: "100%" }}
-        disabled={isValidationError || isLoading || !isDirty}
+        disabled={isValidationError || isLoading}
         type="submit"
       >
         Login

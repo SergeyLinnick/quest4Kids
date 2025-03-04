@@ -1,18 +1,17 @@
-import { LoginForm } from "@repo/auth";
-
+import { SignIn } from "@/components/forms";
 import { Box, Card, Heading } from "@radix-ui/themes";
 import styles from "../page.module.css";
 
-export default function LoginPage() {
+export default function SignInPage() {
   return (
     <div className={styles.page}>
       <div className={styles.pageBackground}>
         <Box width="400px">
           <Card className={styles.card}>
             <Heading size="6" align="center" mb="4" color="violet">
-              Login
+              Sign In
             </Heading>
-            <LoginForm />
+            <SignIn />
           </Card>
         </Box>
       </div>

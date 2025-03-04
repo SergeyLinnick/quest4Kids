@@ -1,8 +1,9 @@
-import { Box, Flex } from "@radix-ui/themes";
+import { Box, Button, Flex } from "@radix-ui/themes";
 import { Avatar, ThemeChanger } from "@repo/ui";
 import Image from "next/image";
 import Link from "next/link";
 
+import { SignOut } from "../../forms/authentication/signOut";
 import styles from "./header.module.css";
 
 export const Header = () => {
@@ -19,6 +20,20 @@ export const Header = () => {
               priority
             />
           </Link>
+          <Link href="/signin">
+            <Button size="1" color="violet">
+              Sign In
+            </Button>
+          </Link>
+          <Link href="/login">
+            <Button size="1" color="violet">
+              Log In
+            </Button>
+          </Link>
+          <div>
+            {/* server sign out */}
+            <SignOut />
+          </div>
           <Flex gap="4" align="center">
             <Avatar />
             <ThemeChanger />

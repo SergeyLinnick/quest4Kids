@@ -28,6 +28,7 @@ const Input: React.FC<InputProps> = ({
             }}
           >
             {label}
+            <span style={{ color: "red" }}>*</span>
           </label>
         )}
         <input

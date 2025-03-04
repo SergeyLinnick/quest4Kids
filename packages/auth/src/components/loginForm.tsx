@@ -2,6 +2,7 @@
 
 import { useLogin } from "@repo/api";
 import { Button, Input } from "@repo/ui";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { navigate } from "./actions";
 
@@ -26,8 +27,23 @@ const LoginForm = () => {
 
   const { login, isLoading } = useLogin(onSuccess, onError);
 
-  const onSubmit = (data: LoginFormData) => {
-    login(data);
+  // const onSubmit = (data: LoginFormData) => {
+  //   login(data);
+  // };
+
+  const onSubmit = async (data: LoginFormData) => {
+    const result = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
+    console.log("result", result);
+
+    // if (result?.error) {
+    //   console.error(result.error);
+    // } else {
+    //   console.log("Successfully logged in!");
+    // }
   };
 
   const isValidationError = Object.keys(errors).length > 0;

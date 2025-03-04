@@ -1,6 +1,6 @@
 import { Flex, Heading } from "@radix-ui/themes";
+import { ButtonLink } from "@repo/ui";
 import { getTasks } from "./actions";
-import { TaskForm } from "./TaskForm";
 import { TasksList } from "./tasksList";
 
 interface ChildPageProps {
@@ -17,9 +17,11 @@ export default async function ChildPage({ params }: ChildPageProps) {
 
   return (
     <Flex direction="column" gap="4">
-      <Heading size="4">{childId}</Heading>
+      <Flex justify="between" align="center">
+        <Heading size="4">{childId}</Heading>
+        <ButtonLink href={`/kids/${childId}/add-task`}>Add Task</ButtonLink>
+      </Flex>
       <TasksList tasks={tasksData?.data || []} />
-      <TaskForm childId={childId} />
     </Flex>
   );
 }

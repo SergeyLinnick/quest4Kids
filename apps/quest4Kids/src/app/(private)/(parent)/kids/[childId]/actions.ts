@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import * as yup from "yup";
 
 type FormState = {
-  errors: string[];
+  errors: Error;
   success?: boolean;
   values?: {
     title?: string;
@@ -15,22 +15,24 @@ type FormState = {
   };
 };
 
+type Error = Map<string, string>;
+
 export async function addTask(
   state: FormState | undefined,
   formData: FormData,
 ): Promise<FormState> {
-  const errors: string[] = [];
+  const errors = new Map<string, string>();
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
   if (!token) {
-    errors.push("No authorization token found");
+    errors.set("common", "No authorization token found");
     return { errors };
   }
 
   const childId = formData.get("childId");
   if (!childId) {
-    errors.push("Child ID is required");
+    errors.set("common", "Child ID is required");
     return { errors };
   }
 
@@ -65,7 +67,9 @@ export async function addTask(
     await taskSchema.validate(formValues, { abortEarly: false });
   } catch (error) {
     if (error instanceof yup.ValidationError) {
-      errors.push(...error.errors);
+      error.inner.forEach((err) => {
+        errors.set(err.path || "common", err.message);
+      });
       return { errors, values: formValues };
     }
   }
@@ -84,7 +88,8 @@ export async function addTask(
     );
 
     if (!response.ok) {
-      errors.push(
+      errors.set(
+        "common",
         `HTTP error! status: ${response.status}, ${response.statusText}`,
       );
       return { errors };
@@ -92,9 +97,9 @@ export async function addTask(
 
     revalidatePath(`/kids/${childId}`);
 
-    return { errors: [], success: true };
+    return { errors: new Map(), success: true };
   } catch (error) {
-    errors.push(`Error creating task: ${error}`);
+    errors.set("common", `Error creating task: ${error}`);
     return { errors };
   }
 }
@@ -124,5 +129,34 @@ export async function getTasks() {
   } catch (error) {
     console.error("Error getting tasks:", error);
     throw new Error("Failed to get tasks. Please try again later.");
+  }
+}
+
+export async function deleteTask(taskId: string) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  try {
+    const response = await fetch(
+      `https://quest4kids-a7fd24f91954.herokuapp.com/tasks/${taskId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `HTTP error! status: ${response.status}, ${response.statusText}`,
+      );
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    throw new Error("Failed to delete task. Please try again later.");
   }
 }

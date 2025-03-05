@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import * as yup from "yup";
@@ -22,8 +23,9 @@ export async function addTask(
   formData: FormData,
 ): Promise<FormState> {
   const errors = new Map<string, string>();
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+
+  const session = await auth();
+  const token = session?.user?.accessToken;
 
   if (!token) {
     errors.set("common", "No authorization token found");
@@ -105,8 +107,12 @@ export async function addTask(
 }
 
 export async function getTasks(childId: string) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+  const session = await auth();
+  const token = session?.user?.accessToken;
+
+  if (!token) {
+    throw new Error("No authorization token found");
+  }
 
   try {
     const response = await fetch(

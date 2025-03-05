@@ -11,14 +11,11 @@ export const { handlers, signIn, auth, signOut }: any = NextAuth({
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
       // e.g. domain, username, password, 2FA token, etc.
       credentials: {
-        email: {},
-        password: {},
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
         try {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          let user: any = null;
-
           const { email, password } =
             await signInSchema.parseAsync(credentials);
 
@@ -26,36 +23,50 @@ export const { handlers, signIn, auth, signOut }: any = NextAuth({
           const pwHash = saltAndHashPassword(password);
 
           // logic to verify if the user exists
-          user = await fetch(
+          const response = await fetch(
             `https://quest4kids-a7fd24f91954.herokuapp.com/auth/login`,
             {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email, password: pwHash }),
             },
           );
 
-          if (!user) {
-            throw new Error("Invalid credentials.");
+          const user = await response.json();
+
+          if (!response.ok || !user) {
+            throw new Error("Invalid credentials");
           }
 
-          // return JSON object with the user data
-          return user;
+          return {
+            email,
+            accessToken: user.accessToken,
+          };
         } catch (error) {
           if (error instanceof ZodError) {
             // Return `null` to indicate that the credentials are invalid
             return null;
           }
+          throw new Error("Login failed");
         }
       },
     }),
   ],
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      // Redirect to /tasks after sign-in
-      return baseUrl + "/tasks";
+    async jwt({ token, user }) {
+      if (user) {
+        token.accessToken = user.accessToken;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token.accessToken) {
+        session.user.accessToken = token.accessToken;
+      }
+      return session;
+    },
+    async redirect({ baseUrl }) {
+      return baseUrl + "/dashboard";
     },
   },
 });

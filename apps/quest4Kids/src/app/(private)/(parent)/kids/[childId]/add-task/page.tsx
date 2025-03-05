@@ -2,9 +2,9 @@ import { Heading } from "@radix-ui/themes";
 import { TaskForm } from "../TaskForm";
 
 interface AddTaskPageProps {
-  params: {
+  params: Promise<{
     childId: string;
-  };
+  }>;
 }
 
 export default async function AddTaskPage({ params }: AddTaskPageProps) {

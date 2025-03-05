@@ -2,9 +2,9 @@ import { TaskForm } from "../../TaskForm";
 import { Modal } from "./Modal";
 
 interface AddTaskModalProps {
-  params: {
+  params: Promise<{
     childId: string;
-  };
+  }>;
 }
 
 export default async function AddTaskModal({ params }: AddTaskModalProps) {

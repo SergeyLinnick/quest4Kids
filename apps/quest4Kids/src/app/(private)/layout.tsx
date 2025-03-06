@@ -4,6 +4,7 @@ import { getMenuItems } from "@/consts/menu";
 import { RoleType } from "@/consts/roles";
 import { SideBar } from "@repo/ui";
 import styles from "./layout.module.css";
+import NotAuthenticated from "./notAuthenticated";
 
 export default async function RootLayout({
   children,
@@ -13,7 +14,7 @@ export default async function RootLayout({
   const role: RoleType = "parent";
 
   const session = await auth();
-  if (!session) return <div>User Not authenticated!</div>;
+  if (!session) return <NotAuthenticated />;
 
   return (
     <>

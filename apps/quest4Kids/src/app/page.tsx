@@ -18,7 +18,7 @@ export default function Home() {
         </div>
         <Flex direction="column" gap="2" align="center">
           <Link href={PAGE_PATH.DASHBOARD}>Lets go to Dashboard</Link>
-          <Link href={PAGE_PATH.LOGIN}>Lets go to Login</Link>
+          <Link href={PAGE_PATH.SIGNIN}>Lets go to Login</Link>
         </Flex>
       </main>
     </div>

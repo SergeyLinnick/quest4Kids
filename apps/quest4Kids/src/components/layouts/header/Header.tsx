@@ -3,6 +3,7 @@ import { Avatar, ThemeChanger } from "@repo/ui";
 import Image from "next/image";
 import Link from "next/link";
 
+import { PAGE_PATH } from "@/consts/pagePath";
 import { SignOut } from "../../forms/authentication/signOut";
 import styles from "./header.module.css";
 
@@ -20,20 +21,25 @@ export const Header = () => {
               priority
             />
           </Link>
-          <Link href="/signin">
-            <Button size="1" color="violet">
-              Sign In
-            </Button>
-          </Link>
-          <Link href="/login">
-            <Button size="1" color="violet">
-              Log In
-            </Button>
-          </Link>
-          <div>
-            {/* server sign out */}
+          <Flex justify="between" align="center" width="350px">
+            <Link href={PAGE_PATH.DASHBOARD}>
+              <Button size="1" color="violet">
+                Dashboard
+              </Button>
+            </Link>
+            <Link href={PAGE_PATH.SIGNUP}>
+              <Button size="1" color="violet">
+                Registration
+              </Button>
+            </Link>
+            <Link href={PAGE_PATH.SIGNIN}>
+              <Button size="1" color="violet">
+                Sign In
+              </Button>
+            </Link>
             <SignOut />
-          </div>
+          </Flex>
+
           <Flex gap="4" align="center">
             <Avatar />
             <ThemeChanger />

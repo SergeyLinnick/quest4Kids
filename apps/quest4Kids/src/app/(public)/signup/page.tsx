@@ -1,4 +1,4 @@
-import { SignIn } from "@/components/forms";
+import { SignUp } from "@/components/forms/authentication/signUp";
 import { Box, Card, Heading } from "@radix-ui/themes";
 import styles from "../page.module.css";
 
@@ -9,9 +9,9 @@ export default function SignUpPage() {
         <Box width="400px">
           <Card className={styles.card}>
             <Heading size="6" align="center" mb="4" color="violet">
-              Sign In
+              Sign Up
             </Heading>
-            <SignIn />
+            <SignUp />
           </Card>
         </Box>
       </div>

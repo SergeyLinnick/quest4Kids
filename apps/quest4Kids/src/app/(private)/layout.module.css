@@ -9,3 +9,13 @@
   order: 1;
   padding: 1.5rem 1.5rem 1.5rem 0;
 }
+
+.noAuth {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--violet-10);
+  font-weight: bold;
+}

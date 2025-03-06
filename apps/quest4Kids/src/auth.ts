@@ -2,6 +2,7 @@ import { saltAndHashPassword } from "@repo/utils";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { ZodError } from "zod";
+import { PAGE_PATH } from "./consts/pagePath";
 import { signInSchema } from "./lib/zod";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,6 +58,7 @@ export const { handlers, signIn, auth, signOut }: any = NextAuth({
       if (user) {
         token.accessToken = user.accessToken;
       }
+
       return token;
     },
     async session({ session, token }) {
@@ -66,7 +68,7 @@ export const { handlers, signIn, auth, signOut }: any = NextAuth({
       return session;
     },
     async redirect({ baseUrl }) {
-      return baseUrl + "/dashboard";
+      return baseUrl + PAGE_PATH.DASHBOARD;
     },
   },
 });

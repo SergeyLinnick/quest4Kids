@@ -1,1 +1,1 @@
-export { PasswordResolver, saltAndHashPassword } from "./forms/index";
+export { PasswordResolver } from "./forms/index";

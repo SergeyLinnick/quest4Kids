@@ -8,6 +8,7 @@ export const ButtonLink = ({
   color = "violet",
   className,
   variant,
+  size = "3",
   style,
   disabled,
   href,
@@ -20,7 +21,7 @@ export const ButtonLink = ({
       disabled={disabled}
       color={color}
       variant={variant}
-      size="3"
+      size={size}
       loading={isLoading}
       asChild
     >

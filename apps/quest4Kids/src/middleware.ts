@@ -1,42 +1,38 @@
-// export { auth as middleware } from "@/auth";
-
+import { auth } from "@repo/auth";
 import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
-import { auth } from "./auth";
-import { PUBLIC_ROUTES } from "./consts/pagePath";
+import { PAGE_PATH, PUBLIC_ROUTES } from "./consts/pagePath";
 
 export async function middleware(request: NextRequest) {
+  const { nextUrl } = request;
+
   const session = await auth();
+
   const accessToken = session?.user?.accessToken;
   const isAuthenticated = !!accessToken;
-  const isPublicRoute = PUBLIC_ROUTES.some((route) =>
-    request.nextUrl.pathname.startsWith(route),
+  const isPublicRoute = PUBLIC_ROUTES.some(
+    (route) => nextUrl.pathname === route,
   );
+  const isSignInPage = nextUrl.pathname === PAGE_PATH.SIGNIN;
 
-  // if (!isAuthenticated && isPublicRoute) {
-  //   return NextResponse.redirect(new URL(PAGE_PATH.SIGNUP, request.url));
-  // }
+  if (!isAuthenticated && !isPublicRoute)
+    return Response.redirect(new URL(PAGE_PATH.SIGNIN, request.url));
 
-  if (isAuthenticated) {
-    const requestHeaders = new Headers(request.headers);
-    requestHeaders.set("Authorization", `Bearer ${accessToken}`);
-    requestHeaders.set("X-With-Credentials", "true"); // custom header to indicate withCredentials but need check maybe Axios or Fetch should do this
+  if (isAuthenticated && isSignInPage)
+    return Response.redirect(new URL(PAGE_PATH.DASHBOARD, request.url));
 
-    const response = NextResponse.next({
-      request: {
-        headers: requestHeaders,
-      },
-    });
-
-    console.log("middleware response.headers::", response.headers);
-
-    return response;
-  }
-
-  return NextResponse.next();
+  // return NextResponse.next();
 }
 
-// Apply middleware to all routes
-// export const config = {
-//   matcher: "/:path*",
-// };
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     * - public image assets (webp, ico, png, jpg, svg)
+     */
+    "/((?!api|_next/static|_next/image|favicon\\.ico|sitemap\\.xml|robots\\.txt|.*\\.(?:webp|ico|png|jpg|svg)).*)",
+  ],
+};

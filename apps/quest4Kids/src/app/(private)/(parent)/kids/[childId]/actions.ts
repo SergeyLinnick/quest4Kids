@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/auth";
+import { auth } from "@repo/auth";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import * as yup from "yup";

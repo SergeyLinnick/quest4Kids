@@ -1,15 +1,19 @@
-import { signIn } from "@/auth";
+"use client";
+
+import { Heading } from "@radix-ui/themes";
+import { useActionState } from "react";
+import { loginUser } from "./actions";
 import styles from "./signin.module.css";
 
+const initialState = { errors: new Map<string, string>(), values: {} };
+
 export function SignIn() {
+  const [state, formAction] = useActionState(loginUser, initialState);
   return (
-    <form
-      action={async (formData) => {
-        "use server";
-        // await signIn("credentials", formData);
-        await signIn("credentials", formData);
-      }}
-    >
+    <form action={formAction}>
+      <Heading size="1" color="violet" mb="3">
+        You are not authenticated, please login to your account
+      </Heading>
       <label className={styles.label}>Email</label>
       <input name="email" type="email" className={styles.input} />
 

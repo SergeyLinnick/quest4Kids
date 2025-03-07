@@ -6,7 +6,7 @@ export default function SignUpPage() {
   return (
     <div className={styles.page}>
       <div className={styles.pageBackground}>
-        <Box width="400px">
+        <Box maxWidth="500px">
           <Card className={styles.card}>
             <Heading size="6" align="center" mb="4" color="violet">
               Sign In

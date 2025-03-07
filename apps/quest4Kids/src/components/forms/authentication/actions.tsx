@@ -1,5 +1,7 @@
 "use server";
 
+import { PAGE_PATH } from "@/consts/pagePath";
+import { signIn } from "@repo/auth";
 import { redirect } from "next/navigation";
 
 type Error = Map<string, string>;
@@ -49,5 +51,12 @@ export async function registerUser(
     throw new Error(errorMessage);
   }
 
-  redirect("/signin");
+  redirect(PAGE_PATH.SIGNIN);
+}
+
+export async function loginUser(
+  state: FormState | undefined,
+  formData: FormData,
+): Promise<FormState> {
+  return await signIn("credentials", formData);
 }

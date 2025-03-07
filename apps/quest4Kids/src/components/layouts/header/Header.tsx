@@ -1,5 +1,5 @@
-import { Box, Button, Flex } from "@radix-ui/themes";
-import { Avatar, ThemeChanger } from "@repo/ui";
+import { Box, Flex } from "@radix-ui/themes";
+import { Avatar, ButtonLink, ThemeChanger } from "@repo/ui";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -21,22 +21,23 @@ export const Header = () => {
               priority
             />
           </Link>
-          <Flex justify="between" align="center" width="350px">
-            <Link href={PAGE_PATH.DASHBOARD}>
-              <Button size="1" color="violet">
-                Dashboard
-              </Button>
-            </Link>
-            <Link href={PAGE_PATH.SIGNUP}>
-              <Button size="1" color="violet">
-                Registration
-              </Button>
-            </Link>
-            <Link href={PAGE_PATH.SIGNIN}>
-              <Button size="1" color="violet">
-                Sign In
-              </Button>
-            </Link>
+          <Flex justify="between" align="center" width="450px">
+            <ButtonLink href={PAGE_PATH.ABOUT} size="1" color="violet">
+              About Us
+            </ButtonLink>
+
+            <ButtonLink href={PAGE_PATH.DASHBOARD} size="1" color="violet">
+              Dashboard
+            </ButtonLink>
+
+            <ButtonLink href={PAGE_PATH.SIGNUP} size="1" color="violet">
+              Registration
+            </ButtonLink>
+
+            <ButtonLink href={PAGE_PATH.SIGNIN} size="1" color="violet">
+              Sign In
+            </ButtonLink>
+
             <SignOut />
           </Flex>
 

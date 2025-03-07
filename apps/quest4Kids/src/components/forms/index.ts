@@ -1,2 +1,2 @@
-export { SignIn } from "./authentication/signIn";
+export { SignIn, SignOut, SignUp } from "./authentication";
 export { ChildForm } from "./childForm/chidForm";

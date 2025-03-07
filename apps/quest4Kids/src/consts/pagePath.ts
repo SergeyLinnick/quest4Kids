@@ -2,9 +2,10 @@ export const PAGE_PATH = {
   HOME: "/",
   SIGNIN: "/signin",
   SIGNUP: "/signup",
-  LOGOUT: "/logout",
+  SIGNOUT: "/signout",
 
   DASHBOARD: "/dashboard",
+  ABOUT: "/about",
 };
 
 export const PAGE_PATH_PARENT = {
@@ -18,4 +19,9 @@ export const PAGE_PATH_CHILD = {
   TASKS: "/tasks",
 };
 
-export const PUBLIC_ROUTES = [PAGE_PATH.SIGNIN, PAGE_PATH.SIGNUP];
+export const PUBLIC_ROUTES = [
+  PAGE_PATH.HOME,
+  PAGE_PATH.SIGNIN,
+  PAGE_PATH.SIGNUP,
+  PAGE_PATH.ABOUT,
+];

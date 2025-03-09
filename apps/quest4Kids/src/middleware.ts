@@ -1,11 +1,11 @@
-import { auth } from "@repo/auth";
+import { auth, Session } from "@repo/auth";
 import type { NextRequest } from "next/server";
 import { PAGE_PATH, PUBLIC_ROUTES } from "./consts/pagePath";
 
 export async function middleware(request: NextRequest) {
   const { nextUrl } = request;
 
-  const session = await auth();
+  const session: Session | null = await auth();
 
   const accessToken = session?.user?.accessToken;
   const isAuthenticated = !!accessToken;

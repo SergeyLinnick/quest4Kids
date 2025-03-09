@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@repo/auth";
+import { auth, Session } from "@repo/auth";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import * as yup from "yup";
@@ -24,7 +24,7 @@ export async function addTask(
 ): Promise<FormState> {
   const errors = new Map<string, string>();
 
-  const session = await auth();
+  const session: Session | null = await auth();
   const token = session?.user?.accessToken;
 
   if (!token) {
@@ -107,7 +107,7 @@ export async function addTask(
 }
 
 export async function getTasks(childId: string) {
-  const session = await auth();
+  const session: Session | null = await auth();
   const token = session?.user?.accessToken;
 
   if (!token) {

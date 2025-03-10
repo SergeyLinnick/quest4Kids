@@ -1,75 +1,90 @@
 "use client";
 
-import { PAGE_PATH_PARENT } from "@/consts/pagePath";
-import { Flex } from "@radix-ui/themes";
-import { ICreateChild, useAddChild } from "@repo/api";
-import { Button, FormField } from "@repo/ui";
-import { useRouter } from "next/navigation";
+import { Box, Flex, Text } from "@radix-ui/themes";
+import { addChild, FormState, initialState } from "@repo/api";
+import { Button, InputField } from "@repo/ui";
 import { Form } from "radix-ui";
-import { useForm } from "react-hook-form";
-import { childFormValidation } from "./resolver";
+import { useActionState } from "react";
 
 export const ChildForm = () => {
-  const router = useRouter();
+  const [state, formAction, isPending] = useActionState<FormState, FormData>(
+    addChild,
+    initialState,
+  );
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ICreateChild>({
-    resolver: childFormValidation,
-    reValidateMode: "onChange",
-    mode: "onChange",
-    shouldUnregister: false,
-    defaultValues: { name: "", email: "", password: "" },
-    // values,
-  });
-
-  const { addChild, isLoading } = useAddChild({
-    onSuccess: () => {
-      router.push(PAGE_PATH_PARENT.CHILDREN);
-    },
-  });
-
-  const onSubmit = (data: ICreateChild) => {
-    addChild(data);
-  };
+  const { values, errors } = state;
 
   return (
-    <Form.Root className="FormRoot" onSubmit={handleSubmit(onSubmit)}>
-      <Flex direction="column" gap="5" maxWidth="300px">
-        <FormField
-          name="name"
-          label="Name"
-          placeholder="Enter Name"
-          register={register("name")}
-          isLoading={isLoading}
-          error={errors.name?.message}
-        />
+    <Box maxWidth="400px">
+      <Form.Root action={formAction}>
+        <Flex direction="column" gap="4">
+          <InputField
+            isLoading={isPending}
+            label="Name"
+            defaultValue={values?.get("name") as string}
+            error={errors.get("name")}
+            name="name"
+          />
+          <InputField
+            isLoading={isPending}
+            label="Email"
+            defaultValue={values?.get("email") as string}
+            error={errors.get("email")}
+            name="email"
+            type="email"
+          />
+          <InputField
+            isLoading={isPending}
+            label="Password"
+            defaultValue={values?.get("password") as string}
+            error={errors.get("password")}
+            name="password"
+            type="password"
+          />
+          <Text color="red">{errors.get("common")}</Text>
 
-        <FormField
-          name="email"
-          label="Email"
-          placeholder="Enter Email"
-          register={register("email")}
-          isLoading={isLoading}
-          error={errors.email?.message}
-          type="email"
-        />
+          <Form.Submit asChild>
+            <Button isLoading={isPending} type="submit">
+              Add Child
+            </Button>
+          </Form.Submit>
+        </Flex>
+      </Form.Root>
+    </Box>
+    // <Form.Root className="FormRoot" onSubmit={handleSubmit(onSubmit)}>
+    //   <Flex direction="column" gap="5" maxWidth="300px">
+    //     <FormField
+    //       name="name"
+    //       label="Name"
+    //       placeholder="Enter Name"
+    //       register={register("name")}
+    //       isLoading={isLoading}
+    //       error={errors.name?.message}
+    //     />
 
-        <FormField
-          name="password"
-          label="Password"
-          placeholder="Enter Password"
-          register={register("password")}
-          isLoading={isLoading}
-          error={errors.password?.message}
-          type="password"
-        />
-        <Form.Submit asChild>
-          <Button isLoading={isLoading}>Add Child</Button>
-        </Form.Submit>
-      </Flex>
-    </Form.Root>
+    //     <FormField
+    //       name="email"
+    //       label="Email"
+    //       placeholder="Enter Email"
+    //       register={register("email")}
+    //       isLoading={isLoading}
+    //       error={errors.email?.message}
+    //       type="email"
+    //     />
+
+    //     <FormField
+    //       name="password"
+    //       label="Password"
+    //       placeholder="Enter Password"
+    //       register={register("password")}
+    //       isLoading={isLoading}
+    //       error={errors.password?.message}
+    //       type="password"
+    //     />
+    //     <Form.Submit asChild>
+    //       <Button isLoading={isLoading}>Add Child</Button>
+    //     </Form.Submit>
+    //   </Flex>
+    // </Form.Root>
   );
 };

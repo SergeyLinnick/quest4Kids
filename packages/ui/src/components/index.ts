@@ -7,3 +7,5 @@ export { SideBar } from "./sideBar/SideBar";
 export { Spinner } from "./spinner/Spinner";
 export { ThemeChanger } from "./themeChanger/ThemeChanger";
 export { UserCard } from "./userCard/UserCard";
+
+export { InputField } from './inputField/InputField';

@@ -1,6 +1,6 @@
 import { Flex, Heading } from "@radix-ui/themes";
+import { fetchChildTasks } from "@repo/api";
 import { ButtonLink } from "@repo/ui";
-import { getTasks } from "./actions";
 import { TasksList } from "./tasksList";
 
 interface ChildPageProps {
@@ -10,7 +10,7 @@ interface ChildPageProps {
 export default async function ChildPage({ params }: ChildPageProps) {
   const childId = (await params).childId;
 
-  const tasksData = await getTasks(childId).catch((error) => {
+  const tasksData = await fetchChildTasks(childId).catch((error) => {
     console.error("Error in page:", error);
     return { data: [] };
   });

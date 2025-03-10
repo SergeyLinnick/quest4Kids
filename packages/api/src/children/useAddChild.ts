@@ -1,36 +1,39 @@
-import { useMutation } from "@tanstack/react-query";
-import { customRevalidatePath } from "../_common/revalidatePath";
-import { customRevalidateTag } from "../_common/revalidateTag";
-import { userService } from "./services";
-import { ICreateChild } from "./types";
+// import { useMutation } from "@tanstack/react-query";
+// import { customRevalidatePath } from "../_common/revalidatePath";
+// import { customRevalidateTag } from "../_common/revalidateTag";
+// import { userService } from "./services";
+// import { ICreateChild } from "./types";
 
-export const useAddChild = ({
-  onSuccess,
-}: {
-  onSuccess?: () => void;
-} = {}) => {
-  // const queryClient = useQueryClient();
+// // Does not use in this project.
+// // It is an example of how to use the useMutation hook.
 
-  const {
-    mutate: addChild,
-    isPending: isLoading,
-    error,
-  } = useMutation<ICreateChild, Error, ICreateChild>({
-    mutationFn: userService.addChild,
-    onSuccess: (data) => {
-      console.log("Child Added:", data);
-      // queryClient.invalidateQueries({ queryKey: [QUERY_KEY.CHILDREN] });
+// export const useAddChild = ({
+//   onSuccess,
+// }: {
+//   onSuccess?: () => void;
+// } = {}) => {
+//   // const queryClient = useQueryClient();
 
-      customRevalidatePath("/kids");
-      customRevalidateTag("children-list");
+//   const {
+//     mutate: addChild,
+//     isPending: isLoading,
+//     error,
+//   } = useMutation<ICreateChild, Error, ICreateChild>({
+//     mutationFn: userService.addChild,
+//     onSuccess: (data) => {
+//       console.log("Child Added:", data);
+//       // queryClient.invalidateQueries({ queryKey: [QUERY_KEY.CHILDREN] });
 
-      onSuccess?.();
-      // toast.success("Child Added");
-    },
-    onError: (error) => {
-      console.error("Error creating child:", error);
-    },
-  });
+//       customRevalidatePath("/kids");
+//       customRevalidateTag("children-list");
 
-  return { addChild, isLoading, error };
-};
+//       onSuccess?.();
+//       // toast.success("Child Added");
+//     },
+//     onError: (error) => {
+//       console.error("Error creating child:", error);
+//     },
+//   });
+
+//   return { addChild, isLoading, error };
+// };

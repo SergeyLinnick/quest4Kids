@@ -1,31 +1,28 @@
-import { AxiosResponse } from "axios";
 import { API_PATH } from "../_common/consts";
-import {
-  clientRequestWithAuth,
-  serverRequestWithAuth,
-} from "../_common/request";
-import { IChild, ICreateChild } from "./types";
+import { authHttpClient } from "../_common/fetchInstance";
+import { FetchConfig } from "../_common/types";
+import { IChild, IChildResponse, ICreateChild } from "./types";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
-export const getChildrenURL = `${api}${API_PATH.USER.GET_CHILDREN}`;
 
 export const userService = {
   addChild: ({ email, password, name }: ICreateChild): Promise<IChild> => {
     const options = {
       method: "POST",
       url: `${api}${API_PATH.USER.ADD_CHILD}`,
-      data: JSON.stringify({ email, password, name }),
+      body: JSON.stringify({ email, password, name }),
     };
 
-    return clientRequestWithAuth(options);
+    return authHttpClient.fetch(options);
   },
 
-  getChildren: (): Promise<AxiosResponse<IChild[]>> => {
+  getChildren: (preference?: FetchConfig): Promise<IChildResponse> => {
     const options = {
       method: "GET",
-      url: `${api}${API_PATH.USER.GET_CHILDREN}`,
+      url: `${api}${API_PATH.USER.GET_CHILDREN}?limit=20`,
+      ...preference,
     };
 
-    return serverRequestWithAuth(options);
+    return authHttpClient.fetch(options);
   },
 };

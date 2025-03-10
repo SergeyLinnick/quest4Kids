@@ -1,41 +1,37 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { handleValidationError } from "../_common/formUtils";
+import { FormState } from "../_common/types";
+import { childSchema } from "./resolver";
+import { userService } from "./services";
+import { IChildResponse } from "./types";
 
-// import { unstable_cache } from "next/cache";
-import { cookies } from "next/headers";
-import { getChildrenURL } from "./services";
-
-// const getData = unstable_cache(
-//   async (token) => {
-//     console.log("Fetching fresh data...");
-//     const res = await fetch(getChildrenURL, {
-//       headers: token ? { Authorization: `Bearer ${token}` } : {},
-//     });
-//     return res.json();
-//   },
-//   ["children-list"],
-//   { revalidate: 60, tags: ["children-list"] },
-// );
-
-const getData = async (token: string | null) => {
-  console.log("Fetching fresh data...");
-  const res = await fetch(getChildrenURL, {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
-    cache: "force-cache",
-    next: { tags: ["children-list"], revalidate: 60 },
-  } as any);
-
-  if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`);
+export const addChild = async (
+  state: FormState | undefined,
+  formData: FormData,
+): Promise<FormState> => {
+  try {
+    const child = await childSchema.parse({
+      name: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+    });
+    await userService.addChild(child);
+    revalidatePath("/kids");
+  } catch (error) {
+    return handleValidationError(error, formData);
   }
 
-  return res.json();
+  redirect("/kids");
 };
 
-export async function fetchChildren() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value || null;
-  const children = await getData(token);
-
-  return children?.data;
-}
+export const fetchChildren = async (): Promise<IChildResponse> => {
+  return await userService.getChildren({
+    cache: "force-cache",
+    next: {
+      tags: ["children-list"],
+      revalidate: 60,
+    },
+  });
+};

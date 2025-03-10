@@ -9,7 +9,8 @@ export const API_PATH = {
     GET_CHILDREN: "/user/get-children-list",
   },
   TASK: {
-    ADD_TASK: (id: string) => `/kids/${id}/task`,
-    // GET_TASKS: (id: string) => `/kids/${id}/task`,
+    ADD_TASK: (childId: string) => `/kids/${childId}/task`,
+    GET_TASKS: "/tasks",
+    DELETE_TASK: (taskId: string) => `/tasks/${taskId}`,
   },
 };

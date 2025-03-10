@@ -19,7 +19,7 @@ export default async function KidsPage() {
         gap="4"
         maxWidth="1200px"
       >
-        {children?.map((child: IChild) => (
+        {children?.data?.map((child: IChild) => (
           <Link
             key={child.id}
             href={PAGE_PATH_PARENT.CHILD(child.id.toString())}

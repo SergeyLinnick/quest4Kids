@@ -7,10 +7,10 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.66.9",
-    "axios": "^1.7.9",
+    "@repo/auth": "workspace:*",
     "next": "^15.1.6",
-    "react": "^19.0.0"
+    "react": "^19.0.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",

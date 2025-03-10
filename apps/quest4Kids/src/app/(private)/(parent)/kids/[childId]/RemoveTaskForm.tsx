@@ -1,16 +1,14 @@
 "use client";
 
 import { Box, Button } from "@radix-ui/themes";
+import { deleteTask, initialState } from "@repo/api";
 import { Form } from "radix-ui";
 import { useActionState } from "react";
-import { deleteTask } from "./actions";
 
 interface RemoveTaskFormProps {
   taskId: string;
   childId: string;
 }
-
-const initialState = { errors: new Map<string, string>(), values: {} };
 
 export const RemoveTaskForm = ({ taskId, childId }: RemoveTaskFormProps) => {
   const [, formAction, isPending] = useActionState(deleteTask, initialState);

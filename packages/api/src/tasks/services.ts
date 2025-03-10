@@ -1,24 +1,41 @@
 import { API_PATH } from "../_common/consts";
-import { clientRequestWithAuth } from "../_common/request";
-import { ICreateTask, ITask } from "./types";
+import { authHttpClient } from "../_common/fetchInstance";
+import { ICreateTask, ITask, ITaskResponse } from "./types";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
-export const getTasksURL = "test";
 
 export const taskService = {
   addTask: ({
-    childId,
     title,
     description,
     points,
     status,
-  }: ICreateTask & { childId: string }): Promise<ITask> => {
+    childId,
+  }: ICreateTask): Promise<ITask> => {
     const options = {
       method: "POST",
       url: `${api}${API_PATH.TASK.ADD_TASK(childId)}`,
-      data: JSON.stringify({ title, description, points, status }),
+      body: JSON.stringify({ title, description, points, status }),
     };
 
-    return clientRequestWithAuth(options);
+    return authHttpClient.fetch(options);
+  },
+
+  getTasksByChildId: (childId: string): Promise<ITaskResponse> => {
+    const options = {
+      method: "GET",
+      url: `${api}${API_PATH.TASK.GET_TASKS}?childId=${childId}`,
+    };
+
+    return authHttpClient.fetch(options);
+  },
+
+  deleteTask: (taskId: string): Promise<ITask> => {
+    const options = {
+      method: "DELETE",
+      url: `${api}${API_PATH.TASK.DELETE_TASK(taskId)}`,
+    };
+
+    return authHttpClient.fetch(options);
   },
 };

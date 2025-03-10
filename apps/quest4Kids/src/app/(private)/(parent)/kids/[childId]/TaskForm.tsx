@@ -1,24 +1,14 @@
 "use client";
 
-import {
-  Box,
-  Flex,
-  RadioCards,
-  Skeleton,
-  Text,
-  TextArea,
-  TextField,
-} from "@radix-ui/themes";
-import { Button } from "@repo/ui";
+import { Box, Flex, RadioCards, Skeleton, Text } from "@radix-ui/themes";
+import { addTask, initialState } from "@repo/api";
+import { Button, InputField } from "@repo/ui";
 import { Form } from "radix-ui";
 import { useActionState } from "react";
-import { addTask } from "./actions";
 
 interface TaskFormProps {
   childId: string;
 }
-
-const initialState = { errors: new Map<string, string>(), values: {} };
 
 export const TaskForm = ({ childId }: TaskFormProps) => {
   // useActionState is available with React 19 (Next.js App Router)
@@ -31,40 +21,29 @@ export const TaskForm = ({ childId }: TaskFormProps) => {
       <Form.Root action={formAction}>
         <input type="hidden" name="childId" value={childId} />
         <Flex direction="column" gap="4">
-          <Flex direction="column" gap="2" asChild>
-            <Form.Field name="title">
-              <Form.Label>Title</Form.Label>
-              <Skeleton loading={isPending}>
-                <Form.Control asChild>
-                  <TextField.Root size="3" defaultValue={values?.title || ""} />
-                </Form.Control>
-              </Skeleton>
-              <Form.Message asChild>
-                <Text color="red">{errors.get("title")}</Text>
-              </Form.Message>
-            </Form.Field>
-          </Flex>
+          <InputField
+            isLoading={isPending}
+            label="Title"
+            defaultValue={values?.get("title") as string}
+            error={errors.get("title")}
+            name="title"
+          />
 
-          <Flex direction="column" gap="2" asChild>
-            <Form.Field name="description">
-              <Form.Label>Description</Form.Label>
-              <Skeleton loading={isPending}>
-                <Form.Control asChild>
-                  <TextArea size="3" defaultValue={values?.description || ""} />
-                </Form.Control>
-              </Skeleton>
-              <Form.Message asChild>
-                <Text color="red">{errors.get("description")}</Text>
-              </Form.Message>
-            </Form.Field>
-          </Flex>
+          <InputField
+            isLoading={isPending}
+            label="Name"
+            defaultValue={values?.get("description") as string}
+            error={errors.get("description")}
+            name="description"
+            as="textarea"
+          />
 
           <Flex direction="column" gap="2" asChild>
             <Form.Field name="points">
               <Form.Label>Points</Form.Label>
               <RadioCards.Root
                 name="points"
-                defaultValue={String(values?.points || 8)}
+                defaultValue={String(values?.get("points") || 8)}
                 columns={{ initial: "2", sm: "4" }}
               >
                 <Skeleton loading={isPending}>
@@ -104,7 +83,7 @@ export const TaskForm = ({ childId }: TaskFormProps) => {
               <Form.Label>Status</Form.Label>
               <RadioCards.Root
                 name="status"
-                defaultValue={values?.status || "OPEN"}
+                defaultValue={(values?.get("status") as string) || "OPEN"}
                 columns={{ initial: "1", sm: "3" }}
               >
                 <Skeleton loading={isPending}>

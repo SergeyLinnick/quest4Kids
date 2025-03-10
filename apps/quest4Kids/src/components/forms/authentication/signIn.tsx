@@ -8,7 +8,7 @@ import styles from "./signin.module.css";
 const initialState = { errors: new Map<string, string>(), values: {} };
 
 export function SignIn() {
-  const [state, formAction] = useActionState(loginUser, initialState);
+  const [, formAction] = useActionState(loginUser, initialState);
   return (
     <form action={formAction}>
       <Heading size="1" color="violet" mb="3">

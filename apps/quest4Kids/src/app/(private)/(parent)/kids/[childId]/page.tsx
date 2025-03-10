@@ -10,10 +10,7 @@ interface ChildPageProps {
 export default async function ChildPage({ params }: ChildPageProps) {
   const childId = (await params).childId;
 
-  const tasksData = await fetchChildTasks(childId).catch((error) => {
-    console.error("Error in page:", error);
-    return { data: [] };
-  });
+  const tasksData = await fetchChildTasks(childId);
 
   return (
     <Flex direction="column" gap="4">

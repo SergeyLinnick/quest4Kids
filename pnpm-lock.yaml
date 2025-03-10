@@ -99,6 +99,9 @@ importers:
       '@repo/auth':
         specifier: workspace:*
         version: link:../auth
+      '@repo/utils':
+        specifier: workspace:*
+        version: link:../utils
       next:
         specifier: ^15.1.6
         version: 15.1.7(@babel/core@7.26.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)

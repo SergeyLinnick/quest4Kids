@@ -1,4 +1,5 @@
 import { Avatar, Box, Card, Flex, Text } from "@radix-ui/themes";
+import { getUserInitials } from "@repo/utils";
 import styles from "./userCard.module.css";
 
 interface UserCardProps {
@@ -12,7 +13,7 @@ interface UserCardProps {
 
 export const UserCard = ({ user, isLink = false }: UserCardProps) => {
   const { name, email, avatar } = user;
-  const firstLetters = name.charAt(0) + name.charAt(1);
+  const initials = getUserInitials(name);
 
   return (
     <Card size="2" className={isLink ? styles.link : ""}>
@@ -21,7 +22,7 @@ export const UserCard = ({ user, isLink = false }: UserCardProps) => {
           src={avatar}
           size="4"
           radius="full"
-          fallback={firstLetters}
+          fallback={initials}
           color="indigo"
         />
         <Box>

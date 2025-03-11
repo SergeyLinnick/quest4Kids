@@ -1,7 +1,7 @@
 "use server";
 
 import { PAGE_PATH_PARENT } from "@/consts/pagePath";
-import { Box, Grid } from "@radix-ui/themes";
+import { Box, Grid, Heading } from "@radix-ui/themes";
 import { fetchChildren, IChild } from "@repo/api";
 import { ButtonLink, UserCard } from "@repo/ui";
 import Link from "next/link";
@@ -19,14 +19,21 @@ export default async function KidsPage() {
         gap="4"
         maxWidth="1200px"
       >
-        {children?.data?.map((child: IChild) => (
-          <Link
-            key={child.id}
-            href={PAGE_PATH_PARENT.CHILD(child.id.toString())}
-          >
-            <UserCard user={child} isLink />
-          </Link>
-        ))}
+        {children?.data?.length > 0 ? (
+          children?.data?.map((child: IChild) => (
+            <Link
+              key={child.id}
+              href={PAGE_PATH_PARENT.CHILD(child.id.toString())}
+            >
+              <UserCard user={child} isLink />
+            </Link>
+          ))
+        ) : (
+          <>
+            <Heading>No children found</Heading>
+            <Link href={PAGE_PATH_PARENT.CHILD_NEW}>Add the child</Link>
+          </>
+        )}
       </Grid>
     </>
   );

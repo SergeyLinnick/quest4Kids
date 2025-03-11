@@ -20,11 +20,3 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
 }
-
-.card {
-  position: relative;
-  z-index: 1;
-  background-color: white;
-  padding: 40px 50px 60px 50px;
-  margin-bottom: 150px;
-}

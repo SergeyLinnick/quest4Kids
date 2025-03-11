@@ -1,5 +1,5 @@
+import { TaskForm } from "@/components/forms/taskForm/TaskForm";
 import { Heading } from "@radix-ui/themes";
-import { TaskForm } from "../TaskForm";
 
 interface AddTaskPageProps {
   params: Promise<{

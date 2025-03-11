@@ -1,4 +1,3 @@
-import { PAGE_PATH } from "@/consts/pagePath";
 import { Button } from "@radix-ui/themes";
 import { signOut } from "@repo/auth";
 
@@ -7,10 +6,10 @@ export function SignOut() {
     <form
       action={async () => {
         "use server";
-        await signOut({ redirectTo: PAGE_PATH.HOME });
+        await signOut();
       }}
     >
-      <Button type="submit" size="1" color="crimson">
+      <Button type="submit" size="2" color="violet">
         Sign Out
       </Button>
     </form>

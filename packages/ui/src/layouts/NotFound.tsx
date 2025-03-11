@@ -2,7 +2,7 @@ import { Flex, Heading, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import styles from "./notFound.module.css";
 
-export default function NotFound() {
+export default function NotFound({ url }: { url?: string }) {
   return (
     <Flex height="100vh" justify="center" align="center">
       <Flex
@@ -19,7 +19,7 @@ export default function NotFound() {
           the address, or the page has been moved to another URL. If you think
           this is an error, please contact support.
         </Text>
-        <Link href="/">Go back home</Link>
+        <Link href={url || "/"}>Go back home</Link>
         <Text trim="both" className={styles.number}>
           404
         </Text>

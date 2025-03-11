@@ -1,6 +1,6 @@
 import { Badge, Button, Flex, Table } from "@radix-ui/themes";
 import { ITask } from "@repo/api";
-import { RemoveTaskForm } from "./RemoveTaskForm";
+import { RemoveTaskForm } from "../forms/taskForm/RemoveTaskForm";
 
 interface TasksListProps {
   tasks: ITask[];

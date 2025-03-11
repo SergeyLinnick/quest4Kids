@@ -5,6 +5,7 @@
   --header-height: 60px;
   --sideBar-width: 250px;
   --404-color: var(--gray-2);
+  --header-button-color: var(--gray-2);
 }
 
 :root,
@@ -22,6 +23,7 @@
   --color-background: #1f172c;
   --bg-header: var(--color-background);
   --404-color: var(--gray-5);
+  --header-button-color: var(--gray-12);
 }
 
 :root,

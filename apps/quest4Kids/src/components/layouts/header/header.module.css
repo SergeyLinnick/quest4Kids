@@ -6,3 +6,9 @@
   top: 0;
   z-index: 2;
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

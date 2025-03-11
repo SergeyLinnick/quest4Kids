@@ -81,9 +81,8 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
 
       return session;
     },
-    // Redirect to "path" after sigIn and signOut
-    async redirect({ baseUrl }) {
-      return baseUrl + "/";
-    },
+    // async redirect({ baseUrl }) {
+    //   return baseUrl;
+    // },
   },
 });

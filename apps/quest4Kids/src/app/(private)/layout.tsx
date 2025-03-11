@@ -1,4 +1,4 @@
-import { Header } from "@/components/layouts";
+import PrivateLayout from "@/components/layouts/PrivateLayout";
 import { getMenuItems } from "@/consts/menu";
 import { RoleType } from "@/consts/roles";
 import { auth } from "@repo/auth";
@@ -17,12 +17,11 @@ export default async function RootLayout({
   if (!session) return <NotAuthenticated />;
 
   return (
-    <>
-      <Header />
+    <PrivateLayout>
       <div className={styles.mainLayout}>
         <SideBar menuItems={getMenuItems(role) || []} />
         <main className={styles.container}>{children}</main>
       </div>
-    </>
+    </PrivateLayout>
   );
 }

@@ -1,7 +1,8 @@
+import { TasksList } from "@/components/tasks/TasksList";
 import { Flex, Heading } from "@radix-ui/themes";
 import { fetchChildTasks } from "@repo/api";
 import { ButtonLink } from "@repo/ui";
-import { TasksList } from "./tasksList";
+import Link from "next/link";
 
 interface ChildPageProps {
   params: Promise<{ childId: string }>;
@@ -18,7 +19,14 @@ export default async function ChildPage({ params }: ChildPageProps) {
         <Heading size="4">{childId}</Heading>
         <ButtonLink href={`/kids/${childId}/add-task`}>Add Task</ButtonLink>
       </Flex>
-      <TasksList tasks={tasksData?.data || []} childId={childId} />
+      {tasksData?.data?.length > 0 ? (
+        <TasksList tasks={tasksData?.data} childId={childId} />
+      ) : (
+        <>
+          <Heading>No tasks found</Heading>
+          <Link href={`/kids/${childId}/add-task`}>Add the first task</Link>
+        </>
+      )}
     </Flex>
   );
 }

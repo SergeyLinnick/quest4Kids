@@ -51,40 +51,5 @@ export const ChildForm = () => {
         </Flex>
       </Form.Root>
     </Box>
-    // <Form.Root className="FormRoot" onSubmit={handleSubmit(onSubmit)}>
-    //   <Flex direction="column" gap="5" maxWidth="300px">
-    //     <FormField
-    //       name="name"
-    //       label="Name"
-    //       placeholder="Enter Name"
-    //       register={register("name")}
-    //       isLoading={isLoading}
-    //       error={errors.name?.message}
-    //     />
-
-    //     <FormField
-    //       name="email"
-    //       label="Email"
-    //       placeholder="Enter Email"
-    //       register={register("email")}
-    //       isLoading={isLoading}
-    //       error={errors.email?.message}
-    //       type="email"
-    //     />
-
-    //     <FormField
-    //       name="password"
-    //       label="Password"
-    //       placeholder="Enter Password"
-    //       register={register("password")}
-    //       isLoading={isLoading}
-    //       error={errors.password?.message}
-    //       type="password"
-    //     />
-    //     <Form.Submit asChild>
-    //       <Button isLoading={isLoading}>Add Child</Button>
-    //     </Form.Submit>
-    //   </Flex>
-    // </Form.Root>
   );
 };

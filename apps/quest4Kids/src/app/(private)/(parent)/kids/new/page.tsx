@@ -1,4 +1,4 @@
-import { ChildForm } from "@/components/forms";
+import { ChildForm } from "@/components";
 import { Heading } from "@radix-ui/themes";
 
 export default function NewChildPage() {

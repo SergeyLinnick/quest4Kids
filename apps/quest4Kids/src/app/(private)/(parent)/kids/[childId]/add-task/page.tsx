@@ -1,4 +1,4 @@
-import { TaskForm } from "@/components/forms/taskForm/TaskForm";
+import { TaskForm } from "@/components";
 import { Heading } from "@radix-ui/themes";
 
 interface AddTaskPageProps {

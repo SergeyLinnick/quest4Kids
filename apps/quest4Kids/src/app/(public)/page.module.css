@@ -17,6 +17,12 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: radial-gradient(
+      circle,
+      var(--violet-a9) 0%,
+      var(--violet-a7) 50%,
+      var(--violet-a5) 100%
+    );
+    opacity: 0.4;
   }
 }

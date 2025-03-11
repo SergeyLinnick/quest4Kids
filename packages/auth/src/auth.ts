@@ -81,8 +81,5 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
 
       return session;
     },
-    // async redirect({ baseUrl }) {
-    //   return baseUrl;
-    // },
   },
 });

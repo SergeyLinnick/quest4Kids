@@ -1,11 +1,12 @@
 export const PAGE_PATH = {
   HOME: "/",
-  SIGNIN: "/",
+  SIGNIN: "/signin",
   SIGNUP: "/signup",
   SIGNOUT: "/signout",
 
   DASHBOARD: "/dashboard",
   ABOUT: "/about",
+  PROFILE: "/profile",
 };
 
 export const PAGE_PATH_PARENT = {
@@ -13,10 +14,12 @@ export const PAGE_PATH_PARENT = {
   CHILD_NEW: "/kids/new",
   CHILD: (childId: string) => `/kids/${childId}`,
   CHILD_EDIT: (childId: string) => `/kids/${childId}/edit`,
+  PROFILE: PAGE_PATH.PROFILE,
 };
 
 export const PAGE_PATH_CHILD = {
   TASKS: "/tasks",
+  PROFILE: PAGE_PATH.PROFILE,
 };
 
 export const PUBLIC_ROUTES = [

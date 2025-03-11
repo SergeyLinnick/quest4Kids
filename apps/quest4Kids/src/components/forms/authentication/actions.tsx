@@ -1,6 +1,6 @@
 "use server";
 
-import { PAGE_PATH } from "@/consts/pagePath";
+import { PAGE_PATH } from "@/consts";
 import { signIn } from "@repo/auth";
 import { redirect } from "next/navigation";
 

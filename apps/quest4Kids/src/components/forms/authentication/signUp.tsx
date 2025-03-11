@@ -12,7 +12,7 @@ export function SignUp() {
 
   return (
     <form action={formAction}>
-      <Heading size="1" color="violet" mb="3">
+      <Heading size="1" color="gray" weight="light" mb="3">
         You are not authenticated, please create account
       </Heading>
       <label className={styles.label}>New Email</label>

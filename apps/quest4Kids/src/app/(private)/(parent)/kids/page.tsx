@@ -1,6 +1,6 @@
 "use server";
 
-import { PAGE_PATH_PARENT } from "@/consts/pagePath";
+import { PAGE_PATH_PARENT } from "@/consts";
 import { Box, Grid, Heading } from "@radix-ui/themes";
 import { fetchChildren, IChild } from "@repo/api";
 import { ButtonLink, UserCard } from "@repo/ui";

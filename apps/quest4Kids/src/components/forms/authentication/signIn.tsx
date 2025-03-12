@@ -11,7 +11,7 @@ export function SignIn() {
   const [, formAction] = useActionState(loginUser, initialState);
   return (
     <form action={formAction}>
-      <Heading size="1" color="violet" mb="3">
+      <Heading size="1" color="gray" weight="light" mb="3">
         You are not authenticated, please login to your account
       </Heading>
       <label className={styles.label}>Email</label>

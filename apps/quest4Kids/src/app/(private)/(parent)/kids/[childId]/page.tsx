@@ -1,4 +1,4 @@
-import { TasksList } from "@/components/tasks/TasksList";
+import { TasksList } from "@/components";
 import { Flex, Heading } from "@radix-ui/themes";
 import { fetchChildTasks } from "@repo/api";
 import { ButtonLink } from "@repo/ui";

@@ -1,4 +1,4 @@
-import { TaskForm } from "@/components/forms/taskForm/TaskForm";
+import { TaskForm } from "@/components";
 import { Modal } from "./Modal";
 
 interface AddTaskModalProps {

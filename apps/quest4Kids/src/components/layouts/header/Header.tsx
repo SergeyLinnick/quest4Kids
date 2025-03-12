@@ -3,13 +3,14 @@ import { ThemeChanger } from "@repo/ui";
 import Image from "next/image";
 import Link from "next/link";
 
+import { PAGE_PATH } from "@/consts";
 import styles from "./header.module.css";
 
 export const Header = ({ children }: { children: React.ReactNode }) => {
   return (
     <header className={styles.header}>
       <Flex justify="between" align="center" height="100%" px="4">
-        <Link href="/" className={styles.logo}>
+        <Link href={PAGE_PATH.HOME} className={styles.logo}>
           <Image
             src="/logo.svg"
             alt="Quest4Kids"

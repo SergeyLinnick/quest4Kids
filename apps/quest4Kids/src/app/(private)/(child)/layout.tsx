@@ -1,5 +1,5 @@
-import { PAGE_PATH } from "@/consts/pagePath";
-import { ROLE, RoleType } from "@/consts/roles";
+import { PAGE_PATH, ROLE } from "@/consts";
+import { RoleType } from "@/types";
 import { auth } from "@repo/auth";
 import { NotFound } from "@repo/ui";
 

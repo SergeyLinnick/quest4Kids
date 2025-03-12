@@ -1,4 +1,4 @@
-import { PAGE_PATH_PARENT } from "@/consts/pagePath";
+import { PAGE_PATH_PARENT } from "@/consts";
 import { Heading } from "@radix-ui/themes";
 import Link from "next/link";
 

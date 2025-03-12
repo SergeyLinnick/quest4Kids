@@ -2,15 +2,15 @@ import { ROLE } from "@/consts";
 import { RoleType } from "@/types";
 import { auth } from "@repo/auth";
 
-type DashboardLayoutProps = {
+type ProfileLayoutProps = {
   parent: React.ReactNode;
   child: React.ReactNode;
 };
 
-export default async function DashboardLayout({
+export default async function ProfileLayout({
   parent,
   child,
-}: DashboardLayoutProps) {
+}: ProfileLayoutProps) {
   const session = await auth();
   const role: RoleType = session?.user?.role;
 

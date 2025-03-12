@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Flex, RadioCards, Skeleton, Text } from "@radix-ui/themes";
-import { addTask, initialState } from "@repo/api";
+import { addTask, initialState, TASK_POINTS, TASK_STATUS } from "@repo/api";
 import { Button, InputField } from "@repo/ui";
 import { Form } from "radix-ui";
 import { useActionState } from "react";
@@ -46,34 +46,15 @@ export const TaskForm = ({ childId }: TaskFormProps) => {
                 defaultValue={String(values?.get("points") || 8)}
                 columns={{ initial: "2", sm: "4" }}
               >
-                <Skeleton loading={isPending}>
-                  <RadioCards.Item value="5">
-                    <Flex direction="column" width="100%">
-                      <Text weight="bold">5</Text>
-                    </Flex>
-                  </RadioCards.Item>
-                </Skeleton>
-                <Skeleton loading={isPending}>
-                  <RadioCards.Item value="8">
-                    <Flex direction="column" width="100%">
-                      <Text weight="bold">8</Text>
-                    </Flex>
-                  </RadioCards.Item>
-                </Skeleton>
-                <Skeleton loading={isPending}>
-                  <RadioCards.Item value="10">
-                    <Flex direction="column" width="100%">
-                      <Text weight="bold">10</Text>
-                    </Flex>
-                  </RadioCards.Item>
-                </Skeleton>
-                <Skeleton loading={isPending}>
-                  <RadioCards.Item value="15">
-                    <Flex direction="column" width="100%">
-                      <Text weight="bold">15</Text>
-                    </Flex>
-                  </RadioCards.Item>
-                </Skeleton>
+                {Object.values(TASK_POINTS).map((points) => (
+                  <Skeleton loading={isPending} key={points}>
+                    <RadioCards.Item value={String(points)}>
+                      <Flex direction="column" width="100%">
+                        <Text weight="bold">{points}</Text>
+                      </Flex>
+                    </RadioCards.Item>
+                  </Skeleton>
+                ))}
               </RadioCards.Root>
             </Form.Field>
           </Flex>
@@ -83,30 +64,20 @@ export const TaskForm = ({ childId }: TaskFormProps) => {
               <Form.Label>Status</Form.Label>
               <RadioCards.Root
                 name="status"
-                defaultValue={(values?.get("status") as string) || "OPEN"}
+                defaultValue={
+                  (values?.get("status") as string) || TASK_STATUS.OPEN.name
+                }
                 columns={{ initial: "1", sm: "3" }}
               >
-                <Skeleton loading={isPending}>
-                  <RadioCards.Item value="OPEN">
-                    <Flex direction="column" width="100%">
-                      <Text weight="bold">Open</Text>
-                    </Flex>
-                  </RadioCards.Item>
-                </Skeleton>
-                <Skeleton loading={isPending}>
-                  <RadioCards.Item value="IN_PROGRESS">
-                    <Flex direction="column" width="100%">
-                      <Text weight="bold">In Progress</Text>
-                    </Flex>
-                  </RadioCards.Item>
-                </Skeleton>
-                <Skeleton loading={isPending}>
-                  <RadioCards.Item value="DONE">
-                    <Flex direction="column" width="100%">
-                      <Text weight="bold">Done</Text>
-                    </Flex>
-                  </RadioCards.Item>
-                </Skeleton>
+                {Object.values(TASK_STATUS).map((status) => (
+                  <Skeleton loading={isPending} key={status.name}>
+                    <RadioCards.Item value={status.name}>
+                      <Flex direction="column" width="100%">
+                        <Text weight="bold">{status.value}</Text>
+                      </Flex>
+                    </RadioCards.Item>
+                  </Skeleton>
+                ))}
               </RadioCards.Root>
             </Form.Field>
           </Flex>

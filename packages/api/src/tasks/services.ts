@@ -1,6 +1,6 @@
 import { API_PATH } from "../_common/consts";
 import { authHttpClient } from "../_common/fetchInstance";
-import { ICreateTask, ITask, ITaskResponse } from "./types";
+import { ICreateTask, ITask, ITaskResponse, IUpdateTask } from "./types";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
 
@@ -34,6 +34,18 @@ export const taskService = {
     const options = {
       method: "DELETE",
       url: `${api}${API_PATH.TASK.DELETE_TASK(taskId)}`,
+    };
+
+    return authHttpClient.fetch(options);
+  },
+
+  updateTask: (taskId: string, values: IUpdateTask): Promise<ITask> => {
+    const { title, description, points, status } = values;
+
+    const options = {
+      method: "PATCH",
+      url: `${api}${API_PATH.TASK.UPDATE_TASK(taskId)}`,
+      body: JSON.stringify({ title, description, points, status }),
     };
 
     return authHttpClient.fetch(options);

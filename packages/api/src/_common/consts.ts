@@ -11,5 +11,6 @@ export const API_PATH = {
     ADD_TASK: (childId: string) => `/kids/${childId}/task`,
     GET_TASKS: "/tasks",
     DELETE_TASK: (taskId: string) => `/tasks/${taskId}`,
+    UPDATE_TASK: (taskId: string) => `/tasks/${taskId}`,
   },
 };

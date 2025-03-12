@@ -1,6 +1,9 @@
-import { Badge, Button, Flex, Table } from "@radix-ui/themes";
-import { ITask } from "@repo/api";
+import { Badge, Flex, Table } from "@radix-ui/themes";
+import { ITask, TASK_STATUS } from "@repo/api";
+import { ChangeStatusTaskForm } from "../forms/taskForm/ChangeStatusTaskForm";
 import { RemoveTaskForm } from "../forms/taskForm/RemoveTaskForm";
+
+import styles from "./taskList.module.css";
 
 interface TasksListProps {
   tasks: ITask[];
@@ -8,29 +11,6 @@ interface TasksListProps {
 }
 
 export const TasksList = ({ tasks, childId }: TasksListProps) => {
-  const getBadge = (status: string) => {
-    switch (status) {
-      case "IN_PROGRESS":
-        return (
-          <Badge color="orange" variant="soft" radius="full">
-            {status}
-          </Badge>
-        );
-      case "DONE":
-        return (
-          <Badge color="green" variant="soft" radius="full">
-            {status}
-          </Badge>
-        );
-      default:
-        return (
-          <Badge color="blue" variant="soft" radius="full">
-            {status}
-          </Badge>
-        );
-    }
-  };
-
   return (
     <Table.Root>
       <Table.Header>
@@ -44,25 +24,50 @@ export const TasksList = ({ tasks, childId }: TasksListProps) => {
       </Table.Header>
 
       <Table.Body>
-        {tasks.map((task) => (
-          <Table.Row key={task.id}>
-            <Table.RowHeaderCell>{task.title}</Table.RowHeaderCell>
-            <Table.Cell>{task.description}</Table.Cell>
-            <Table.Cell>{task.points}</Table.Cell>
-            <Table.Cell>{getBadge(task.status)}</Table.Cell>
-            <Table.Cell>
-              <Flex gap="2">
-                <Button variant="outline" color="green">
-                  Done
-                </Button>
-                <Button variant="outline" color="blue">
-                  In Progress
-                </Button>
-                <RemoveTaskForm taskId={task.id} childId={childId} />
-              </Flex>
-            </Table.Cell>
-          </Table.Row>
-        ))}
+        {tasks.map((task) => {
+          const { status } = task;
+          const isStatusDone = status === TASK_STATUS.DONE.name;
+          const doneClassName = isStatusDone ? styles.done : "";
+          const isStatusInProgress = status === TASK_STATUS.IN_PROGRESS.name;
+
+          return (
+            <Table.Row key={task.id}>
+              <Table.RowHeaderCell className={doneClassName}>
+                {task.title}
+              </Table.RowHeaderCell>
+              <Table.Cell className={doneClassName}>
+                {task.description}
+              </Table.Cell>
+              <Table.Cell>{task.points}</Table.Cell>
+              <Table.Cell>
+                <Badge
+                  color={TASK_STATUS[status].color}
+                  variant="soft"
+                  radius="full"
+                >
+                  {TASK_STATUS[status].value}
+                </Badge>
+              </Table.Cell>
+              <Table.Cell>
+                <Flex gap="2">
+                  <ChangeStatusTaskForm
+                    taskId={task.id}
+                    childId={childId}
+                    status={TASK_STATUS.IN_PROGRESS}
+                    isDisabled={isStatusInProgress || isStatusDone}
+                  />
+                  <ChangeStatusTaskForm
+                    taskId={task.id}
+                    childId={childId}
+                    status={TASK_STATUS.DONE}
+                    isDisabled={isStatusDone}
+                  />
+                  <RemoveTaskForm taskId={task.id} childId={childId} />
+                </Flex>
+              </Table.Cell>
+            </Table.Row>
+          );
+        })}
       </Table.Body>
     </Table.Root>
   );

@@ -2,6 +2,7 @@ export { initialState } from "./_common/types";
 export type { Error, FormState } from "./_common/types";
 export { addChild, fetchChildren } from "./children";
 export type { IChild, ICreateChild, IUpdateChild } from "./children";
+
 export {
   addTask,
   changeStatusTask,
@@ -17,3 +18,6 @@ export type {
   TaskStatus,
   TaskStatusName,
 } from "./tasks";
+
+export { fetchProfile } from "./profile";
+export { addAvatar, fetchAvatar } from "./user";

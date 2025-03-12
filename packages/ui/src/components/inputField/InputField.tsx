@@ -4,17 +4,21 @@ import { Form } from "radix-ui";
 interface InputFieldProps {
   isLoading?: boolean;
   label: string;
+  value?: string;
   defaultValue?: string;
   error?: string;
   as?: "input" | "textarea";
   name: string;
   type?: "text" | "email" | "password";
+  readOnly?: boolean;
 }
 
 export const InputField = ({
   isLoading = false,
   label,
+  value,
   defaultValue = "",
+  readOnly,
   error,
   as = "input",
   name,
@@ -31,6 +35,8 @@ export const InputField = ({
                 size="3"
                 defaultValue={defaultValue}
                 type={type}
+                value={value}
+                readOnly={readOnly}
               />
             ) : (
               <TextArea size="3" defaultValue={defaultValue} />

@@ -6,6 +6,8 @@ export const API_PATH = {
   USER: {
     ADD_CHILD: "/user/create-child-account",
     GET_CHILDREN: "/user/get-children-list",
+    GET_AVATAR: (userId: string) => `/user/${userId}/avatar`,
+    ADD_AVATAR: (userId: string) => `/user/${userId}/avatar`,
   },
   TASK: {
     ADD_TASK: (childId: string) => `/kids/${childId}/task`,

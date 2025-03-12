@@ -17,6 +17,7 @@ export default async function ChildPage({ params }: ChildPageProps) {
     <Flex direction="column" gap="4">
       <Flex justify="between" align="center">
         <Heading size="4">{childId}</Heading>
+        <ButtonLink href={`/kids/${childId}/profile`}>Edit Profile</ButtonLink>
         <ButtonLink href={`/kids/${childId}/add-task`}>Add Task</ButtonLink>
       </Flex>
       {tasksData?.data?.length > 0 ? (

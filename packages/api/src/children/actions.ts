@@ -5,7 +5,7 @@ import { handleValidationError } from "../_common/formUtils";
 import { FormState } from "../_common/types";
 import { childSchema } from "./resolver";
 import { userService } from "./services";
-import { IChildResponse } from "./types";
+import { IChildByIdResponse, IChildResponse } from "./types";
 
 export const addChild = async (
   state: FormState | undefined,
@@ -32,6 +32,21 @@ export const fetchChildren = async (): Promise<IChildResponse> => {
     next: {
       tags: ["children-list"],
       revalidate: 60,
+    },
+  });
+};
+
+export const fetchChildById = async (
+  id: string,
+): Promise<IChildByIdResponse> => {
+  return await userService.getChildById({
+    id,
+    preference: {
+      cache: "force-cache",
+      next: {
+        tags: ["children-list"],
+        revalidate: 60 * 60 * 24, // 24 hours
+      },
     },
   });
 };

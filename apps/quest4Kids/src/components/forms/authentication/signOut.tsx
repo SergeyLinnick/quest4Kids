@@ -1,5 +1,6 @@
 import { Button } from "@radix-ui/themes";
 import { signOut } from "@repo/auth";
+import styles from "./signOut.module.css";
 
 export function SignOut() {
   return (
@@ -9,7 +10,13 @@ export function SignOut() {
         await signOut({ redirectTo: "/", redirect: true });
       }}
     >
-      <Button type="submit" size="2" color="violet">
+      <Button
+        type="submit"
+        className={styles.headerButton}
+        size="2"
+        variant="outline"
+        color="violet"
+      >
         Sign Out
       </Button>
     </form>

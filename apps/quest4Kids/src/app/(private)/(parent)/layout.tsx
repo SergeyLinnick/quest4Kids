@@ -13,5 +13,5 @@ export default async function ParentLayout({
 
   if (role !== ROLE.PARENT) return <NotFound url={PAGE_PATH.DASHBOARD} />;
 
-  return <>{children}</>;
+  return children;
 }

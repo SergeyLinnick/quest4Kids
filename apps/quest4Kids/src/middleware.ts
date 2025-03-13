@@ -9,10 +9,9 @@ export async function middleware(request: NextRequest) {
 
   const accessToken = session?.user?.accessToken;
   const isAuthenticated = !!accessToken;
-  const isSignInPage = nextUrl.pathname === PAGE_PATH.SIGNIN;
   const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
 
-  if (isAuthenticated && isSignInPage) {
+  if (isAuthenticated && isPublicRoute) {
     return NextResponse.redirect(new URL(PAGE_PATH.DASHBOARD, request.url));
   }
 
@@ -32,6 +31,8 @@ export const config = {
     "/dashboard",
     "/tasks/:path*",
     "/kids/:path*",
+    "/signin",
+    "/signup",
 
     /*
      * Match all request paths except for the ones starting with:

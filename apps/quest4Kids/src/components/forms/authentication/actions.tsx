@@ -1,20 +1,9 @@
 "use server";
 
 import { PAGE_PATH } from "@/consts";
-import { signIn } from "@repo/auth";
+import type { FormState } from "@repo/api";
+import { AuthError, signIn } from "@repo/auth";
 import { redirect } from "next/navigation";
-
-type Error = Map<string, string>;
-
-type FormState = {
-  errors: Error;
-  success?: boolean;
-  values?: {
-    name?: string;
-    email?: string;
-    password?: number;
-  };
-};
 
 export async function registerUser(
   state: FormState | undefined,
@@ -26,7 +15,7 @@ export async function registerUser(
 
   try {
     const response = await fetch(
-      "https://quest4kids-a7fd24f91954.herokuapp.com/auth/register",
+      "http://quest4kids-api.us-east-1.elasticbeanstalk.com/auth/register",
       {
         method: "POST",
         body: JSON.stringify({ email, password, name }),
@@ -58,40 +47,17 @@ export async function loginUser(
   state: FormState | undefined,
   formData: FormData,
 ): Promise<FormState> {
-  return await signIn("credentials", formData);
-
-  // try {
-  //   const result: { ok: boolean; error?: string } = await signIn(
-  //     "credentials",
-  //     formData,
-  //   );
-
-  //   console.log("result -----------------------", result);
-
-  //   if (!result?.ok) {
-  //     const errorMessage = result?.error || "Invalid credentials!";
-  //     console.error("Login error:", errorMessage, { email });
-  //     return {
-  //       errors: new Map([["form", errorMessage]]),
-  //       values: { email },
-  //     };
-  //   }
-
-  //   return {
-  //     errors: new Map(),
-  //     success: true,
-  //     values: {},
-  //   };
-  // } catch (error) {
-  //   const errorMessage =
-  //     error instanceof Error
-  //       ? error.message
-  //       : "An unknown error occurred during login!";
-  //   console.error("Login error:", errorMessage, { email });
-
-  //   return {
-  //     errors: new Map([["form", errorMessage]]),
-  //     values: { email },
-  //   };
-  // }
+  const errors = new Map<string, string>();
+  try {
+    await signIn("credentials", {
+      redirect: false,
+      ...Object.fromEntries(formData),
+    });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      errors.set("common", "Failed to sign in. Please check your credentials.");
+      return { errors };
+    }
+  }
+  redirect(PAGE_PATH.DASHBOARD);
 }

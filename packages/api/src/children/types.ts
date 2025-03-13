@@ -12,3 +12,5 @@ export type IUpdateChild = Partial<ICreateChild>;
 export type IUserCard = Omit<IChild, "password">;
 
 export type IChildResponse = { data: IChild[] };
+
+export type IChildByIdResponse = IChild;

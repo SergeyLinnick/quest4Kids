@@ -13,7 +13,6 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
       authorize: async (credentials) => {
         try {
           const { email, password } = credentials;
-          // TODO add validation
 
           const loginResponse = await fetch(`${api}/auth/login`, {
             method: "POST",
@@ -21,11 +20,11 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
             body: JSON.stringify({ email, password }),
           });
 
-          const login = await loginResponse.json();
-
-          if (!loginResponse.ok || !login) {
+          if (!loginResponse.ok) {
             throw new Error("Invalid credentials");
           }
+
+          const login = await loginResponse.json();
 
           const profileResponse = await fetch(`${api}/auth/profile`, {
             method: "GET",
@@ -35,11 +34,11 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
             },
           });
 
-          const profile = await profileResponse.json();
-
-          if (!profileResponse.ok || !profile) {
+          if (!profileResponse.ok) {
             throw new Error("Failed to fetch profile");
           }
+
+          const profile = await profileResponse.json();
 
           return {
             id: profile.id,
@@ -49,11 +48,8 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
             accessToken: login.accessToken,
             image: "avatar",
           };
-        } catch (error) {
-          if (error instanceof Error) {
-            throw new Error("Login Error");
-          }
-          throw new Error("Login failed");
+        } catch {
+          throw new Error("Login Error");
         }
       },
     }),
@@ -65,7 +61,10 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
   jwt: {
     maxAge: 60 * 59, // 59 minutes
   },
-
+  pages: {
+    signIn: "/signin",
+    newUser: "/signup",
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -88,6 +87,9 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
       }
 
       return session;
+    },
+    async redirect({ baseUrl }) {
+      return baseUrl;
     },
   },
 });

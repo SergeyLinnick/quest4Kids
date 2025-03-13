@@ -5,6 +5,8 @@ import type { FormState } from "@repo/api";
 import { AuthError, signIn } from "@repo/auth";
 import { redirect } from "next/navigation";
 
+const api = process.env.NEXT_PUBLIC_API_URL;
+
 export async function registerUser(
   state: FormState | undefined,
   formData: FormData,
@@ -14,16 +16,13 @@ export async function registerUser(
   const name = formData.get("name") as string;
 
   try {
-    const response = await fetch(
-      "http://quest4kids-api.us-east-1.elasticbeanstalk.com/auth/register",
-      {
-        method: "POST",
-        body: JSON.stringify({ email, password, name }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const response = await fetch(`${api}/auth/register`, {
+      method: "POST",
+      body: JSON.stringify({ email, password, name }),
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
 
     if (!response.ok) {
       const errorData = await response.json();

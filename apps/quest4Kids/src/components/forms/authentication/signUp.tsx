@@ -1,14 +1,13 @@
 "use client";
 
 import { Heading } from "@radix-ui/themes";
+import { initialState } from "@repo/api";
 import { useActionState } from "react";
 import { registerUser } from "./actions";
 import styles from "./signin.module.css";
 
-const initialState = { errors: new Map<string, string>(), values: {} };
-
 export function SignUp() {
-  const [state, formAction] = useActionState(registerUser, initialState);
+  const [, formAction] = useActionState(registerUser, initialState);
 
   return (
     <form action={formAction}>

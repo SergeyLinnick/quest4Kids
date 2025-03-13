@@ -1,6 +1,8 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
+const api = process.env.NEXT_PUBLIC_API_URL;
+
 export const { handlers, signIn, auth, signOut } = NextAuth({
   providers: [
     Credentials({
@@ -13,31 +15,25 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
           const { email, password } = credentials;
           // TODO add validation
 
-          const loginResponse = await fetch(
-            `https://quest4kids-a7fd24f91954.herokuapp.com/auth/login`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email, password }),
-            },
-          );
+          const loginResponse = await fetch(`${api}/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
 
-          const user = await loginResponse.json();
+          const login = await loginResponse.json();
 
-          if (!loginResponse.ok || !user) {
+          if (!loginResponse.ok || !login) {
             throw new Error("Invalid credentials");
           }
 
-          const profileResponse = await fetch(
-            `https://quest4kids-a7fd24f91954.herokuapp.com/auth/profile`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${user.accessToken}`, // Attach access token for authorization
-              },
+          const profileResponse = await fetch(`${api}/auth/profile`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${login.accessToken}`,
             },
-          );
+          });
 
           const profile = await profileResponse.json();
 
@@ -50,7 +46,7 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
             email: profile.email,
             name: profile.name,
             role: profile.role,
-            accessToken: user.accessToken,
+            accessToken: login.accessToken,
             image: "avatar",
           };
         } catch (error) {

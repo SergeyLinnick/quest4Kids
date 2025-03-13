@@ -59,4 +59,39 @@ export async function loginUser(
   formData: FormData,
 ): Promise<FormState> {
   return await signIn("credentials", formData);
+
+  // try {
+  //   const result: { ok: boolean; error?: string } = await signIn(
+  //     "credentials",
+  //     formData,
+  //   );
+
+  //   console.log("result -----------------------", result);
+
+  //   if (!result?.ok) {
+  //     const errorMessage = result?.error || "Invalid credentials!";
+  //     console.error("Login error:", errorMessage, { email });
+  //     return {
+  //       errors: new Map([["form", errorMessage]]),
+  //       values: { email },
+  //     };
+  //   }
+
+  //   return {
+  //     errors: new Map(),
+  //     success: true,
+  //     values: {},
+  //   };
+  // } catch (error) {
+  //   const errorMessage =
+  //     error instanceof Error
+  //       ? error.message
+  //       : "An unknown error occurred during login!";
+  //   console.error("Login error:", errorMessage, { email });
+
+  //   return {
+  //     errors: new Map([["form", errorMessage]]),
+  //     values: { email },
+  //   };
+  // }
 }

@@ -15,7 +15,7 @@ export function SignUp() {
       <Heading size="1" color="gray" weight="light" mb="3">
         You are not authenticated, please create account
       </Heading>
-      <label className={styles.label}>New Email</label>
+      <label className={styles.label}>Email</label>
       <input
         name="email"
         type="email"
@@ -24,7 +24,7 @@ export function SignUp() {
         placeholder="Enter your email"
       />
 
-      <label className={styles.label}>New Name</label>
+      <label className={styles.label}>Name</label>
       <input
         name="name"
         type="text"
@@ -33,7 +33,7 @@ export function SignUp() {
         placeholder="Enter your Name"
       />
 
-      <label className={styles.label}>New Password</label>
+      <label className={styles.label}>Password</label>
       <input
         name="password"
         type="password"

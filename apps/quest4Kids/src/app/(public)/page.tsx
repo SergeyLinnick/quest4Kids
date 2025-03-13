@@ -1,4 +1,6 @@
-import { Box, Card, Heading, Text } from "@radix-ui/themes";
+import { PAGE_PATH } from "@/consts";
+import { Box, Card, Heading } from "@radix-ui/themes";
+import { ButtonLink } from "@repo/ui";
 import styles from "./page.module.css";
 
 export default function LandingPage() {
@@ -8,45 +10,73 @@ export default function LandingPage() {
         <Box maxWidth="800px" pb="9">
           <Card variant="classic" size="5" mb="9">
             <Heading size="6" align="center" mb="4" color="violet">
-              Landing Page
+              Welcome to Quest4Kids
             </Heading>
-            <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
-              aperiam dolorem eligendi iure culpa sunt obcaecati beatae nesciunt
-              doloribus ipsam modi quos commodi, a optio maxime quam, provident
-              sit delectus ea itaque doloremque quasi, praesentium soluta?
-              Cumque consequuntur architecto nemo alias molestias.
+            <Heading size="3" align="center" mb="4" color="violet">
+              Where Learning Becomes an Adventure!
+            </Heading>
+
+            <main
+              style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}
+            >
+              <section>
+                <Heading size="3" align="left" mb="4" color="violet">
+                  How It Works:
+                </Heading>
+
+                <ul style={{ listStyle: "none", padding: 0 }}>
+                  <li style={{ marginBottom: "10px" }}>
+                    <span style={{ fontWeight: "bold" }}>
+                      Create Meaningful Tasks:
+                    </span>{" "}
+                    Assign tasks like homework, organizing toys, or helping
+                    around the house.
+                  </li>
+                  <li style={{ marginBottom: "10px" }}>
+                    <span style={{ fontWeight: "bold" }}>Set Rewards:</span>{" "}
+                    Motivate your child with rewards they’ll love, like extra
+                    playtime or a special treat.
+                  </li>
+                  <li style={{ marginBottom: "10px" }}>
+                    <span style={{ fontWeight: "bold" }}>Track Progress:</span>{" "}
+                    Watch their confidence grow as they complete tasks and earn
+                    points.
+                  </li>
+                </ul>
+              </section>
               <br />
-              Possimus necessitatibus quam ipsam aperiam nobis temporibus
-              voluptas tenetur, assumenda quae maiores tempore sequi eos nostrum
-              consequatur deleniti laudantium expedita eum?
+              <section>
+                <Heading size="3" align="left" mb="4" color="violet">
+                  Why Quest4Kids?
+                </Heading>
+                <ul style={{ listStyle: "none", padding: 0 }}>
+                  <li style={{ marginBottom: "10px" }}>
+                    <span style={{ fontWeight: "bold" }}>Fun & Engaging:</span>{" "}
+                    Gamified tasks turn responsibilities into exciting quests.
+                  </li>
+                  <li style={{ marginBottom: "10px" }}>
+                    <span style={{ fontWeight: "bold" }}>Family Bonding:</span>{" "}
+                    Strengthen your relationship as you work together to achieve
+                    goals.
+                  </li>
+                  <li style={{ marginBottom: "10px" }}>
+                    <span style={{ fontWeight: "bold" }}>Life Skills:</span>{" "}
+                    Help your child build independence, responsibility, and good
+                    habits.
+                  </li>
+                </ul>
+              </section>
               <br />
-              Animi officia accusamus, quia, explicabo quibusdam porro quos
-              fugiat ipsam voluptatem itaque facilis eaque! Expedita distinctio
-              officiis quia eveniet itaque, harum fugiat consequuntur odio
-              excepturi ipsum voluptates dolorem beatae molestias fuga neque
-              accusantium maxime rem similique nemo modi possimus. Minus
-              voluptates asperiores itaque accusantium. Eum saepe quae sed
-              quaerat debitis est consequatur provident fuga ut ullam possimus
-              praesentium voluptatibus aliquam dolores, soluta sequi, eos esse
-              nostrum, mollitia odit quos illum suscipit quod commodi!
-              <br />
-              Expedita odit dolorem facere eligendi laudantium laborum corrupti
-              consequuntur dolorum quisquam at! Debitis voluptatem dolore nulla
-              totam obcaecati iure dolorum ullam vero dolorem quia nesciunt
-              quisquam at, labore repellat sequi voluptas magni expedita fugiat
-              ipsam cumque, aut recusandae sunt sit.
-              <br />
-              Enim eveniet ad laboriosam quisquam similique veritatis id ullam
-              pariatur doloremque amet iure culpa inventore at magni assumenda
-              eius cumque corporis, impedit ex. Labore laudantium deleniti, nemo
-              nulla voluptatibus quas voluptate fuga est libero? Quam dolores
-              cumque culpa accusantium id veritatis numquam, nesciunt
-              aspernatur. Facere ipsa nisi ab, voluptatum neque libero. Quod
-              esse, iure hic dolore numquam rerum. Odit inventore quae
-              repellendus hic nostrum deleniti, accusamus similique fugiat
-              consequatur eveniet magni laboriosam natus magnam!
-            </Text>
+              <section>
+                <Heading size="3" align="center" mb="4" color="violet">
+                  Take the first step toward transforming chores into adventures
+                  and teaching your kids that responsibility can be rewarding!
+                </Heading>
+                <Heading align="center">
+                  <ButtonLink href={PAGE_PATH.SIGNIN}>Get Started</ButtonLink>
+                </Heading>
+              </section>
+            </main>
           </Card>
         </Box>
       </div>

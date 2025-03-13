@@ -21,10 +21,24 @@ export const taskService = {
     return authHttpClient.fetch(options);
   },
 
-  getTasksByChildId: (childId: string): Promise<ITaskResponse> => {
+  getTasksByChildId: (
+    childId: string,
+    filters?: { [key: string]: string },
+  ): Promise<ITaskResponse> => {
+    const searchParams = new URLSearchParams({
+      childId,
+      limit: "20",
+    });
+
+    if (filters?.status) {
+      searchParams.set("status", filters.status);
+    }
+
+    const params = searchParams.toString();
+
     const options = {
       method: "GET",
-      url: `${api}${API_PATH.TASK.GET_TASKS}?childId=${childId}`,
+      url: `${api}${API_PATH.TASK.GET_TASKS}?${params}`,
     };
 
     return authHttpClient.fetch(options);

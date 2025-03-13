@@ -31,7 +31,7 @@ export const TasksList = ({ tasks, childId }: TasksListProps) => {
           const isStatusInProgress = status === TASK_STATUS.IN_PROGRESS.name;
 
           return (
-            <Table.Row key={task.id}>
+            <Table.Row key={task.id} align="center">
               <Table.RowHeaderCell className={doneClassName}>
                 {task.title}
               </Table.RowHeaderCell>

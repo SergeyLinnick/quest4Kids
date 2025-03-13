@@ -7,6 +7,7 @@ import "@repo/ui/globals.css";
 
 import { Theme } from "@radix-ui/themes";
 import { ThemeProvider } from "next-themes";
+import { NuqsAdapter } from "nuqs/adapters/next";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,7 +33,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ThemeProvider attribute="class">
-          <Theme accentColor="violet">{children}</Theme>
+          <Theme accentColor="violet">
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </Theme>
         </ThemeProvider>
       </body>
     </html>

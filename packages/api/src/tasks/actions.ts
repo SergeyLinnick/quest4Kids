@@ -33,8 +33,9 @@ export const addTask = async (
 
 export const fetchChildTasks = async (
   childId: string,
+  filters?: { [key: string]: string },
 ): Promise<ITaskResponse> => {
-  return await taskService.getTasksByChildId(childId);
+  return await taskService.getTasksByChildId(childId, filters);
 };
 
 export const deleteTask = async (

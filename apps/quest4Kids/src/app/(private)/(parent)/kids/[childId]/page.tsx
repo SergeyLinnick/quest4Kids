@@ -1,40 +1,43 @@
-import { TasksList } from "@/components";
-import { Flex, Heading } from "@radix-ui/themes";
-import { fetchChildById, fetchChildTasks } from "@repo/api";
+import { FilterTaskForm } from "@/components/forms/taskForm/FilterTaskForm";
+import { TasksListWrapper } from "@/components/tasks/TasksListWrapper";
+import { Box, Flex, Grid, Heading } from "@radix-ui/themes";
+import { fetchChildById } from "@repo/api";
 import { ButtonLink } from "@repo/ui";
-import Link from "next/link";
+import { Suspense } from "react";
 
 interface ChildPageProps {
   params: Promise<{ childId: string }>;
+  searchParams: Promise<{ status: string }>;
 }
 
-export default async function ChildPage({ params }: ChildPageProps) {
+export default async function ChildPage({
+  params,
+  searchParams,
+}: ChildPageProps) {
   const childId = (await params).childId;
+  const status = (await searchParams).status;
 
-  const [tasksData, childData] = await Promise.all([
-    fetchChildTasks(childId),
-    fetchChildById(childId),
-  ]);
+  const childData = await fetchChildById(childId);
 
   return (
-    <Flex direction="column" gap="4">
+    <Flex direction="column" gap="6">
       <Flex justify="between" align="center">
-        <Heading size="4">{childData.name}</Heading>
-        <div>
-          <ButtonLink href={`/kids/${childId}/profile`}>
+        <Heading size="8">{childData?.name}</Heading>
+        <Flex gap="3">
+          <ButtonLink href={`/kids/${childId}/profile`} variant="outline">
             Edit Profile
           </ButtonLink>
           <ButtonLink href={`/kids/${childId}/add-task`}>Add Task</ButtonLink>
-        </div>
+        </Flex>
       </Flex>
-      {tasksData?.data?.length > 0 ? (
-        <TasksList tasks={tasksData?.data} childId={childId} />
-      ) : (
-        <>
-          <Heading>No tasks found</Heading>
-          <Link href={`/kids/${childId}/add-task`}>Add the first task</Link>
-        </>
-      )}
+      <Grid columns="1fr 200px" gapX="9" width="100%">
+        <Suspense fallback={<div>Loading...</div>}>
+          <TasksListWrapper childId={childId} status={status} />
+        </Suspense>
+        <Box mt="7">
+          <FilterTaskForm />
+        </Box>
+      </Grid>
     </Flex>
   );
 }

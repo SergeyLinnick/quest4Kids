@@ -8,6 +8,7 @@ export {
   changeStatusTask,
   deleteTask,
   fetchChildTasks,
+  filterTasks,
   TASK_POINTS,
   TASK_STATUS,
 } from "./tasks";

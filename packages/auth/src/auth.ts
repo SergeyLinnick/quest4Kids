@@ -1,7 +1,11 @@
-import NextAuth from "next-auth";
+import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
+
+class InvalidLoginError extends CredentialsSignin {
+  code = "Invalid identifier or password";
+}
 
 export const { handlers, signIn, auth, signOut } = NextAuth({
   providers: [
@@ -49,7 +53,7 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
             image: "avatar",
           };
         } catch {
-          throw new Error("Login Error");
+          throw new InvalidLoginError();
         }
       },
     }),

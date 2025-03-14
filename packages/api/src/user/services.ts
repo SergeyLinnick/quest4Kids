@@ -5,13 +5,15 @@ const api = process.env.NEXT_PUBLIC_API_URL;
 
 export const userService = {
   addAvatar: ({ file, userId }: any): Promise<any> => {
-    console.log("file----", file);
-    console.log("userId----", userId);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("userId", userId);
 
     const options = {
       method: "POST",
       url: `${api}${API_PATH.USER.ADD_AVATAR(userId)}`,
-      body: JSON.stringify({ file }),
+      body: formData,
+      headers: {},
     };
 
     return authHttpClient.fetch(options);
@@ -22,7 +24,6 @@ export const userService = {
       method: "GET",
       url: `${api}${API_PATH.USER.GET_AVATAR(userId)}`,
     };
-
     return authHttpClient.fetch(options);
   },
 };

@@ -13,6 +13,7 @@ interface FetchProps {
   url: string;
   method?: string;
   headers?: Record<string, string>;
+  body?: string | FormData | URLSearchParams | null;
 }
 
 class HttpClient {
@@ -71,18 +72,22 @@ class HttpClient {
     url,
     method = "GET",
     headers,
+    body,
     ...options
   }: FetchProps): Promise<T> {
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 seconds timeout
 
+      const isFormData = body instanceof FormData;
+
       const response = await fetch(url, {
         method,
         headers: {
           ...headers,
-          "Content-Type": "application/json",
+          ...(isFormData ? {} : { "Content-Type": "application/json" }),
         },
+        body: body ?? undefined,
         signal: controller.signal,
         ...options,
       });

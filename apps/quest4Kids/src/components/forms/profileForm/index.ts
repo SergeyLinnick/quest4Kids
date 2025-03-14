@@ -1,1 +1,1 @@
-export { ProfileForm } from "./ProfileForm";
+export { AvatarForm } from "./AvatarForm";

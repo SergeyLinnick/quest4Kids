@@ -1,5 +1,8 @@
 "use client";
 
+import { Flex, Heading, Text } from "@radix-ui/themes";
+import { Button } from "@repo/ui";
+
 export default function ErrorBoundary({
   error,
   reset,
@@ -8,10 +11,13 @@ export default function ErrorBoundary({
   reset: () => void;
 }) {
   return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <p>{error.message}</p>
-      <button onClick={reset}>Try again</button>
-    </div>
+    <Flex justify="center" align="center">
+      <Flex direction="column" gap="6" align="center">
+        <Heading>Something went wrong!</Heading>
+        <Text>{error.message}</Text>
+
+        {reset && <Button onClick={reset}>Try again</Button>}
+      </Flex>
+    </Flex>
   );
 }

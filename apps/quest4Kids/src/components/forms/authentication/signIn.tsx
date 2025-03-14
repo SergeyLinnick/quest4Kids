@@ -11,7 +11,7 @@ export function SignIn() {
 
   return (
     <form action={formAction}>
-      <Heading size="1" color="gray" weight="light" mb="3">
+      <Heading size="1" align="center" color="gray" weight="light" mb="3">
         You are not authenticated, please login to your account
       </Heading>
 

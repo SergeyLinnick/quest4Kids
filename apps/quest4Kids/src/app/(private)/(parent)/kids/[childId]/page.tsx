@@ -18,14 +18,15 @@ export default async function ChildPage({
   const status = (await searchParams).status;
 
   const childData = await fetchChildById(childId);
+  const childName = childData?.name;
 
   return (
     <Flex direction="column" gap="6">
       <Flex justify="between" align="center">
-        <Heading size="8">{childData?.name}</Heading>
+        <Heading size="8">{childName}</Heading>
         <Flex gap="3">
           <ButtonLink href={`/kids/${childId}/profile`} variant="outline">
-            Edit Profile
+            Edit {childName}
           </ButtonLink>
           <ButtonLink href={`/kids/${childId}/add-task`}>Add Task</ButtonLink>
         </Flex>

@@ -1,6 +1,6 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { handleValidationError } from "../_common/formUtils";
 import type { FormState } from "../_common/types";
 import { avatarSchema } from "./resolver";
@@ -10,28 +10,28 @@ export const addAvatar = async (
   state: FormState | undefined,
   formData: FormData,
 ): Promise<FormState> => {
-  const userId = formData.get("userId");
-  const file = formData.get("avatar");
-
-  console.log("userId", userId);
-  console.log("file", file);
+  const userId = formData.get("userId") as string;
+  const file = formData.get("file") as File;
 
   try {
     const data = await avatarSchema.parse({
       file,
       userId,
     });
-    console.log("data", data);
 
     await userService.addAvatar(data);
-    // revalidatePath(`/profile`);
+    revalidatePath(`/kids/${userId}/profile`);
+
+    return {
+      success: true,
+      values: formData,
+      errors: new Map(),
+    };
   } catch (error) {
     return handleValidationError(error, formData);
   }
-
-  redirect(`/profile`);
 };
 
-export const fetchAvatar = async (userId: string): Promise<any> => {
-  return await userService.getAvatar(userId);
+export const fetchAvatar = async (id: string): Promise<any> => {
+  return await userService.getAvatar(id);
 };

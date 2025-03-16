@@ -13,7 +13,18 @@ interface AddTaskPageProps {
 export default async function ChildProfilePage({ params }: AddTaskPageProps) {
   const { childId } = await params;
   const childData = await fetchChildById(childId);
-  const avatar = await fetchAvatar(childId);
+  // Handle avatar fetching with fallback
+  let avatar = null;
+  try {
+    avatar = await fetchAvatar(childId);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.warn(
+        `Failed to fetch avatar for childId ${childId}:`,
+        error.message,
+      );
+    }
+  }
 
   const childName = childData?.name;
   const createdAt: string | undefined = childData?.createdAt;

@@ -6,11 +6,13 @@ import { TasksList } from "./TasksList";
 interface TasksListWrapperProps {
   childId: string;
   status: string;
+  isParent?: boolean;
 }
 
 export async function TasksListWrapper({
   childId,
   status,
+  isParent = false,
 }: TasksListWrapperProps) {
   const tasksData = await fetchChildTasks(childId, { status: status || "" });
 
@@ -21,10 +23,18 @@ export async function TasksListWrapper({
         <Heading size="6" mb="4">
           No tasks found
         </Heading>
-        <Link href={`/kids/${childId}/add-task`}>Add the first task</Link>
+        {isParent && (
+          <Link href={`/kids/${childId}/add-task`}>Add the first task</Link>
+        )}
       </Box>
     );
   }
 
-  return <TasksList tasks={tasksData?.data} childId={childId} />;
+  return (
+    <TasksList
+      tasks={tasksData?.data}
+      childId={childId}
+      hideDelete={!isParent}
+    />
+  );
 }

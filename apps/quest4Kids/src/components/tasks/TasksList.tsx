@@ -8,9 +8,14 @@ import styles from "./taskList.module.css";
 interface TasksListProps {
   tasks: ITask[];
   childId: string;
+  hideDelete?: boolean;
 }
 
-export const TasksList = ({ tasks, childId }: TasksListProps) => {
+export const TasksList = ({
+  tasks,
+  childId,
+  hideDelete = false,
+}: TasksListProps) => {
   return (
     <Table.Root>
       <Table.Header>
@@ -62,7 +67,9 @@ export const TasksList = ({ tasks, childId }: TasksListProps) => {
                     status={TASK_STATUS.DONE}
                     isDisabled={isStatusDone}
                   />
-                  <RemoveTaskForm taskId={task.id} childId={childId} />
+                  {!hideDelete && (
+                    <RemoveTaskForm taskId={task.id} childId={childId} />
+                  )}
                 </Flex>
               </Table.Cell>
             </Table.Row>

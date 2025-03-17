@@ -17,7 +17,17 @@ export default async function RootLayout({
   const session = await auth();
   const userId = session?.user?.id;
 
-  const avatar = await fetchAvatar(userId);
+  let avatar = null;
+  try {
+    avatar = await fetchAvatar(userId);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.warn(
+        `Failed to fetch avatar for user ${userId}:`,
+        error.message,
+      );
+    }
+  }
 
   const role: RoleType = session?.user?.role;
   const name = session?.user?.name;

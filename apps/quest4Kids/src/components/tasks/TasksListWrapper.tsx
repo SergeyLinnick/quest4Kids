@@ -12,9 +12,9 @@ interface TasksListWrapperProps {
 export async function TasksListWrapper({
   childId,
   status,
-  isParent = false,
+  isParent = true,
 }: TasksListWrapperProps) {
-  const tasksData = await fetchChildTasks(childId, { status: status || "" });
+  const tasksData = await fetchChildTasks({ status: status || "", childId });
 
   if (tasksData?.data?.length === 0) {
     // TODO: Add Empty component

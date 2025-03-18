@@ -6,7 +6,7 @@ export interface ITask {
   description: string;
   points: number;
   status: TaskStatusName;
-  childId: string;
+  userId: string;
   // labels?: { name: string }[];
 }
 

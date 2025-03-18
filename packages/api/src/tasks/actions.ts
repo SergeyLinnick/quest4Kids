@@ -12,7 +12,7 @@ export const addTask = async (
   state: FormState | undefined,
   formData: FormData,
 ): Promise<FormState> => {
-  const childId = formData.get("childId");
+  const userId = formData.get("childId");
 
   try {
     const task = await taskSchema.parse({
@@ -20,22 +20,21 @@ export const addTask = async (
       description: formData.get("description"),
       points: Number(formData.get("points")),
       status: formData.get("status"),
-      childId,
+      userId,
     });
     await taskService.addTask(task);
-    revalidatePath(`/kids/${childId}`);
+    revalidatePath(`/kids/${userId}`);
   } catch (error) {
     return handleValidationError(error, formData);
   }
 
-  redirect(`/kids/${childId}`);
+  redirect(`/kids/${userId}`);
 };
 
-export const fetchChildTasks = async (
-  childId: string,
-  filters?: { [key: string]: string },
-): Promise<ITaskResponse> => {
-  return await taskService.getTasksByChildId(childId, filters);
+export const fetchChildTasks = async (filters?: {
+  [key: string]: string;
+}): Promise<ITaskResponse> => {
+  return await taskService.getTasks(filters);
 };
 
 export const deleteTask = async (

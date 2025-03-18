@@ -10,28 +10,27 @@ export const taskService = {
     description,
     points,
     status,
-    childId,
+    userId,
   }: ICreateTask): Promise<ITask> => {
     const options = {
       method: "POST",
-      url: `${api}${API_PATH.TASK.ADD_TASK(childId)}`,
+      url: `${api}${API_PATH.TASK.ADD_TASK(userId)}`,
       body: JSON.stringify({ title, description, points, status }),
     };
 
     return authHttpClient.fetch(options);
   },
 
-  getTasksByChildId: (
-    childId: string,
-    filters?: { [key: string]: string },
-  ): Promise<ITaskResponse> => {
+  getTasks: (filters?: { [key: string]: string }): Promise<ITaskResponse> => {
     const searchParams = new URLSearchParams({
-      childId,
       limit: "20",
     });
 
     if (filters?.status) {
       searchParams.set("status", filters.status);
+    }
+    if (filters?.childId) {
+      searchParams.set("childId", filters.childId);
     }
 
     const params = searchParams.toString();

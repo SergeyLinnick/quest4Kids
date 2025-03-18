@@ -1,14 +1,27 @@
-import { PAGE_PATH_PARENT } from "@/consts";
-import { Heading } from "@radix-ui/themes";
-import Link from "next/link";
+import { BarChart } from "@/components/charts/barChart";
+import { generateTaskDataset } from "@/utilities/charts";
+import { Grid } from "@radix-ui/themes";
+import { fetchChildren, fetchChildTasks } from "@repo/api";
+import { Card } from "@repo/ui";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const [children, tasks] = await Promise.all([
+    fetchChildren(),
+    fetchChildTasks(),
+  ]);
+
+  const data = generateTaskDataset(tasks.data, children.data);
+
   return (
-    <>
-      <Heading mb="5" as="h1">
-        Parent Dashboard
-      </Heading>
-      <Link href={PAGE_PATH_PARENT.CHILD_NEW}>Add Kid</Link>
-    </>
+    <Grid columns="3" gap="3" width="auto">
+      <Card title="Tasks by children">
+        <BarChart data={data} />
+      </Card>
+      <Card>test</Card>
+      <Card>test</Card>
+      <Card>test</Card>
+      <Card>test</Card>
+      <Card>test</Card>
+    </Grid>
   );
 }

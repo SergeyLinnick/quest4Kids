@@ -16,5 +16,5 @@ export const taskSchema = z.object({
   status: z.enum(["OPEN", "IN_PROGRESS", "DONE"], {
     errorMap: () => ({ message: "Invalid status" }),
   }),
-  childId: z.string().readonly(),
+  userId: z.string().readonly(),
 });

@@ -21,7 +21,6 @@
 //   } = useMutation<ICreateChild, Error, ICreateChild>({
 //     mutationFn: userService.addChild,
 //     onSuccess: (data) => {
-//       console.log("Child Added:", data);
 //       // queryClient.invalidateQueries({ queryKey: [QUERY_KEY.CHILDREN] });
 
 //       customRevalidatePath("/kids");

@@ -1,1 +1,6 @@
-export { addAvatar, fetchAvatar } from "./actions";
+export {
+  addAvatar,
+  editChildAccount,
+  editChildAccountById,
+  fetchAvatar,
+} from "./actions";

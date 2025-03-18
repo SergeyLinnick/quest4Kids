@@ -1,14 +1,12 @@
 "use client";
 
-import { RoleType } from "@/types";
 import { Flex, Text } from "@radix-ui/themes";
 import { addAvatar, initialState } from "@repo/api";
-import { Button, InputField } from "@repo/ui";
+import { Button } from "@repo/ui";
 import { Form } from "radix-ui";
 import { useActionState } from "react";
 
 interface ProfileFormProps {
-  role: RoleType;
   id: string;
 }
 
@@ -22,17 +20,9 @@ export const AvatarForm = ({ id }: ProfileFormProps) => {
 
   return (
     <Form.Root action={formAction}>
-      <Flex direction="column" gap="4">
-        <InputField
-          isLoading={isPending}
-          label="User ID"
-          error={errors.get("userId")}
-          name="userId"
-          value={id}
-          readOnly
-        />
-        <input type="hidden" name="userId" value={id} />
+      <input type="hidden" name="userId" value={id} />
 
+      <Flex direction="column" gap="4">
         <label>Avatar</label>
         <input type="file" name="file" accept="image/*" />
         <Text as="span" color="red">

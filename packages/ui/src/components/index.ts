@@ -11,3 +11,5 @@ export { UserCard } from "./userCard/UserCard";
 export { InputField } from "./inputField/InputField";
 
 export { default as AccountAge } from "./accountAge/AccountAge";
+
+export { InlineEdit } from "./inlineEdit";

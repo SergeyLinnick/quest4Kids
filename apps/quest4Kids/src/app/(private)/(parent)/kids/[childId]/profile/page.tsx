@@ -1,5 +1,5 @@
 import { AvatarForm } from "@/components";
-import { ROLE } from "@/consts";
+import { InlineEditWrapper } from "@/components/forms/profileForm/InlineEditWrapper";
 import { Box, Heading } from "@radix-ui/themes";
 import { fetchAvatar, fetchChildById } from "@repo/api";
 import { AccountAge, UserCard } from "@repo/ui";
@@ -13,18 +13,7 @@ interface AddTaskPageProps {
 export default async function ChildProfilePage({ params }: AddTaskPageProps) {
   const { childId } = await params;
   const childData = await fetchChildById(childId);
-  // Handle avatar fetching with fallback
-  let avatar = null;
-  try {
-    avatar = await fetchAvatar(childId);
-  } catch (error) {
-    if (error instanceof Error) {
-      console.warn(
-        `Failed to fetch avatar for childId ${childId}:`,
-        error.message,
-      );
-    }
-  }
+  const avatar = await fetchAvatar(childId);
 
   const childName = childData?.name;
   const createdAt: string | undefined = childData?.createdAt;
@@ -34,10 +23,13 @@ export default async function ChildProfilePage({ params }: AddTaskPageProps) {
   return (
     <>
       <Heading mb="6">{childName} profile</Heading>
-      <Box maxWidth="400px" mb="5">
+      <Box maxWidth="400px">
         <UserCard user={{ avatar, ...childData }} />
         <AccountAge createdAt={createdAt} />
-        <AvatarForm id={childId} role={ROLE.CHILD} />
+        <AvatarForm id={childId} />
+        <br />
+        {/* <NameForm id={childId} initialValue={childData.name} /> */}
+        <InlineEditWrapper initialValue={childData.name} id={childId} />
       </Box>
     </>
   );

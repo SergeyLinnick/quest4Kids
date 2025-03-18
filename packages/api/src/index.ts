@@ -20,4 +20,9 @@ export type {
 } from "./tasks";
 
 export { fetchProfile } from "./profile";
-export { addAvatar, fetchAvatar } from "./user";
+export {
+  addAvatar,
+  editChildAccount,
+  editChildAccountById,
+  fetchAvatar,
+} from "./user";

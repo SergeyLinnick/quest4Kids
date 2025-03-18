@@ -26,4 +26,16 @@ export const userService = {
     };
     return authHttpClient.fetch(options);
   },
+
+  updateChildAccount: (childId: string, values: any): Promise<any> => {
+    const { email, name, password } = values;
+
+    const options = {
+      method: "PATCH",
+      url: `${api}${API_PATH.USER.UPDATE_CHILD(childId)}`,
+      body: JSON.stringify({ email, name, password }),
+    };
+
+    return authHttpClient.fetch(options);
+  },
 };

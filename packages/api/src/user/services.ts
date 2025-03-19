@@ -19,7 +19,7 @@ export const userService = {
     return authHttpClient.fetch(options);
   },
 
-  getAvatar: (userId: string): Promise<any> => {
+  getAvatar: (userId: string): Promise<string> => {
     const options = {
       method: "GET",
       url: `${api}${API_PATH.USER.GET_AVATAR(userId)}`,

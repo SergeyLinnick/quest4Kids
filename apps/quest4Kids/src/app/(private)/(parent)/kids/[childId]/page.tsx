@@ -1,6 +1,6 @@
 import { FilterTaskForm } from "@/components/forms/taskForm/FilterTaskForm";
 import { TasksListWrapper } from "@/components/tasks/TasksListWrapper";
-import { Box, Flex, Grid, Heading } from "@radix-ui/themes";
+import { Box, Flex, Grid, Heading, Spinner } from "@radix-ui/themes";
 import { fetchChildById } from "@repo/api";
 import { ButtonLink } from "@repo/ui";
 import { Suspense } from "react";
@@ -32,7 +32,7 @@ export default async function ChildPage({
         </Flex>
       </Flex>
       <Grid columns="1fr 200px" gapX="9" width="100%">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Spinner />}>
           <TasksListWrapper childId={childId} status={status} />
         </Suspense>
         <Box mt="7">

@@ -1,5 +1,6 @@
 "use client";
 
+import { barChartOptions, createChartGradient } from "@/utilities/charts";
 import {
   BarElement,
   CategoryScale,
@@ -13,7 +14,6 @@ import {
 } from "chart.js";
 import { useEffect, useRef, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import { barChartOptions, createChartGradient } from "./helpers";
 
 ChartJS.register(
   CategoryScale,

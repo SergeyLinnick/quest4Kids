@@ -40,11 +40,35 @@ export const barChartOptions: ChartOptions<"bar"> = {
     },
     y: {
       stacked: true,
+      beginAtZero: true,
+      ticks: {},
     },
   },
   elements: {
     bar: {
       borderRadius: 100,
+    },
+  },
+};
+
+export const doughnutChartOptions: ChartOptions<"doughnut"> = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "bottom",
+      display: true,
+      labels: {
+        boxWidth: 10,
+        boxHeight: 10,
+        useBorderRadius: true,
+        borderRadius: 5,
+        textAlign: "center",
+      },
+    },
+  },
+  elements: {
+    arc: {
+      borderWidth: 0,
     },
   },
 };
@@ -86,5 +110,38 @@ export function generateTaskDataset(tasks: ITask[], users: IChild[]) {
   return {
     labels: activeUsers.map((user) => user.name),
     datasets,
+  };
+}
+
+export function generateDoughnutDataset(tasks: ITask[]) {
+  const colors = {
+    OPEN: "rgb(255, 197, 61)",
+    IN_PROGRESS: "rgb(35, 212, 255)",
+    DONE: "rgb(176, 255, 0)",
+  };
+
+  const tasksByStatus = Object.keys(TASK_STATUS).reduce(
+    (acc, status) => {
+      acc[status] = tasks.filter((task) => task.status === status).length;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+
+  return {
+    labels: Object.keys(TASK_STATUS).map(
+      (status) =>
+        status.charAt(0).toUpperCase() +
+        status.slice(1).toLowerCase().replace("_", " "),
+    ),
+    datasets: [
+      {
+        label: "Tasks",
+        data: Object.values(tasksByStatus),
+        backgroundColor: Object.keys(TASK_STATUS).map(
+          (status) => colors[status as keyof typeof colors],
+        ),
+      },
+    ],
   };
 }

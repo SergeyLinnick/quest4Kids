@@ -32,8 +32,10 @@ export const addAvatar = async (
   }
 };
 
-export const fetchAvatar = async (id: string): Promise<any> => {
-  return await userService.getAvatar(id);
+export const fetchAvatar = async (id: string): Promise<string> => {
+  const avatar = await userService.getAvatar(id);
+  if (JSON.stringify(avatar) === "{}") return "";
+  return avatar;
 };
 
 export const editChildAccount = async (

@@ -1,9 +1,9 @@
-import { Spinner } from '@repo/ui';
+import { Flex, Spinner } from "@radix-ui/themes";
 
 export default function Loading() {
-	return (
-		<div className="flex h-screen items-center justify-center">
-			<Spinner />
-		</div>
-	);
+  return (
+    <Flex align="center" justify="center" height="100%">
+      <Spinner size="3" />
+    </Flex>
+  );
 }

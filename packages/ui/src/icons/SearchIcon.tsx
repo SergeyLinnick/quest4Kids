@@ -1,8 +1,8 @@
-type SunIconProps = {
+type SearchIconProps = {
   className?: string;
 };
 
-const SearchIcon = ({ className }: SunIconProps) => {
+const SearchIcon = ({ className }: SearchIconProps) => {
   return (
     <svg
       width="15"

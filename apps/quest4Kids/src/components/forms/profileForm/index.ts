@@ -1,2 +1,2 @@
 export { AvatarForm } from "./AvatarForm";
-export { NameForm } from "./NameForm";
+export { InlineEditProfile } from "./InlineEditProfile";

@@ -3,6 +3,7 @@ export interface IChild {
   name: string;
   email: string;
   password: string;
+  oldPassword?: string;
   createdAt?: string;
 }
 

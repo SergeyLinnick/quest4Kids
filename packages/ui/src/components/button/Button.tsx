@@ -1,4 +1,4 @@
-import { Button as ButtonRadix } from "@radix-ui/themes";
+import { Button as ButtonRadix, Spinner } from "@radix-ui/themes";
 import { BaseButtonProps } from "@radix-ui/themes/components/_internal/base-button";
 import clsx from "clsx";
 
@@ -12,7 +12,8 @@ export const Button = ({
   disabled,
   onClick,
   isLoading,
-}: BaseButtonProps & { isLoading?: boolean }) => {
+  icon,
+}: BaseButtonProps & { isLoading?: boolean; icon?: React.ReactNode }) => {
   return (
     <ButtonRadix
       className={clsx(className)}
@@ -25,6 +26,8 @@ export const Button = ({
       size="3"
       loading={isLoading}
     >
+      {icon && <Spinner loading={isLoading}>{icon}</Spinner>}
+
       {children}
     </ButtonRadix>
   );

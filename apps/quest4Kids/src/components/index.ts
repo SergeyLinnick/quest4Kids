@@ -1,7 +1,7 @@
 export {
   AvatarForm,
   ChildForm,
-  NameForm,
+  InlineEditProfile,
   RemoveTaskForm,
   SignIn,
   SignOut,

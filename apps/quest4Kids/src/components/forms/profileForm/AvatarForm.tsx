@@ -1,8 +1,7 @@
 "use client";
 
-import { Flex, Text } from "@radix-ui/themes";
+import { Button, Flex, Text } from "@radix-ui/themes";
 import { addAvatar, initialState } from "@repo/api";
-import { Button } from "@repo/ui";
 import { Form } from "radix-ui";
 import { useActionState } from "react";
 
@@ -22,15 +21,14 @@ export const AvatarForm = ({ id }: ProfileFormProps) => {
     <Form.Root action={formAction}>
       <input type="hidden" name="userId" value={id} />
 
-      <Flex direction="column" gap="4">
-        <label>Avatar</label>
+      <Flex align="center" justify="start">
         <input type="file" name="file" accept="image/*" />
         <Text as="span" color="red">
           {errors.get("file")}
         </Text>
 
         <Form.Submit asChild>
-          <Button isLoading={isPending} type="submit">
+          <Button size="1" loading={isPending} type="submit">
             Add Avatar
           </Button>
         </Form.Submit>

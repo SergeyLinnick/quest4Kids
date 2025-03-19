@@ -44,7 +44,7 @@ export const fetchChildById = async (
     preference: {
       cache: "force-cache",
       next: {
-        tags: ["children-list"],
+        tags: ["children"],
         revalidate: 60 * 60 * 24, // 24 hours
       },
     },

@@ -4,17 +4,23 @@ import { editChildAccountById } from "@repo/api";
 import { InlineEdit } from "@repo/ui";
 import { useActionState } from "react";
 
-type InlineEditWrapperProps = {
-  initialValue: string;
+type InlineEditProfileProps = {
+  label: string;
+  name: string;
+  type: "text" | "email" | "password";
+  value: string;
   id: string;
 };
 
-export const InlineEditWrapper = ({
-  initialValue,
+export const InlineEditProfile = ({
+  label,
+  name,
+  type = "text",
+  value = "",
   id,
-}: InlineEditWrapperProps) => {
+}: InlineEditProfileProps) => {
   const formData = new FormData();
-  formData.set("name", initialValue);
+  formData.set(name, value);
   const initialState = { errors: new Map(), values: formData, id };
 
   const [state, formAction, isPending] = useActionState(
@@ -26,10 +32,10 @@ export const InlineEditWrapper = ({
 
   return (
     <InlineEdit
-      label="Name"
-      value={initialValue}
-      name="name"
-      type="text"
+      label={label}
+      name={name}
+      type={type}
+      value={value}
       errors={errors}
       isPending={isPending}
       values={values || formData}

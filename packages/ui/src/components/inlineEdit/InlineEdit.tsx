@@ -1,9 +1,11 @@
 "use client";
 
-import { Button } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import { Form } from "radix-ui";
 import React, { useState } from "react";
+import { CheckIcon, Cross1Icon, Pencil1Icon } from "../../icons";
 import { InputField } from "../inputField/InputField";
+import styles from "./inlineEdit.module.css";
 
 interface InlineEditProps {
   value: string;
@@ -39,26 +41,56 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
 
   return (
     <Form.Root action={handleAction}>
+      <Flex direction="column" gap="2" asChild>
+        <Form.Field name={name}>
+          <Form.Label>{label}</Form.Label>
+        </Form.Field>
+      </Flex>
       {isEditing ? (
-        <div>
+        <div className={styles.inputHolder}>
           <InputField
-            label={label}
+            label=""
             name={name}
             type={type}
-            // defaultValue={value}
             defaultValue={values?.get(name) as string}
             isLoading={isPending}
             error={errors?.get(name)}
           />
-          <Button color="violet" type="submit" loading={isPending}>
-            Save
-          </Button>
-          <Button onClick={handleCancel} color="red">
-            Cancel
-          </Button>
+          <div className={styles.btnHolder}>
+            <Button
+              onClick={handleCancel}
+              type="reset"
+              variant="outline"
+              color="red"
+              title="Cancel"
+              disabled={isPending}
+            >
+              <Cross1Icon />
+            </Button>
+            <Button
+              color="violet"
+              variant="outline"
+              type="submit"
+              loading={isPending}
+              title="Submit"
+              size="2"
+              ml="1"
+            >
+              <CheckIcon />
+            </Button>
+          </div>
         </div>
       ) : (
-        <div onClick={() => setIsEditing(true)}>{value || "Click to edit"}</div>
+        <div
+          title={`Click to edit ${label}`}
+          className={styles.valueHolder}
+          onClick={() => setIsEditing(true)}
+        >
+          {value || <i>Click to edit {label}</i>}
+          <div className={styles.iconHolder}>
+            <Pencil1Icon />
+          </div>
+        </div>
       )}
     </Form.Root>
   );

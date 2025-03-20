@@ -37,7 +37,7 @@ export default async function ChildProfilePage({ params }: AddTaskPageProps) {
           <InlineEditProfile
             label="Email"
             name="email"
-            type="email"
+            type="text"
             value={childData.email}
             id={childId}
           />

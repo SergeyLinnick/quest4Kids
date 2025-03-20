@@ -4,6 +4,7 @@ import type { Error, FormState } from "./types";
 export const handleValidationError = (
   error: unknown,
   formData: FormData,
+  id?: string,
 ): FormState => {
   const errors: Error = new Map<string, string>();
 
@@ -11,7 +12,7 @@ export const handleValidationError = (
     error.errors.forEach((err) => {
       errors.set(err.path.join(".") || "common", err.message);
     });
-    return { errors, values: formData };
+    return { errors, values: formData, id, success: false };
   }
   throw error;
 };

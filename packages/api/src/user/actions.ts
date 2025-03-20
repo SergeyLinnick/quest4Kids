@@ -3,7 +3,11 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { handleValidationError } from "../_common/formUtils";
 import type { FormState } from "../_common/types";
-import { accountSchema, avatarSchema } from "./resolver";
+import {
+  accountSchemaEmail,
+  accountSchemaName,
+  avatarSchema,
+} from "./resolver";
 import { userService } from "./services";
 
 export const addAvatar = async (
@@ -43,16 +47,27 @@ export const editChildAccountById = async (
   formData: FormData,
 ): Promise<FormState> => {
   const name = formData.get("name")?.toString();
-  // const email = formData.get("email")?.toString();
+  const email = formData.get("email")?.toString();
   const id = state?.id;
 
-  try {
-    const data = await accountSchema.parseAsync({
-      name,
-      id,
-    });
+  const validate = async () => {
+    if (name) {
+      return await accountSchemaName.parseAsync({
+        name,
+      });
+    }
+    if (email) {
+      return await accountSchemaEmail.parseAsync({
+        email,
+      });
+    }
+  };
 
-    await userService.updateChildAccount(data);
+  try {
+    const data = await validate();
+
+    await userService.updateChildAccount({ id, ...data });
+
     revalidatePath(`/kids/${id}/profile`);
     revalidatePath(`/kids`);
     revalidateTag("children-list");
@@ -64,6 +79,6 @@ export const editChildAccountById = async (
       id,
     };
   } catch (error) {
-    return handleValidationError(error, formData);
+    return handleValidationError(error, formData, id);
   }
 };

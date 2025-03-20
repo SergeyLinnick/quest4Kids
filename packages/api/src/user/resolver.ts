@@ -7,12 +7,13 @@ export const avatarSchema = z.object({
   userId: z.string().nonempty("User ID is required"),
 });
 
-export const accountSchema = z.object({
+export const accountSchemaName = z.object({
   name: z
     .string()
     .min(1, "Name is required")
     .max(20, "Name must be more than 20 characters"),
-  // email: z.string().email("Invalid email").min(1, "Email is required"),
+});
 
-  id: z.string().readonly(),
+export const accountSchemaEmail = z.object({
+  email: z.string().email("Invalid email").min(1, "Email is required"),
 });

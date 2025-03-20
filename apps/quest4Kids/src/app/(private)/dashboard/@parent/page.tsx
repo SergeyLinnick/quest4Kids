@@ -1,4 +1,4 @@
-import { BarChart } from "@/components/charts/BarChart";
+import { BarChart } from "@/components/charts/barChart";
 import { ROLE } from "@/consts";
 import { generateTaskDataset } from "@/utilities/charts";
 import { Grid } from "@radix-ui/themes";

@@ -1,5 +1,5 @@
 import { TaskForm } from "@/components";
-import { Modal } from "./Modal";
+import { Modal } from "@repo/ui";
 
 interface AddTaskModalProps {
   params: Promise<{

@@ -4,6 +4,7 @@ import { Form } from "radix-ui";
 interface InputFieldProps {
   isLoading?: boolean;
   label: string;
+  placeholder?: string;
   value?: string;
   defaultValue?: string;
   error?: string;
@@ -16,6 +17,7 @@ interface InputFieldProps {
 export const InputField = ({
   isLoading = false,
   label,
+  placeholder,
   value,
   defaultValue = "",
   readOnly,
@@ -37,6 +39,7 @@ export const InputField = ({
                 type={type}
                 value={value}
                 readOnly={readOnly}
+                placeholder={placeholder}
               />
             ) : (
               <TextArea size="3" defaultValue={defaultValue} />

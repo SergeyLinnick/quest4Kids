@@ -6,6 +6,7 @@ import type { FormState } from "../_common/types";
 import {
   accountSchemaEmail,
   accountSchemaName,
+  accountSchemaPasswords,
   avatarSchema,
 } from "./resolver";
 import { userService } from "./services";
@@ -46,9 +47,12 @@ export const editChildAccountById = async (
   state: FormState | undefined,
   formData: FormData,
 ): Promise<FormState> => {
+  const id = state?.id;
+
   const name = formData.get("name")?.toString();
   const email = formData.get("email")?.toString();
-  const id = state?.id;
+  const oldPassword = formData.get("oldPassword")?.toString();
+  const password = formData.get("password")?.toString();
 
   const validate = async () => {
     if (name) {
@@ -61,6 +65,14 @@ export const editChildAccountById = async (
         email,
       });
     }
+    if (oldPassword || password) {
+      console.log("IF OLD PASSWORD OR NEW PASSWORD", oldPassword);
+
+      return await accountSchemaPasswords.parseAsync({
+        password,
+        oldPassword,
+      });
+    }
   };
 
   try {
@@ -71,6 +83,18 @@ export const editChildAccountById = async (
     revalidatePath(`/kids/${id}/profile`);
     revalidatePath(`/kids`);
     revalidateTag("children-list");
+
+    // TODO: refactor
+    if (oldPassword === "" || password === "") {
+      const errors = new Map<string, string>();
+      errors.set("common", "New Password or Current Password is empty strings");
+      return {
+        errors,
+        values: formData,
+        id,
+        success: false,
+      };
+    }
 
     return {
       errors: new Map(),

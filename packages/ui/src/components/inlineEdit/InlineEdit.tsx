@@ -34,12 +34,10 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
     setIsEditing(false);
   };
 
-  const handleAction = async (formData: FormData) => {
-    await formAction(formData);
+  const handleAction = (formData: FormData) => {
+    formAction(formData);
 
-    if (errors.size === 0) {
-      setIsEditing(false);
-    }
+    setIsEditing(false);
   };
 
   return (

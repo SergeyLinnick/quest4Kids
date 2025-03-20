@@ -28,12 +28,12 @@ export const userService = {
   },
 
   updateChildAccount: (data: any): Promise<any> => {
-    const { email, name, password, id } = data;
+    const { email, name, password, oldPassword, id } = data;
 
     const options = {
       method: "PATCH",
       url: `${api}${API_PATH.USER.UPDATE_CHILD(id)}`,
-      body: JSON.stringify({ email, name, password }),
+      body: JSON.stringify({ email, name, password, oldPassword }),
     };
 
     return authHttpClient.fetch(options);

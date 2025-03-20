@@ -14,5 +14,8 @@ export const handleValidationError = (
     });
     return { errors, values: formData, id, success: false };
   }
+
+  console.error("error in handleValidationError:", error);
+
   throw error;
 };

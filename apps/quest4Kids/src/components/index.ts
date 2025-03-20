@@ -1,5 +1,6 @@
 export {
   AvatarForm,
+  ChangePasswordForm,
   ChildForm,
   InlineEditProfile,
   RemoveTaskForm,

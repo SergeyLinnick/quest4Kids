@@ -6,14 +6,8 @@
   overflow: hidden;
   user-select: none;
   border-radius: 100%;
-  background-color: var(--black-a3);
-}
-
-.avatarImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: inherit;
+  background-color: var(--avatar-bg-color);
+  position: relative;
 }
 
 .avatarFallback {
@@ -22,8 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  color: var(--violet-11);
+  color: var(--violet-10);
   font-size: 15px;
   line-height: 1;
   font-weight: 500;

@@ -44,13 +44,29 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
 
           const profile = await profileResponse.json();
 
+          const avatarResponse = await fetch(
+            `${api}/user/${profile.id}/avatar`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${login.accessToken}`,
+              },
+            },
+          );
+
+          const avatar = await avatarResponse.text();
+
+          console.log("avatar ====>", avatar);
+
           return {
             id: profile.id,
             email: profile.email,
             name: profile.name,
             role: profile.role,
             accessToken: login.accessToken,
-            image: "avatar",
+            refreshToken: login.refreshToken,
+            image: avatar || "",
           };
         } catch {
           throw new InvalidLoginError();
@@ -73,6 +89,7 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
         token.role = user.role;
         token.id = user.id;
       }
@@ -82,6 +99,9 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
     async session({ session, token }) {
       if (token.accessToken) {
         session.user.accessToken = token.accessToken;
+      }
+      if (token.refreshToken) {
+        session.user.refreshToken = token.refreshToken;
       }
       if (token.role) {
         session.user.role = token.role;

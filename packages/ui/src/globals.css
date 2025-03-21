@@ -6,6 +6,7 @@
   --sideBar-width: 250px;
   --404-color: var(--gray-2);
   --header-button-color: var(--gray-2);
+  --avatar-bg-color: var(--gray-2);
 }
 
 :root,
@@ -24,6 +25,7 @@
   --bg-header: var(--color-background);
   --404-color: var(--gray-5);
   --header-button-color: var(--gray-12);
+  --avatar-bg-color: var(--gray-12);
 }
 
 :root,

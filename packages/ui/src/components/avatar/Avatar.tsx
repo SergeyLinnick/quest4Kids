@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Avatar as AvatarRadix } from "radix-ui";
 import styles from "./avatar.module.css";
 
@@ -19,14 +21,21 @@ export const Avatar = ({
       className={styles.avatarRoot}
       style={{ width: size, height: size }}
     >
-      <AvatarRadix.Image
-        className={styles.avatarImage}
-        src={src}
-        alt={alt || "avatar"}
-      />
-      <AvatarRadix.Fallback className={styles.avatarFallback} delayMs={600}>
-        {fallback}
-      </AvatarRadix.Fallback>
+      {src ? (
+        <Image
+          src={src}
+          alt={alt || "avatar"}
+          fill
+          className={styles.avatarImage}
+          sizes={`${size}px`}
+          priority
+          quality={90}
+        />
+      ) : (
+        <AvatarRadix.Fallback className={styles.avatarFallback} delayMs={600}>
+          {fallback}
+        </AvatarRadix.Fallback>
+      )}
     </AvatarRadix.Root>
   );
 };

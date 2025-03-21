@@ -1,7 +1,5 @@
 import { Header, SignOut } from "@/components";
 import { getMenuItems, PAGE_PATH } from "@/consts";
-import { RoleType } from "@/types";
-import { fetchAvatar } from "@repo/api";
 import { auth } from "@repo/auth";
 import { Avatar, SideBar } from "@repo/ui";
 import { getUserInitials } from "@repo/utils";
@@ -15,26 +13,22 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  const userId = session?.user?.id;
-
-  const avatar = await fetchAvatar(userId);
-
-  const role: RoleType = session?.user?.role;
-  const name = session?.user?.name;
-  const initials = getUserInitials(name);
-
   if (!session) return <NotAuthenticated />;
+
+  const { user } = session;
+
+  const initials = getUserInitials(user.name);
 
   return (
     <>
       <Header>
         <SignOut />
         <Link href={PAGE_PATH.PROFILE}>
-          <Avatar fallback={initials} src={avatar} />
+          <Avatar fallback={initials} src={user.image} />
         </Link>
       </Header>
       <div className={styles.mainLayout}>
-        <SideBar menuItems={getMenuItems(role) || []} />
+        <SideBar menuItems={getMenuItems(user.role) || []} />
         <main className={styles.container}>{children}</main>
       </div>
     </>

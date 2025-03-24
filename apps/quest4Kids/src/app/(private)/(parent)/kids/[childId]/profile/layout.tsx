@@ -7,8 +7,8 @@ export default function ProfileLayout({
 }>) {
   return (
     <div>
-      {modal}
       {children}
+      {modal}
     </div>
   );
 }

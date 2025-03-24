@@ -19,7 +19,6 @@ export const Header = ({ children }: { children: React.ReactNode }) => {
             priority
           />
         </Link>
-
         <Flex gap="4" align="center">
           {children}
           <ThemeChanger />

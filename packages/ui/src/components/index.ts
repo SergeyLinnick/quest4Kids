@@ -4,6 +4,7 @@ export { Button } from "./button/Button";
 export { ButtonLink } from "./buttonLink/ButtonLink";
 export { Card } from "./card/Card";
 export { FormField } from "./formField/FormField";
+export { ImagePicker } from "./imagePicker";
 export { InlineEdit } from "./inlineEdit";
 export { default as Input } from "./input/Input";
 export { InputField } from "./inputField/InputField";

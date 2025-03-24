@@ -55,23 +55,25 @@ export const editChildAccountById = async (
   const password = formData.get("password")?.toString();
 
   const validate = async () => {
-    if (name) {
-      return await accountSchemaName.parseAsync({
-        name,
-      });
-    }
-    if (email) {
-      return await accountSchemaEmail.parseAsync({
-        email,
-      });
-    }
-    if (oldPassword || password) {
-      console.log("IF OLD PASSWORD OR NEW PASSWORD", oldPassword);
-
-      return await accountSchemaPasswords.parseAsync({
-        password,
-        oldPassword,
-      });
+    switch (true) {
+      // Inline form for name
+      case Boolean(name): {
+        return await accountSchemaName.parseAsync({ name });
+      }
+      // Inline form for email
+      case Boolean(email): {
+        return await accountSchemaEmail.parseAsync({ email });
+      }
+      // Change password form
+      case oldPassword !== undefined || password !== undefined: {
+        return await accountSchemaPasswords.parseAsync({
+          password,
+          oldPassword,
+        });
+      }
+      default: {
+        throw new Error("No valid input provided for validation");
+      }
     }
   };
 
@@ -83,18 +85,6 @@ export const editChildAccountById = async (
     revalidatePath(`/kids/${id}/profile`);
     revalidatePath(`/kids`);
     revalidateTag("children-list");
-
-    // TODO: refactor
-    if (oldPassword === "" || password === "") {
-      const errors = new Map<string, string>();
-      errors.set("common", "New Password or Current Password is empty strings");
-      return {
-        errors,
-        values: formData,
-        id,
-        success: false,
-      };
-    }
 
     return {
       errors: new Map(),

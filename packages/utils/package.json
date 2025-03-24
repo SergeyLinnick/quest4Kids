@@ -6,10 +6,6 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0"
   },
-  "dependencies": {
-    "yup": "^1.6.1"
-  },
-  "devDependencies": {},
   "author": "",
   "description": "",
   "exports": {
@@ -17,5 +13,8 @@
   },
   "keywords": [],
   "license": "ISC",
-  "main": "index.ts"
+  "main": "index.ts",
+  "dependencies": {
+    "zod": "^3.24.2"
+  }
 }

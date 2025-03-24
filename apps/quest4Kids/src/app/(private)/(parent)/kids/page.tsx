@@ -2,12 +2,19 @@
 
 import { PAGE_PATH_PARENT } from "@/consts";
 import { Flex, Grid, Heading } from "@radix-ui/themes";
-import { fetchChildren, IChild } from "@repo/api";
+import { fetchAvatar, fetchChildren, IChild } from "@repo/api";
 import { ButtonLink, UserCard } from "@repo/ui";
 import Link from "next/link";
 
 export default async function KidsPage() {
   const children = await fetchChildren();
+
+  const childrenWithAvatars = await Promise.all(
+    children?.data?.map(async (child: IChild) => {
+      const avatar = await fetchAvatar(child.id);
+      return { ...child, avatar };
+    }) || [],
+  );
 
   return (
     <>
@@ -21,8 +28,8 @@ export default async function KidsPage() {
         maxWidth="1200px"
         my="5"
       >
-        {children?.data?.length > 0 ? (
-          children?.data?.map((child: IChild) => (
+        {childrenWithAvatars?.length > 0 ? (
+          childrenWithAvatars?.map((child: IChild) => (
             <Link
               key={child.id}
               href={PAGE_PATH_PARENT.CHILD(child.id.toString())}

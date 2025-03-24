@@ -8,6 +8,7 @@ export const Button = ({
   type = "button",
   className,
   variant,
+  size = "3",
   style,
   disabled,
   onClick,
@@ -23,7 +24,7 @@ export const Button = ({
       disabled={disabled}
       color={color}
       variant={variant}
-      size="3"
+      size={size}
       loading={isLoading}
     >
       {icon && <Spinner loading={isLoading}>{icon}</Spinner>}

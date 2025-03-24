@@ -28,7 +28,7 @@ export const ChangePasswordForm = ({ id }: ChangePasswordFormProps) => {
         <InputField
           label="Current Password"
           name="oldPassword"
-          // type="password"
+          type="password"
           defaultValue={values?.get("oldPassword") as string}
           isLoading={isPending}
           error={errors.get("oldPassword")}
@@ -39,7 +39,7 @@ export const ChangePasswordForm = ({ id }: ChangePasswordFormProps) => {
           label="New Password"
           name="password"
           isLoading={isPending}
-          // type="password"
+          type="password"
           defaultValue={values?.get("password") as string}
           error={errors.get("password")}
           placeholder="Enter your new password"
@@ -50,7 +50,15 @@ export const ChangePasswordForm = ({ id }: ChangePasswordFormProps) => {
             Change Password
           </Button>
         </Form.Submit>
+        {errors.get("common") && (
+          <Text color="red">{errors.get("common")}</Text>
+        )}
+        {state.success && (
+          <Text color="green">Password changed successfully!</Text>
+        )}
+
         <Heading size="1">Requirements for passwords:</Heading>
+
         <DataList.Root orientation="vertical">
           <DataList.Item>
             <DataList.Value>
@@ -89,11 +97,6 @@ export const ChangePasswordForm = ({ id }: ChangePasswordFormProps) => {
           </DataList.Item>
         </DataList.Root>
       </Flex>
-
-      {errors.get("common") && <Text color="red">{errors.get("common")}</Text>}
-      {state.success && (
-        <Text color="green">Password changed successfully!</Text>
-      )}
     </Form.Root>
   );
 };

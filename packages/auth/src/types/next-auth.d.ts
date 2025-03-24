@@ -9,15 +9,19 @@ declare module "next-auth" {
     accessToken?: string;
     refreshToken?: string;
     image?: string;
+    expiresAt?: number;
   }
 
   interface Session {
     user?: User & DefaultSession["user"];
+    accessToken: string;
+    error: string;
   }
 
   interface JWT {
     accessToken?: string;
     refreshToken?: string;
+    error?: string;
   }
 }
 

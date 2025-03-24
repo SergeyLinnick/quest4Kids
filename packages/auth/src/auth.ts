@@ -1,5 +1,6 @@
 import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { EXPIRES_IN } from "./refreshToken";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
 
@@ -57,8 +58,6 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
 
           const avatar = await avatarResponse.text();
 
-          console.log("avatar ====>", avatar);
-
           return {
             id: profile.id,
             email: profile.email,
@@ -67,6 +66,7 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
             accessToken: login.accessToken,
             refreshToken: login.refreshToken,
             image: avatar || "",
+            expiresAt: Date.now() + EXPIRES_IN,
           };
         } catch {
           throw new InvalidLoginError();
@@ -76,10 +76,10 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
   ],
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60, // 1 hour
+    maxAge: EXPIRES_IN,
   },
   jwt: {
-    maxAge: 60 * 59, // 59 minutes
+    maxAge: EXPIRES_IN,
   },
   pages: {
     signIn: "/signin",
@@ -92,7 +92,14 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
         token.refreshToken = user.refreshToken;
         token.role = user.role;
         token.id = user.id;
+        token.expiresAt = user.expiresAt;
       }
+
+      if (Date.now() < (token.expiresAt as number)) {
+        return token;
+      }
+
+      // return await refreshToken(token);
 
       return token;
     },
@@ -100,14 +107,23 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
       if (token.accessToken) {
         session.user.accessToken = token.accessToken;
       }
-      if (token.refreshToken) {
-        session.user.refreshToken = token.refreshToken;
-      }
       if (token.role) {
         session.user.role = token.role;
       }
       if (token.id) {
         session.user.id = token.id;
+      }
+
+      if (token.expiresAt) {
+        session.user.expiresAt = token.expiresAt;
+      }
+
+      if (token.refreshToken) {
+        session.user.refreshToken = token.refreshToken;
+      }
+
+      if (token.error) {
+        session.user.error = token.error;
       }
 
       return session;

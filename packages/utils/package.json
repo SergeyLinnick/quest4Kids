@@ -6,6 +6,9 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0"
   },
+  "dependencies": {
+    "zod": "^3.24.2"
+  },
   "author": "",
   "description": "",
   "exports": {
@@ -13,8 +16,5 @@
   },
   "keywords": [],
   "license": "ISC",
-  "main": "index.ts",
-  "dependencies": {
-    "zod": "^3.24.2"
-  }
+  "main": "index.ts"
 }

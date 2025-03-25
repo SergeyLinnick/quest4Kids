@@ -6,12 +6,17 @@ import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { Form as FormRadix } from "radix-ui";
 
-export const FilterTaskForm = () => {
+interface FilterTaskFormProps {
+  status: string;
+}
+
+export const FilterTaskForm = ({ status = "" }: FilterTaskFormProps) => {
   const [, setStatus] = useQueryState("status");
   const router = useRouter();
 
   const handleStatusChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    await setStatus(e.target.value);
+    const value = e.target.value === "" ? null : e.target.value;
+    await setStatus(value);
     router.refresh();
   };
 
@@ -23,7 +28,7 @@ export const FilterTaskForm = () => {
           columns="1"
           onChange={handleStatusChange}
           size="1"
-          defaultValue=""
+          defaultValue={status}
         >
           <RadioCards.Item value="">
             <Flex direction="column" width="100%">

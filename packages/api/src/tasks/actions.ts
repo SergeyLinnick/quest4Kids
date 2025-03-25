@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { handleValidationError } from "../_common/formUtils";
 import type { FormState } from "../_common/types";
 import { taskSchema } from "./resolver";
@@ -24,11 +23,11 @@ export const addTask = async (
     });
     await taskService.addTask(task);
     revalidatePath(`/kids/${userId}`);
+
+    return { errors: new Map(), success: true };
   } catch (error) {
     return handleValidationError(error, formData);
   }
-
-  redirect(`/kids/${userId}`);
 };
 
 export const fetchChildTasks = async (filters?: {

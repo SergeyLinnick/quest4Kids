@@ -36,7 +36,7 @@ export default async function ChildPage({
           <TasksListWrapper childId={childId} status={status} />
         </Suspense>
         <Box mt="7">
-          <FilterTaskForm />
+          <FilterTaskForm status={status} />
         </Box>
       </Grid>
     </Flex>

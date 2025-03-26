@@ -9,6 +9,7 @@ export type FormState = {
   success?: boolean;
   values?: FormData;
   id?: string;
+  message?: string;
 };
 
 export const initialState: FormState = {

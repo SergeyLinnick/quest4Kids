@@ -14,7 +14,7 @@ export default async function AddTaskModal({ params }: AddTaskModalProps) {
 
   return (
     <Modal title="Add Task">
-      <TaskForm childId={childId} />
+      <TaskForm childId={childId} isModal />
     </Modal>
   );
 }

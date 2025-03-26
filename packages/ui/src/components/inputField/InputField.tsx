@@ -10,8 +10,9 @@ interface InputFieldProps {
   error?: string;
   as?: "input" | "textarea";
   name: string;
-  type?: "text" | "email" | "password";
+  type?: "text" | "email" | "password" | "number";
   readOnly?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const InputField = ({
@@ -25,6 +26,7 @@ export const InputField = ({
   as = "input",
   name,
   type = "text",
+  onChange,
 }: InputFieldProps) => {
   return (
     <Flex direction="column" gap="2" asChild>
@@ -40,6 +42,7 @@ export const InputField = ({
                 value={value}
                 readOnly={readOnly}
                 placeholder={placeholder}
+                onChange={onChange}
               />
             ) : (
               <TextArea size="3" defaultValue={defaultValue} />

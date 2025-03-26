@@ -22,7 +22,7 @@ export const TasksList = ({
         <Table.Row>
           <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Description</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Points</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>Coins</Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
         </Table.Row>

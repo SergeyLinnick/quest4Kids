@@ -1,39 +1,39 @@
-import { Avatar, Box, Card, Flex, Text } from "@radix-ui/themes";
+import { Box, Card, Flex, Text } from "@radix-ui/themes";
 import { getUserInitials } from "@repo/utils";
+import Link from "next/link";
+import { Avatar } from "../avatar/Avatar";
+import Coins from "./Coins";
 import styles from "./userCard.module.css";
 
 interface UserCardProps {
-  user: {
-    name: string;
-    email: string;
-    avatar?: string;
-  };
-  isLink?: boolean;
+  user: Record<string, any>;
+  href?: string;
+  children?: React.ReactNode;
 }
 
-export const UserCard = ({ user, isLink = false }: UserCardProps) => {
-  const { name, email, avatar } = user;
+export const UserCard = ({ user, href, children }: UserCardProps) => {
+  const { name, email, avatar, availablePoints, totalEarnedPoints } = user;
   const initials = getUserInitials(name);
 
+  const content = (
+    <Flex gap="4" align="center">
+      <Avatar fallback={initials} src={avatar} size={55} alt={name} />
+      <Box>
+        <Text as="div" weight="bold">
+          {name}
+        </Text>
+        <Text as="div" color="gray">
+          {email}
+        </Text>
+        <Coins available={availablePoints} total={totalEarnedPoints} />
+      </Box>
+    </Flex>
+  );
+
   return (
-    <Card size="2" className={isLink ? styles.link : ""}>
-      <Flex gap="4" align="center">
-        <Avatar
-          src={avatar}
-          size="4"
-          radius="full"
-          fallback={initials}
-          color="indigo"
-        />
-        <Box>
-          <Text as="div" weight="bold">
-            {name}
-          </Text>
-          <Text as="div" color="gray">
-            {email}
-          </Text>
-        </Box>
-      </Flex>
+    <Card size="3" className={href ? styles.link : ""}>
+      {href ? <Link href={href}>{content}</Link> : content}
+      {children}
     </Card>
   );
 };

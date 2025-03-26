@@ -1,8 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { handleValidationError } from "../_common/formUtils";
 import type { FormState } from "../_common/types";
+import { TASK_STATUS } from "./const";
 import { taskSchema } from "./resolver";
 import { taskService } from "./services";
 import { ITaskResponse, TaskStatusName } from "./types";
@@ -78,6 +79,9 @@ export const changeStatusTask = async (
   try {
     await taskService.updateTask(taskId, { status: status as TaskStatusName });
     revalidatePath(`/kids/${childId}`);
+    if (status === TASK_STATUS.DONE.name) {
+      revalidateTag("children-list");
+    }
     return { errors: new Map(), success: true };
   } catch (error) {
     console.error("Error updating task:", error);

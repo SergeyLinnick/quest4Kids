@@ -17,4 +17,7 @@ export const API_PATH = {
     DELETE_TASK: (taskId: string) => `/tasks/${taskId}`,
     UPDATE_TASK: (taskId: string) => `/tasks/${taskId}`,
   },
+  POINTS: {
+    SWAP_POINTS: (childId: string) => `/user/${childId}/claim-points`,
+  },
 };

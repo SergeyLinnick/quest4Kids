@@ -10,9 +10,10 @@ import { useActionState, useEffect } from "react";
 
 interface TaskFormProps {
   childId: string;
+  isModal?: boolean;
 }
 
-export const TaskForm = ({ childId }: TaskFormProps) => {
+export const TaskForm = ({ childId, isModal = false }: TaskFormProps) => {
   const router = useRouter();
   // useActionState is available with React 19 (Next.js App Router)
   const [state, formAction, isPending] = useActionState(addTask, initialState);
@@ -21,9 +22,13 @@ export const TaskForm = ({ childId }: TaskFormProps) => {
 
   useEffect(() => {
     if (success) {
-      router.back();
+      if (isModal) {
+        router.back();
+      } else {
+        router.push(`/kids/${childId}`);
+      }
     }
-  }, [router, success]);
+  }, [router, success, isModal, childId]);
 
   return (
     <Box maxWidth="400px">
@@ -50,7 +55,7 @@ export const TaskForm = ({ childId }: TaskFormProps) => {
 
             <Flex direction="column" gap="2" asChild>
               <RadixForm.Field name="points">
-                <RadixForm.Label>Points</RadixForm.Label>
+                <RadixForm.Label>Coins</RadixForm.Label>
                 <RadioCards.Root
                   name="points"
                   defaultValue={String(values?.get("points") || 8)}

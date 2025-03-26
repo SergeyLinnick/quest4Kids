@@ -1,3 +1,21 @@
+.link {
+  transition: transform 0.3s ease;
+}
+
 .link:hover {
-  box-shadow: var(--shadow-3);
+  box-shadow: var(--shadow-4);
+  transform: scale(1.05);
+}
+
+.addCard {
+  border: 3px dashed var(--cyan-4);
+  color: var(--cyan-11);
+}
+
+.addCard:hover {
+  background-color: var(--cyan-2);
+}
+
+.addCard:after {
+  box-shadow: none;
 }

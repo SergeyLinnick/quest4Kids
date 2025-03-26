@@ -21,3 +21,8 @@
   line-height: 1;
   font-weight: 500;
 }
+
+.avatarImage {
+  object-fit: cover;
+  object-position: center;
+}

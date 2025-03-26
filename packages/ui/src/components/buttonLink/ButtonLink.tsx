@@ -12,7 +12,7 @@ export const ButtonLink = ({
   style,
   disabled,
   href,
-  isLoading,
+  isLoading = false,
 }: BaseButtonProps & { isLoading?: boolean; href: string }) => {
   return (
     <ButtonRadix

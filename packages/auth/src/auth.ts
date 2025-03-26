@@ -31,6 +31,8 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
 
           const login = await loginResponse.json();
 
+          console.log("login ===>", login.accessToken);
+
           const profileResponse = await fetch(`${api}/auth/profile`, {
             method: "GET",
             headers: {
@@ -76,10 +78,10 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
   ],
   session: {
     strategy: "jwt",
-    maxAge: EXPIRES_IN,
+    maxAge: 60 * 60, // 1 hour,
   },
   jwt: {
-    maxAge: EXPIRES_IN,
+    maxAge: 60 * 60, // 1 hour,
   },
   pages: {
     signIn: "/signin",

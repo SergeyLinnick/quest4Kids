@@ -4,10 +4,15 @@ export interface IChild {
   email: string;
   password: string;
   oldPassword?: string;
-  createdAt?: string;
+  createdAt: string;
+  availablePoints: number;
+  totalEarnedPoints: number;
 }
 
-export type ICreateChild = Omit<IChild, "id">;
+export type ICreateChild = Omit<
+  IChild,
+  "id" | "availablePoints" | "totalEarnedPoints" | "createdAt"
+>;
 
 export type IUpdateChild = Partial<ICreateChild>;
 

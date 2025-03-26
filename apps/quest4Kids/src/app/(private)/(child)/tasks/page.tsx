@@ -27,7 +27,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
           />
         </Suspense>
         <Box mt="7">
-          <FilterTaskForm />
+          <FilterTaskForm status={status} />
         </Box>
       </Grid>
     </Flex>

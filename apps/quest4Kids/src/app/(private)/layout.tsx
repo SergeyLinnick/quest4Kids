@@ -24,7 +24,7 @@ export default async function RootLayout({
       <Header>
         <SignOut />
         <Link href={PAGE_PATH.PROFILE}>
-          <Avatar fallback={initials} src={user.image} />
+          <Avatar fallback={initials} src={user.image} alt={user.name} />
         </Link>
       </Header>
       <div className={styles.mainLayout}>

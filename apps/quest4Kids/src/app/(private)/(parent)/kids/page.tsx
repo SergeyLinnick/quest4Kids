@@ -12,7 +12,6 @@ export default async function KidsPage() {
 
   const childrenWithAvatars = await Promise.all(
     children?.data?.map(async (child: IChild) => {
-      console.log("child", child);
       const avatar = await fetchAvatar(child.id);
       return { ...child, avatar };
     }) || [],

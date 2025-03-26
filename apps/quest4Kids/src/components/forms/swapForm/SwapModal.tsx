@@ -1,6 +1,9 @@
+"use client";
+
 import { Dialog } from "@radix-ui/themes";
 import { IChild } from "@repo/api";
 import { Button, SwapIcon } from "@repo/ui";
+import { useState } from "react";
 import SwapForm from "./SwapForm";
 
 interface SwapFormProps {
@@ -9,8 +12,10 @@ interface SwapFormProps {
 }
 
 export const SwapModal = ({ user, isDisabled = false }: SwapFormProps) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
         <Button variant="outline" disabled={isDisabled}>
           Swap
@@ -22,6 +27,7 @@ export const SwapModal = ({ user, isDisabled = false }: SwapFormProps) => {
           name={user.name}
           availablePoints={user.availablePoints}
           childId={user.id}
+          setOpen={setOpen}
         />
       </Dialog.Content>
     </Dialog.Root>

@@ -8,20 +8,22 @@ import {
   swapPointSchema,
 } from "@repo/api";
 import { Button, InputField } from "@repo/ui";
+import confetti from "canvas-confetti";
 import { Form } from "radix-ui";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import z from "zod";
-
 interface SwapFormProps {
   name: string;
   availablePoints: number;
   childId: string;
+  setOpen: (open: boolean) => void;
 }
 
 const SwapForm: React.FC<SwapFormProps> = ({
   name,
   availablePoints,
   childId,
+  setOpen,
 }: SwapFormProps) => {
   const [points, setPoints] = useState(availablePoints);
   const [clientError, setClientError] = useState<string | null>(null);
@@ -30,6 +32,18 @@ const SwapForm: React.FC<SwapFormProps> = ({
     swapPoints,
     initialState,
   );
+
+  useEffect(() => {
+    if (state.success) {
+      confetti({
+        particleCount: 150,
+        spread: 60,
+      });
+      setTimeout(() => {
+        setOpen(false);
+      }, 1000);
+    }
+  }, [state.success, setOpen]);
 
   const handlePointsChange = ({ target }: { target: HTMLInputElement }) => {
     const value = Number(target.value);
@@ -44,6 +58,12 @@ const SwapForm: React.FC<SwapFormProps> = ({
       }
     }
   };
+
+  const buttonText = isPending
+    ? "Swapping..."
+    : state.success
+      ? "Success"
+      : "Swap";
 
   return (
     <>
@@ -70,11 +90,14 @@ const SwapForm: React.FC<SwapFormProps> = ({
               Cancel
             </Button>
           </Dialog.Close>
-          <Dialog.Close>
-            <Button type="submit" disabled={isPending}>
-              {isPending ? "Swapping..." : "Swap"}
-            </Button>
-          </Dialog.Close>
+
+          <Button
+            type="submit"
+            disabled={isPending}
+            color={state.success ? "green" : "violet"}
+          >
+            {buttonText}
+          </Button>
         </Flex>
       </Form.Root>
     </>

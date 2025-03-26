@@ -1,13 +1,13 @@
 "use client";
 
-import { Dialog, Flex, Text } from "@radix-ui/themes";
+import { Box, Dialog, Flex, Text } from "@radix-ui/themes";
 import {
   FormState,
   initialState,
   swapPoints,
   swapPointSchema,
 } from "@repo/api";
-import { Button, InputField } from "@repo/ui";
+import { Button, CoinsIcon, InputField } from "@repo/ui";
 import confetti from "canvas-confetti";
 import { Form } from "radix-ui";
 import { useActionState, useEffect, useState } from "react";
@@ -41,7 +41,7 @@ const SwapForm: React.FC<SwapFormProps> = ({
       });
       setTimeout(() => {
         setOpen(false);
-      }, 1000);
+      }, 2000);
     }
   }, [state.success, setOpen]);
 
@@ -65,43 +65,72 @@ const SwapForm: React.FC<SwapFormProps> = ({
       ? "Success"
       : "Swap";
 
-  return (
-    <>
-      <Dialog.Title>
-        {name} swaps {points}&nbsp;coins for a reward
-      </Dialog.Title>
-      <Form.Root action={formAction}>
-        <Flex direction="column" gap="2">
-          <InputField
-            label="Coins"
-            defaultValue={points.toString()}
-            placeholder="Enter coins to swap"
-            onChange={handlePointsChange}
-            name="points"
-            type="number"
-          />
-          <Text color="red">{clientError}</Text>
+  const getContent = () => {
+    if (state.success && availablePoints === 0) {
+      return (
+        <Flex direction="column" gap="4" align="center">
+          <Box>
+            <CoinsIcon />
+          </Box>
+          <Text align="center">Well done!</Text>
+          <Text align="center" color="gray">
+            No coins left — time to earn some more!
+          </Text>
         </Flex>
-        <input type="hidden" name="childId" value={childId} />
+      );
+    }
 
-        <Flex gap="3" mt="4" justify="end">
-          <Dialog.Close>
-            <Button variant="soft" color="gray">
-              Cancel
+    if (state.success) {
+      return (
+        <Flex direction="column" gap="4" align="center">
+          <Box>
+            <CoinsIcon />
+          </Box>
+          <Text align="center">Well done! Coins exchanged.</Text>
+        </Flex>
+      );
+    }
+
+    return (
+      <>
+        <Dialog.Title>
+          {name} swaps {points}&nbsp;coins for a reward
+        </Dialog.Title>
+        <Form.Root action={formAction}>
+          <Flex direction="column" gap="2">
+            <InputField
+              label="Coins"
+              defaultValue={points.toString()}
+              placeholder="Enter coins to swap"
+              onChange={handlePointsChange}
+              name="points"
+              type="number"
+            />
+            <Text color="red">{clientError}</Text>
+          </Flex>
+          <input type="hidden" name="childId" value={childId} />
+
+          <Flex gap="3" mt="4" justify="end">
+            <Dialog.Close>
+              <Button variant="soft" color="gray">
+                Cancel
+              </Button>
+            </Dialog.Close>
+
+            <Button
+              type="submit"
+              disabled={isPending || !!clientError}
+              color={state.success ? "green" : "violet"}
+            >
+              {buttonText}
             </Button>
-          </Dialog.Close>
+          </Flex>
+        </Form.Root>
+      </>
+    );
+  };
 
-          <Button
-            type="submit"
-            disabled={isPending}
-            color={state.success ? "green" : "violet"}
-          >
-            {buttonText}
-          </Button>
-        </Flex>
-      </Form.Root>
-    </>
-  );
+  return getContent();
 };
 
 export default SwapForm;

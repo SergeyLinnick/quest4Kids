@@ -12,8 +12,9 @@ export const API_PATH = {
     ADD_AVATAR: (userId: string) => `/user/${userId}/avatar`,
   },
   TASK: {
-    ADD_TASK: (childId: string) => `/kids/${childId}/task`,
     GET_TASKS: "/tasks",
+    GET_TASK_STATISTICS: "/tasks/statistics",
+    ADD_TASK: (childId: string) => `/kids/${childId}/task`,
     DELETE_TASK: (taskId: string) => `/tasks/${taskId}`,
     UPDATE_TASK: (taskId: string) => `/tasks/${taskId}`,
   },

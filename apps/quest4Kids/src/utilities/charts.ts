@@ -1,5 +1,6 @@
-import { IChild, ITask, TASK_STATUS } from "@repo/api";
+import { TASK_STATUS } from "@repo/api";
 import { ChartArea, ChartOptions } from "chart.js";
+import { ITaskStatistics } from "node_modules/@repo/api/src/tasks";
 
 export function createChartGradient(
   ctx: CanvasRenderingContext2D,
@@ -73,60 +74,66 @@ export const doughnutChartOptions: ChartOptions<"doughnut"> = {
   },
 };
 
-export function generateTaskDataset(tasks: ITask[], users: IChild[]) {
+export function generateTaskDataset(statistics: ITaskStatistics[]) {
   const colors = {
     OPEN: ["#FFC53D", "#FFBA18", "#AB6400"],
     IN_PROGRESS: ["#23d4ff", "#786eff", "#a534ff"],
     DONE: ["#b0ff00", "#009971", "#23ff70"],
   };
 
-  // Filter users with tasks
-  const activeUsers = users.filter((user) =>
-    tasks.some((task) => task.userId === user.id),
-  );
-
-  // Group tasks by users
-  const tasksByUser = activeUsers.reduce(
-    (acc, user) => {
-      acc[user.id] = tasks.filter((task) => task.userId === user.id);
-      return acc;
-    },
-    {} as Record<string, ITask[]>,
-  );
+  //   data={{
+  //     labels: ['Ola', 'Kasia', 'Adam'],
+  //     datasets: [
+  //       {
+  //         id: 1,
+  //         label: 'Open',
+  //         data: [5, 6, 7],
+  //       },
+  //       {
+  //         id: 2,
+  //         label: 'In Progress',
+  //         data: [3, 2, 1],
+  //       },
+  //     ],
+  //   }
+  // }
 
   const datasets = Object.keys(TASK_STATUS).map((status, index) => ({
     label:
       status.charAt(0).toUpperCase() +
       status.slice(1).toLowerCase().replace("_", " "),
-    data: activeUsers.map(
-      (user) =>
-        tasksByUser[user.id]?.filter((task) => task.status === status).length ??
-        0,
-    ),
+    data: statistics.map((item) => {
+      if (status === TASK_STATUS.OPEN.name) {
+        return item.openTasks || null;
+      }
+      if (status === TASK_STATUS.IN_PROGRESS.name) {
+        return item.inProgressTasks || null;
+      }
+      if (status === TASK_STATUS.DONE.name) {
+        return item.doneTasks || null;
+      }
+      return null;
+    }),
     stack: `Stack ${index}`,
     colors: colors[status as keyof typeof colors],
   }));
 
   return {
-    labels: activeUsers.map((user) => user.name),
+    labels: statistics.map((stat) => stat.name),
     datasets,
   };
 }
 
-export function generateDoughnutDataset(tasks: ITask[]) {
+export function generateDoughnutDataset(statistics?: ITaskStatistics) {
+  if (!statistics) {
+    return null;
+  }
+
   const colors = {
     OPEN: "rgb(255, 197, 61)",
     IN_PROGRESS: "rgb(35, 212, 255)",
     DONE: "rgb(176, 255, 0)",
   };
-
-  const tasksByStatus = Object.keys(TASK_STATUS).reduce(
-    (acc, status) => {
-      acc[status] = tasks.filter((task) => task.status === status).length;
-      return acc;
-    },
-    {} as Record<string, number>,
-  );
 
   return {
     labels: Object.keys(TASK_STATUS).map(
@@ -137,7 +144,11 @@ export function generateDoughnutDataset(tasks: ITask[]) {
     datasets: [
       {
         label: "Tasks",
-        data: Object.values(tasksByStatus),
+        data: [
+          statistics.openTasks,
+          statistics.inProgressTasks,
+          statistics.doneTasks,
+        ],
         backgroundColor: Object.keys(TASK_STATUS).map(
           (status) => colors[status as keyof typeof colors],
         ),

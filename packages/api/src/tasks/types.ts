@@ -21,3 +21,11 @@ export type ITaskResponse = {
 export type TaskStatus = (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
 export type TaskStatusName =
   (typeof TASK_STATUS)[keyof typeof TASK_STATUS]["name"];
+
+export interface ITaskStatistics {
+  openTasks: number;
+  inProgressTasks: number;
+  doneTasks: number;
+  id: string;
+  name: string;
+}

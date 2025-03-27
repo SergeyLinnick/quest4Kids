@@ -1,5 +1,5 @@
 import { Box, Heading } from "@radix-ui/themes";
-import { fetchChildTasks } from "@repo/api";
+import { getTasks } from "@repo/api";
 import Link from "next/link";
 import { TasksList } from "./TasksList";
 
@@ -14,7 +14,7 @@ export async function TasksListWrapper({
   status,
   isParent = true,
 }: TasksListWrapperProps) {
-  const tasksData = await fetchChildTasks({ status: status || "", childId });
+  const tasksData = await getTasks({ status: status || "", childId });
 
   if (tasksData?.data?.length === 0) {
     // TODO: Add Empty component

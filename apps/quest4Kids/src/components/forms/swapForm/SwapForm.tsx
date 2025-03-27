@@ -1,17 +1,18 @@
 "use client";
 
-import { Box, Dialog, Flex, Text } from "@radix-ui/themes";
+import { Dialog, Flex, Text } from "@radix-ui/themes";
 import {
   FormState,
   initialState,
   swapPoints,
   swapPointSchema,
 } from "@repo/api";
-import { Button, CoinsIcon, InputField } from "@repo/ui";
+import { Button, InputField } from "@repo/ui";
 import confetti from "canvas-confetti";
 import { Form } from "radix-ui";
 import { useActionState, useEffect, useState } from "react";
 import z from "zod";
+import { SuccessCard } from "./SuccessCard";
 interface SwapFormProps {
   name: string;
   availablePoints: number;
@@ -59,36 +60,13 @@ const SwapForm: React.FC<SwapFormProps> = ({
     }
   };
 
-  const buttonText = isPending
-    ? "Swapping..."
-    : state.success
-      ? "Success"
-      : "Swap";
-
   const getContent = () => {
     if (state.success && availablePoints === 0) {
-      return (
-        <Flex direction="column" gap="4" align="center">
-          <Box>
-            <CoinsIcon />
-          </Box>
-          <Text align="center">Well done!</Text>
-          <Text align="center" color="gray">
-            No coins left — time to earn some more!
-          </Text>
-        </Flex>
-      );
+      return <SuccessCard text="No coins left — time to earn some more!" />;
     }
 
     if (state.success) {
-      return (
-        <Flex direction="column" gap="4" align="center">
-          <Box>
-            <CoinsIcon />
-          </Box>
-          <Text align="center">Well done! Coins exchanged.</Text>
-        </Flex>
-      );
+      return <SuccessCard text="Coins exchanged." />;
     }
 
     return (
@@ -122,7 +100,7 @@ const SwapForm: React.FC<SwapFormProps> = ({
               disabled={isPending || !!clientError}
               color={state.success ? "green" : "violet"}
             >
-              {buttonText}
+              {isPending ? "Swapping..." : "Swap"}
             </Button>
           </Flex>
         </Form.Root>

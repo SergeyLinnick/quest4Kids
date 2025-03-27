@@ -6,7 +6,7 @@ import type { FormState } from "../_common/types";
 import { TASK_STATUS } from "./const";
 import { taskSchema } from "./resolver";
 import { taskService } from "./services";
-import { ITaskResponse, TaskStatusName } from "./types";
+import { ITaskResponse, ITaskStatistics, TaskStatusName } from "./types";
 
 export const addTask = async (
   state: FormState | undefined,
@@ -31,7 +31,7 @@ export const addTask = async (
   }
 };
 
-export const fetchChildTasks = async (filters?: {
+export const getTasks = async (filters?: {
   [key: string]: string;
 }): Promise<ITaskResponse> => {
   return await taskService.getTasks(filters);
@@ -87,4 +87,11 @@ export const changeStatusTask = async (
     console.error("Error updating task:", error);
     throw new Error(`Failed to update task. Please try again later: ${error}`);
   }
+};
+
+export const getTaskStatistics = async (filters?: {
+  [key: string]: string;
+}): Promise<ITaskStatistics[]> => {
+  const response = await taskService.taskStatistics(filters);
+  return response.data;
 };

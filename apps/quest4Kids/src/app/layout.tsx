@@ -6,6 +6,7 @@ import "@radix-ui/themes/styles.css";
 import "@repo/ui/globals.css";
 
 import { Theme } from "@radix-ui/themes";
+import { ClerkProvider } from "@repo/clerk";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next";
 
@@ -30,14 +31,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeProvider attribute="class">
-          <Theme accentColor="violet">
-            <NuqsAdapter>{children}</NuqsAdapter>
-          </Theme>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${geistSans.variable} ${geistMono.variable}`}>
+          <ThemeProvider attribute="class">
+            <Theme accentColor="violet">
+              <NuqsAdapter>{children}</NuqsAdapter>
+            </Theme>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

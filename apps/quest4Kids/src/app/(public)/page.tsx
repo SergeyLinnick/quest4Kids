@@ -1,6 +1,7 @@
+import { buttonVariants } from "@/components/ui/button";
 import { PAGE_PATH } from "@/consts";
 import { Box, Card, Heading } from "@radix-ui/themes";
-import { ButtonLink } from "@repo/ui";
+import Link from "next/link";
 import styles from "./page.module.css";
 
 export default function LandingPage() {
@@ -73,7 +74,16 @@ export default function LandingPage() {
                   and teaching your kids that responsibility can be rewarding!
                 </Heading>
                 <Heading align="center">
-                  <ButtonLink href={PAGE_PATH.SIGNIN}>Get Started</ButtonLink>
+                  <Link
+                    href={PAGE_PATH.SIGNIN}
+                    className={buttonVariants({ variant: "outline" })}
+                  >
+                    Get Started
+                  </Link>
+
+                  <h1 className="text-3xl font-bold underline">
+                    Hello Tailwind!
+                  </h1>
                 </Heading>
               </section>
             </main>

@@ -11,7 +11,7 @@
     visibility: hidden;
   }
 
-  &:hover {
+  &:hover:not(.disabled) {
     transition:
       background-color 0.2s ease-out,
       box-shadow 0.2s ease-out;

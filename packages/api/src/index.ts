@@ -20,4 +20,4 @@ export type {
   TaskStatus,
   TaskStatusName,
 } from "./tasks";
-export { addAvatar, editChildAccountById, fetchAvatar } from "./user";
+export { addAvatar, fetchAvatar, updateProfile } from "./user";

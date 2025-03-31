@@ -9,6 +9,7 @@ export type FormState = {
   success?: boolean;
   values?: FormData;
   id?: string;
+  isParentProfile?: boolean;
   message?: string;
 };
 

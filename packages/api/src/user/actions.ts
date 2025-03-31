@@ -3,6 +3,7 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { handleValidationError } from "../_common/formUtils";
 import type { FormState } from "../_common/types";
+import { profileService } from "../profile";
 import {
   accountSchemaEmail,
   accountSchemaName,
@@ -43,11 +44,12 @@ export const fetchAvatar = async (id: string): Promise<string> => {
   return avatar;
 };
 
-export const editChildAccountById = async (
+export const updateProfile = async (
   state: FormState | undefined,
   formData: FormData,
 ): Promise<FormState> => {
   const id = state?.id;
+  const isParentProfile = state?.isParentProfile;
 
   const name = formData.get("name")?.toString();
   const email = formData.get("email")?.toString();
@@ -80,10 +82,14 @@ export const editChildAccountById = async (
   try {
     const data = await validate();
 
-    await userService.updateChildAccount({ id, ...data });
-
+    if (isParentProfile) {
+      await profileService.updateParentAccount(data);
+    } else {
+      await userService.updateChildAccount({ id, ...data });
+    }
     revalidatePath(`/kids/${id}/profile`);
     revalidatePath(`/kids`);
+    revalidatePath(`/profile`);
     revalidateTag("children-list");
 
     return {

@@ -14,4 +14,16 @@ export const profileService = {
 
     return authHttpClient.fetch(options);
   },
+
+  updateParentAccount: (data: any): Promise<any> => {
+    const { email, name, password, oldPassword } = data;
+
+    const options = {
+      method: "PATCH",
+      url: `${api}${API_PATH.AUTH.UPDATE_PROFILE}`,
+      body: JSON.stringify({ email, name, password, oldPassword }),
+    };
+
+    return authHttpClient.fetch(options);
+  },
 };

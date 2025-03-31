@@ -4,5 +4,6 @@ export {
   AvatarForm,
   ChangePasswordForm,
   InlineEditProfile,
+  ProfileFormsComposer,
 } from "./profileForm";
 export { RemoveTaskForm, TaskForm } from "./taskForm";

@@ -1,7 +1,11 @@
-import { AvatarForm, InlineEditProfile } from "@/components";
-import { Box, Flex, Heading } from "@radix-ui/themes";
+import { ProfileFormsComposer } from "@/components";
+import { ROLE } from "@/consts";
+import { RoleType } from "@/types";
+import { Box, Heading } from "@radix-ui/themes";
 import { fetchAvatar, fetchChildById } from "@repo/api";
-import { AccountAge, ButtonLink } from "@repo/ui";
+import { auth } from "@repo/auth";
+import { AccountAge } from "@repo/ui";
+import { notFound } from "next/navigation";
 
 interface AddTaskPageProps {
   params: Promise<{
@@ -17,7 +21,11 @@ export default async function ChildProfilePage({ params }: AddTaskPageProps) {
   const childName = childData?.name;
   const createdAt: string | undefined = childData?.createdAt;
 
-  if (!childId) return null;
+  if (!childId) return notFound();
+
+  const session = await auth();
+  const currentUserRole: RoleType = session?.user?.role;
+  const isParentRole = currentUserRole === ROLE.PARENT;
 
   return (
     <>
@@ -26,32 +34,13 @@ export default async function ChildProfilePage({ params }: AddTaskPageProps) {
       </Heading>
 
       <Box maxWidth="400px">
-        <Flex direction="column" gap="6">
-          <InlineEditProfile
-            label="Name"
-            name="name"
-            type="text"
-            value={childData.name}
-            id={childId}
-          />
-
-          <InlineEditProfile
-            label="Email"
-            name="email"
-            type="text"
-            value={childData.email}
-            id={childId}
-          />
-
-          <AvatarForm id={childId} avatar={avatar} />
-
-          <ButtonLink
-            href={`/kids/${childId}/profile/change-password`}
-            variant="outline"
-          >
-            Change current Password
-          </ButtonLink>
-        </Flex>
+        <ProfileFormsComposer
+          id={childId}
+          userData={childData}
+          avatar={avatar}
+          isParentProfile={false}
+          isParentRole={isParentRole}
+        />
       </Box>
     </>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { editChildAccountById } from "@repo/api";
+import { updateProfile } from "@repo/api";
 import { InlineEdit } from "@repo/ui";
 import { useActionState } from "react";
 
@@ -10,6 +10,8 @@ type InlineEditProfileProps = {
   type: "text" | "email" | "password";
   value: string;
   id: string;
+  isParentProfile: boolean;
+  isDisabled?: boolean;
 };
 
 export const InlineEditProfile = ({
@@ -18,13 +20,20 @@ export const InlineEditProfile = ({
   type = "text",
   value = "",
   id,
+  isParentProfile,
+  isDisabled,
 }: InlineEditProfileProps) => {
   const formData = new FormData();
   formData.set(name, value);
-  const initialState = { errors: new Map(), values: formData, id };
+  const initialState = {
+    errors: new Map(),
+    values: formData,
+    id,
+    isParentProfile,
+  };
 
   const [state, formAction, isPending] = useActionState(
-    editChildAccountById,
+    updateProfile,
     initialState,
   );
 
@@ -40,6 +49,7 @@ export const InlineEditProfile = ({
       isPending={isPending}
       values={values || formData}
       formAction={formAction}
+      isDisabled={isDisabled}
     />
   );
 };

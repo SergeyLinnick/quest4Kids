@@ -2,6 +2,7 @@ export const API_PATH = {
   AUTH: {
     REGISTER: "/auth/register",
     PROFILE: "/auth/profile",
+    UPDATE_PROFILE: "/auth/profile",
   },
   USER: {
     ADD_CHILD: "/user/create-child-account",

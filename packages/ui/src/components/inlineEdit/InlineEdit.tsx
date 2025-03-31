@@ -16,6 +16,7 @@ interface InlineEditProps {
   errors: Map<string, string>;
   values: FormData;
   formAction: (formData: FormData) => void;
+  isDisabled?: boolean;
 }
 
 export const InlineEdit: React.FC<InlineEditProps> = ({
@@ -27,6 +28,7 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
   errors,
   values,
   formAction,
+  isDisabled,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -47,8 +49,8 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
           <Form.Label>{label}</Form.Label>
         </Form.Field>
       </Flex>
-      {isEditing ? (
-        <div className={styles.inputHolder}>
+      {isEditing && !isDisabled ? (
+        <div className={`${styles.inputHolder} `}>
           <InputField
             label=""
             name={name}
@@ -84,11 +86,11 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
       ) : (
         <div
           title={`Click to edit ${label}`}
-          className={styles.valueHolder}
+          className={`${styles.valueHolder} ${isDisabled ? styles.disabled : ""}`}
           onClick={() => setIsEditing(true)}
         >
           {value || <i>Click to edit {label}</i>}
-          <div className={styles.iconHolder}>
+          <div className={`${styles.iconHolder}`}>
             <Pencil1Icon />
           </div>
         </div>

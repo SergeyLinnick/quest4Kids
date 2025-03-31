@@ -1,7 +1,7 @@
 "use client";
 
 import { Badge, DataList, Flex, Heading, Text } from "@radix-ui/themes";
-import { editChildAccountById } from "@repo/api";
+import { updateProfile } from "@repo/api";
 import { Button, InputField } from "@repo/ui";
 import { Form } from "radix-ui";
 import { useActionState } from "react";
@@ -13,10 +13,15 @@ interface ChangePasswordFormProps {
 export const ChangePasswordForm = ({ id }: ChangePasswordFormProps) => {
   const formData = new FormData();
 
-  const initialState = { errors: new Map(), values: formData, id };
+  const initialState = {
+    errors: new Map(),
+    values: formData,
+    id,
+    success: false,
+  };
 
   const [state, formAction, isPending] = useActionState(
-    editChildAccountById,
+    updateProfile,
     initialState,
   );
 
@@ -53,7 +58,7 @@ export const ChangePasswordForm = ({ id }: ChangePasswordFormProps) => {
         {errors.get("common") && (
           <Text color="red">{errors.get("common")}</Text>
         )}
-        {state.success && (
+        {"success" in state && state.success && (
           <Text color="green">Password changed successfully!</Text>
         )}
 

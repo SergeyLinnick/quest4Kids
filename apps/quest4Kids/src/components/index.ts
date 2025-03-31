@@ -3,6 +3,7 @@ export {
   ChangePasswordForm,
   ChildForm,
   InlineEditProfile,
+  ProfileFormsComposer,
   RemoveTaskForm,
   SignIn,
   SignOut,

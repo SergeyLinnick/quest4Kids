@@ -1,1 +1,1 @@
-export { addAvatar, editChildAccountById, fetchAvatar } from "./actions";
+export { addAvatar, fetchAvatar, updateProfile } from "./actions";

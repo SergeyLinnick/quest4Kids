@@ -1,7 +1,9 @@
 import { buttonVariants } from "@/components/ui/button";
 import { PAGE_PATH } from "@/consts";
 import { Box, Card, Heading } from "@radix-ui/themes";
+import { Button } from "@repo/ui-tw";
 import Link from "next/link";
+
 import styles from "./page.module.css";
 
 export default function LandingPage() {
@@ -80,6 +82,8 @@ export default function LandingPage() {
                   >
                     Get Started
                   </Link>
+
+                  <Button variant="destructive">Hello Tailwind!</Button>
 
                   <h1 className="text-3xl font-bold underline">
                     Hello Tailwind!

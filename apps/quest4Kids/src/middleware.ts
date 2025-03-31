@@ -11,7 +11,9 @@ export async function middleware(request: NextRequest) {
 
   const accessToken = session?.user?.accessToken;
   const isAuthenticated = !!accessToken;
-  const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
+  const isPublicRoute = PUBLIC_ROUTES.some((route) =>
+    nextUrl.pathname.startsWith(route),
+  );
 
   if (isAuthenticated && isPublicRoute) {
     return NextResponse.redirect(new URL(PAGE_PATH.DASHBOARD, request.url));

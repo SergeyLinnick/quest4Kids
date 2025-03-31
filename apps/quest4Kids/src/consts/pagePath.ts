@@ -11,6 +11,8 @@ export const PAGE_PATH = {
   DASHBOARD: "/dashboard",
   ABOUT: "/about",
   PROFILE: "/profile",
+
+  MARKETING: "/marketing",
 };
 
 export const PAGE_PATH_PARENT = {
@@ -31,6 +33,7 @@ export const PUBLIC_ROUTES = [
   PAGE_PATH.SIGNIN,
   PAGE_PATH.SIGNUP,
   PAGE_PATH.ABOUT,
+  PAGE_PATH.MARKETING,
 
   PAGE_PATH.AUTH + PAGE_PATH.CLERK_SIGNIN,
 ];

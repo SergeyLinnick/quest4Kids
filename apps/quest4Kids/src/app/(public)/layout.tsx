@@ -11,6 +11,7 @@ export default function RootLayout({
   return (
     <>
       <Header>
+        <a href="/marketing">Marketing</a>
         <ButtonLink
           href={PAGE_PATH.ABOUT}
           size="2"

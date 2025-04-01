@@ -1,6 +1,4 @@
-@import "tailwindcss";
 @import "@repo/ui-tw/styles/default.css";
-
 /**
  * Tailwind CSS official document:
  * https://tailwindcss.com/docs/detecting-classes-in-source-files

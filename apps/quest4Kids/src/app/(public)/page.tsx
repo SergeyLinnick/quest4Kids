@@ -1,7 +1,6 @@
-import { buttonVariants } from "@/components/ui/button";
 import { PAGE_PATH } from "@/consts";
-import { Box, Card, Heading } from "@radix-ui/themes";
-import { Button } from "@repo/ui-tw";
+import { Box, Card, Flex, Heading } from "@radix-ui/themes";
+import { Button, buttonVariants } from "@repo/ui-tw";
 import Link from "next/link";
 
 import styles from "./page.module.css";
@@ -77,18 +76,21 @@ export default function LandingPage() {
                 </Heading>
                 <Heading align="center">
                   <Link
-                    href={PAGE_PATH.SIGNIN}
                     className={buttonVariants({ variant: "outline" })}
+                    href={PAGE_PATH.SIGNIN}
                   >
                     Get Started
                   </Link>
-
-                  <Button variant="destructive">Hello Tailwind!</Button>
-
-                  <h1 className="text-3xl font-bold underline">
-                    Hello Tailwind!
-                  </h1>
                 </Heading>
+                <Flex align="center" justify="center" my="2">
+                  <Button variant="destructive" className="text-center">
+                    Tailwind Button
+                  </Button>
+                </Flex>
+
+                <h1 className="text-3xl font-bold underline text-center">
+                  Hello Tailwind!
+                </h1>
               </section>
             </main>
           </Card>

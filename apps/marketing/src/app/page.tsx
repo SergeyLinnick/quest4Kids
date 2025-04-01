@@ -1,46 +1,46 @@
-import { Badge, Button } from "@repo/ui-tw";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="body">
-      <div className="test">Marketing</div>
-      <a href="/">Go Home</a>
-      <div>
-        <Button variant="destructive">Click me</Button>
+    <section className="relative pt-16 items-center flex h-screen max-h-215">
+      <div className="container mx-auto items-center flex flex-wrap">
+        <div className="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
+          <div className="pt-32 sm:pt-0">
+            <h2 className="font-semibold text-4xl text-blueGray-600">
+              Turn Chores into Adventures!
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
+              Make everyday tasks exciting! Assign fun challenges to your kids,
+              reward their achievements, and watch them grow.
+            </p>
+            <div className="mt-12">
+              <a
+                href="/"
+                target="_blank"
+                className="get-started text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-lightBlue-500 active:bg-lightBlue-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
+                rel="noreferrer"
+              >
+                Get started
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="mt-10">Test div</div>
-      <>
-        <Badge variant="default">Badge</Badge>
-        <Badge variant="secondary">Badge</Badge>
-        <Badge variant="destructive">Badge</Badge>
-        <Badge variant="outline" asChild>
-          <a href="/">Badge</a>
-        </Badge>
-        <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">
-          Badge
-        </span>
-        <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset">
-          Badge
-        </span>
-        <span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-yellow-600/20 ring-inset">
-          Badge
-        </span>
-        <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">
-          Badge
-        </span>
-        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-700/10 ring-inset">
-          Badge
-        </span>
-        <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-700/10 ring-inset">
-          Badge
-        </span>
-        <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-purple-700/10 ring-inset">
-          Badge
-        </span>
-        <span className="inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-pink-700/10 ring-inset">
-          Badge
-        </span>
-      </>
-    </div>
+
+      {/* <Image
+        className="absolute top-0 b-auto right-0 pt-16 sm:w-6/12 -mt-48 sm:mt-0 w-10/12 max-h-860px"
+        src="/images/img01.jpg"
+        alt="Turn Chores into Adventures!"
+        width={1000}
+        height={1000}
+      /> */}
+
+      <Image
+        src="/images/img01.jpg"
+        alt="Turn Chores into Adventures!"
+        width={1000}
+        height={1000}
+      />
+    </section>
   );
 }

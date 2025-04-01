@@ -1,6 +1,6 @@
-import { Header } from "@/components";
 import { PAGE_PATH } from "@/consts";
 import { ButtonLink } from "@repo/ui";
+import { Header } from "@repo/ui-tw";
 import styles from "./../page.module.css";
 
 export default function RootLayout({

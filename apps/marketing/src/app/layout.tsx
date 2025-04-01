@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 
+import { Header } from "@repo/ui-tw";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,7 +17,14 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute="class">{children}</ThemeProvider>
+        <ThemeProvider attribute="class">
+          <Header isOutside>
+            <a href="/marketing">About Us</a>
+            <a href="/signup">Sign Up</a>
+            <a href="/signin">Sign In</a>
+          </Header>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

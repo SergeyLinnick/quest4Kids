@@ -10,5 +10,4 @@ export {
   SignUp,
   TaskForm,
 } from "./forms";
-export { Header } from "./layouts";
 export { TasksList } from "./tasks";

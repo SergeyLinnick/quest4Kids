@@ -2,7 +2,7 @@ import { auth, Session } from "@repo/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { PAGE_PATH, PUBLIC_ROUTES } from "./consts";
 
-// Middleware for clerk
+// Clerk auth
 // export const middleware = clerkMiddleware(async (auth, request) => {
 export async function middleware(request: NextRequest) {
   const { nextUrl } = request;
@@ -11,9 +11,7 @@ export async function middleware(request: NextRequest) {
 
   const accessToken = session?.user?.accessToken;
   const isAuthenticated = !!accessToken;
-  const isPublicRoute = PUBLIC_ROUTES.some((route) =>
-    nextUrl.pathname.startsWith(route),
-  );
+  const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
 
   if (isAuthenticated && isPublicRoute) {
     return NextResponse.redirect(new URL(PAGE_PATH.DASHBOARD, request.url));
@@ -25,7 +23,7 @@ export async function middleware(request: NextRequest) {
 
   return NextResponse.next();
 }
-// Middleware for clerk
+// Clerk auth
 // });
 
 export const config = {

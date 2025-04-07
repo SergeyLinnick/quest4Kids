@@ -10,3 +10,17 @@ export const TASK_POINTS = {
   HARD: 10,
   VERY_HARD: 15,
 } as const;
+
+export const TASK_LABELS = {
+  HOME: "Home",
+  SCHOOL: "School",
+  SPORTS: "Sports",
+  ART: "Art",
+  MUSIC: "Music",
+  READING: "Reading",
+  FRIENDS: "Friends",
+  FAMILY: "Family",
+  SCIENCE: "Science",
+  CODING: "Coding",
+  NATURE: "Nature",
+} as const;

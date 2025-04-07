@@ -2,7 +2,6 @@ import { PAGE_PATH } from "@/consts";
 import { Box, Card, Flex, Heading } from "@radix-ui/themes";
 import { Button, buttonVariants } from "@repo/ui-tw";
 import Link from "next/link";
-import TestSelect from "./testSelect";
 
 import styles from "./page.module.css";
 
@@ -88,7 +87,6 @@ export default function LandingPage() {
                     Tailwind Button
                   </Button>
                 </Flex>
-                <TestSelect />
               </section>
             </main>
           </Card>

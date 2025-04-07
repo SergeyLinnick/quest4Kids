@@ -1,4 +1,4 @@
-import { TASK_STATUS } from "./const";
+import { TASK_LABELS, TASK_STATUS } from "./const";
 
 export interface ITask {
   id: string;
@@ -7,10 +7,11 @@ export interface ITask {
   points: number;
   status: TaskStatusName;
   userId: string;
-  // labels?: { name: string }[];
+  labels: TaskLabelsName[];
 }
-
-export type ICreateTask = Omit<ITask, "id">;
+// TODO fix types
+// export type ICreateTask = Omit<ITask, "id">;
+export type ICreateTask = any;
 
 export type IUpdateTask = Partial<ICreateTask>;
 
@@ -21,6 +22,8 @@ export type ITaskResponse = {
 export type TaskStatus = (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
 export type TaskStatusName =
   (typeof TASK_STATUS)[keyof typeof TASK_STATUS]["name"];
+
+export type TaskLabelsName = (typeof TASK_LABELS)[keyof typeof TASK_LABELS];
 
 export interface ITaskStatistics {
   openTasks: number;

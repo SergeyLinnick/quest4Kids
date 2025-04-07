@@ -1,12 +1,13 @@
 "use client";
 
 import { Box, Flex, RadioCards, Skeleton, Text } from "@radix-ui/themes";
-import { addTask, initialState, TASK_POINTS, TASK_STATUS } from "@repo/api";
+import { addTask, TASK_LABELS, TASK_POINTS, TASK_STATUS } from "@repo/api";
 import { Button, InputField } from "@repo/ui";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
 import { Form as RadixForm } from "radix-ui";
 import { useActionState, useEffect } from "react";
+import { TaskLabelsSelect } from "./TaskLabelsSelect";
 
 interface TaskFormProps {
   childId: string;
@@ -15,7 +16,12 @@ interface TaskFormProps {
 
 export const TaskForm = ({ childId, isModal = false }: TaskFormProps) => {
   const router = useRouter();
-  // useActionState is available with React 19 (Next.js App Router)
+  const formData = new FormData();
+  formData.set("labels", TASK_LABELS.HOME);
+  const initialState = {
+    errors: new Map(),
+    values: formData,
+  };
   const [state, formAction, isPending] = useActionState(addTask, initialState);
 
   const { values, errors, success } = state;
@@ -51,6 +57,13 @@ export const TaskForm = ({ childId, isModal = false }: TaskFormProps) => {
               error={errors.get("description")}
               name="description"
               as="textarea"
+            />
+
+            <TaskLabelsSelect
+              label="Task Label"
+              isLoading={isPending}
+              values={values}
+              errors={errors}
             />
 
             <Flex direction="column" gap="2" asChild>

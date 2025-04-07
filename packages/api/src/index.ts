@@ -10,6 +10,7 @@ export {
   deleteTask,
   getTasks,
   getTaskStatistics,
+  TASK_LABELS,
   TASK_POINTS,
   TASK_STATUS,
 } from "./tasks";

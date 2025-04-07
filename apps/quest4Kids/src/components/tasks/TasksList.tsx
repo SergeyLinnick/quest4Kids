@@ -1,12 +1,21 @@
 import { Badge, Flex, Table } from "@radix-ui/themes";
-import { ITask, TASK_STATUS } from "@repo/api";
+import { TASK_LABELS, TASK_STATUS } from "@repo/api";
 import { ChangeStatusTaskForm } from "../forms/taskForm/ChangeStatusTaskForm";
 import { RemoveTaskForm } from "../forms/taskForm/RemoveTaskForm";
 
+import { TaskLabelsSelect } from "../forms";
 import styles from "./taskList.module.css";
 
 interface TasksListProps {
-  tasks: ITask[];
+  tasks: {
+    id: string;
+    title: string;
+    description: string;
+    points: number;
+    status: string;
+    userId: string;
+    labels: { id: string; name: string }[];
+  }[];
   childId: string;
   hideDelete?: boolean;
 }
@@ -24,6 +33,8 @@ export const TasksList = ({
           <Table.ColumnHeaderCell>Description</Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Coins</Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>Labels</Table.ColumnHeaderCell>
+
           <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
         </Table.Row>
       </Table.Header>
@@ -34,6 +45,11 @@ export const TasksList = ({
           const isStatusDone = status === TASK_STATUS.DONE.name;
           const doneClassName = isStatusDone ? styles.done : "";
           const isStatusInProgress = status === TASK_STATUS.IN_PROGRESS.name;
+
+          const taskLabel = task?.labels?.[0]?.name;
+
+          const values = new FormData();
+          values.set("labels", taskLabel || TASK_LABELS.HOME);
 
           return (
             <Table.Row key={task.id} align="center">
@@ -46,12 +62,15 @@ export const TasksList = ({
               <Table.Cell>{task.points}</Table.Cell>
               <Table.Cell>
                 <Badge
-                  color={TASK_STATUS[status].color}
+                  color={TASK_STATUS[status as keyof typeof TASK_STATUS]?.color}
                   variant="soft"
                   radius="full"
                 >
-                  {TASK_STATUS[status].value}
+                  {TASK_STATUS[status as keyof typeof TASK_STATUS]?.value}
                 </Badge>
+              </Table.Cell>
+              <Table.Cell>
+                <TaskLabelsSelect isLoading={false} values={values} />
               </Table.Cell>
               <Table.Cell>
                 <Flex gap="2">

@@ -6,13 +6,23 @@ import type { FormState } from "../_common/types";
 import { TASK_STATUS } from "./const";
 import { taskSchema } from "./resolver";
 import { taskService } from "./services";
-import { ITaskResponse, ITaskStatistics, TaskStatusName } from "./types";
+import {
+  ITaskResponse,
+  ITaskStatistics,
+  TaskLabelsName,
+  TaskStatusName,
+} from "./types";
 
 export const addTask = async (
   state: FormState | undefined,
   formData: FormData,
 ): Promise<FormState> => {
   const userId = formData.get("childId");
+  const labelsArr: TaskLabelsName[] = [];
+  const label = formData.get("labels");
+  if (label && typeof label === "string") {
+    labelsArr.push(label as TaskLabelsName);
+  }
 
   try {
     const task = await taskSchema.parse({
@@ -20,6 +30,7 @@ export const addTask = async (
       description: formData.get("description"),
       points: Number(formData.get("points")),
       status: formData.get("status"),
+      labels: labelsArr,
       userId,
     });
     await taskService.addTask(task);

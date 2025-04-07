@@ -32,7 +32,10 @@ export async function TasksListWrapper({
 
   return (
     <TasksList
-      tasks={tasksData?.data}
+      tasks={tasksData?.data.map((task) => ({
+        ...task,
+        labels: task.labels.map((label) => ({ id: label, name: label })),
+      }))}
       childId={childId}
       hideDelete={!isParent}
     />

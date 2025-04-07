@@ -6,4 +6,4 @@ export {
   InlineEditProfile,
   ProfileFormsComposer,
 } from "./profileForm";
-export { RemoveTaskForm, TaskForm } from "./taskForm";
+export { RemoveTaskForm, TaskForm, TaskLabelsSelect } from "./taskForm";

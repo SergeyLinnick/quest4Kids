@@ -1,6 +1,12 @@
 import { API_PATH } from "../_common/consts";
 import { authHttpClient } from "../_common/fetchInstance";
-import { ITask, ITaskResponse, ITaskStatistics, IUpdateTask } from "./types";
+import {
+  ICreateTask,
+  ITask,
+  ITaskResponse,
+  ITaskStatistics,
+  IUpdateTask,
+} from "./types";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
 

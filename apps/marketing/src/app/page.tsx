@@ -36,7 +36,7 @@ export default function Home() {
       /> */}
 
       <Image
-        src="/images/img01.jpg"
+        src="/marketing/images/img01.jpg"
         alt="Turn Chores into Adventures!"
         width={1000}
         height={1000}

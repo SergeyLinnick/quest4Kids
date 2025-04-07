@@ -1,5 +1,6 @@
 import { PAGE_PATH } from "@/consts";
 import { Box, Card, DataList, Heading, Text } from "@radix-ui/themes";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "../page.module.css";
 
@@ -19,6 +20,12 @@ export default function AboutPage() {
                   Quest4Kids
                 </Text>
               </Link>{" "}
+              <Image
+                src="/images/img01.jpg"
+                alt="Turn Chores into Adventures!"
+                width={1000}
+                height={1000}
+              />
               our mission is to make learning fun, engaging, and rewarding for
               children. As parents and educators, we understand the importance
               of teaching kids responsibility and helping them develop good

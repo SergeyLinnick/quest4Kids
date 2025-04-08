@@ -18,10 +18,10 @@ export const addTask = async (
   formData: FormData,
 ): Promise<FormState> => {
   const userId = formData.get("childId");
-  const labelsArr: TaskLabelsName[] = [];
-  const label = formData.get("labels");
-  if (label && typeof label === "string") {
-    labelsArr.push(label as TaskLabelsName);
+  const labelsArr = [];
+  const label = formData.get("labels") as TaskLabelsName | null;
+  if (label) {
+    labelsArr.push(label);
   }
 
   try {

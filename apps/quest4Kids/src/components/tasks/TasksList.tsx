@@ -1,5 +1,5 @@
 import { Badge, Flex, Table } from "@radix-ui/themes";
-import { TASK_LABELS, TASK_STATUS } from "@repo/api";
+import { ITask, TASK_LABELS, TASK_STATUS } from "@repo/api";
 import { ChangeStatusTaskForm } from "../forms/taskForm/ChangeStatusTaskForm";
 import { RemoveTaskForm } from "../forms/taskForm/RemoveTaskForm";
 
@@ -7,15 +7,7 @@ import { TaskLabelsSelect } from "../forms";
 import styles from "./taskList.module.css";
 
 interface TasksListProps {
-  tasks: {
-    id: string;
-    title: string;
-    description: string;
-    points: number;
-    status: string;
-    userId: string;
-    labels: { id: string; name: string }[];
-  }[];
+  tasks: ITask[];
   childId: string;
   hideDelete?: boolean;
 }

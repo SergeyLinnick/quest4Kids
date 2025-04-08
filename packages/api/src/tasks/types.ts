@@ -7,11 +7,15 @@ export interface ITask {
   points: number;
   status: TaskStatusName;
   userId: string;
-  labels: TaskLabelsName[];
+  labels: {
+    id: string;
+    name: string;
+  }[];
 }
-// TODO fix types
-// export type ICreateTask = Omit<ITask, "id">;
-export type ICreateTask = any;
+
+export type ICreateTask = Omit<ITask, "id" | "labels"> & {
+  labels: string[];
+};
 
 export type IUpdateTask = Partial<ICreateTask>;
 

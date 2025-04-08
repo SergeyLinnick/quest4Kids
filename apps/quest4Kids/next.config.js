@@ -1,11 +1,5 @@
-const URL = process.env.NEXT_PUBLIC_MARKETING_URL;
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // images: {
-  //   domains: ["my-nest-bucket-test.s3.amazonaws.com"],
-  // },
-
   images: {
     remotePatterns: [
       {
@@ -20,18 +14,18 @@ const nextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: "/marketing",
-        destination: `${URL}/marketing`,
-      },
-      {
-        source: "/marketing/:path*",
-        destination: `${URL}/marketing/:path*`,
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/marketing",
+  //       destination: `${URL}/marketing`,
+  //     },
+  //     {
+  //       source: "/marketing/:path*",
+  //       destination: `${URL}/marketing/:path*`,
+  //     },
+  //   ];
+  // },
 };
 
 export default nextConfig;

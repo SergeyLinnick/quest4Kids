@@ -4,7 +4,7 @@
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
-			"env": ["NEXT_PUBLIC_API_URL", "REACT_APP_API_URL", "API_URL", "MARKETING_URL"],
+			"env": ["NEXT_PUBLIC_API_URL", "REACT_APP_API_URL", "API_URL"],
 			"inputs": ["$TURBO_DEFAULT$", ".env*", ".env.local"],
 			"outputs": [".next/**", "!.next/cache/**"]
 		},
@@ -20,6 +20,6 @@
 		}
 	},
 
-	"globalEnv": ["NEXT_PUBLIC_API_URL", "REACT_APP_API_URL", "API_URL", "MARKETING_URL"],
+	"globalEnv": ["NEXT_PUBLIC_API_URL", "REACT_APP_API_URL", "API_URL"],
 	"globalDependencies": [".env"]
 }

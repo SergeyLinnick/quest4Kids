@@ -13,7 +13,6 @@
     "@radix-ui/themes": "^3.2.0",
     "@repo/api": "workspace:*",
     "@repo/auth": "workspace:*",
-    "@repo/clerk": "workspace:*",
     "@repo/ui": "workspace:*",
     "@repo/ui-tw": "workspace:*",
     "@repo/utils": "workspace:*",

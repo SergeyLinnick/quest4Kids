@@ -10,7 +10,6 @@ import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
 
 import { Theme } from "@radix-ui/themes";
-import { ClerkProvider } from "@repo/clerk";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next";
 
@@ -35,16 +34,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          <ThemeProvider attribute="class">
-            <Theme accentColor="violet">
-              <NuqsAdapter>{children}</NuqsAdapter>
-            </Theme>
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <ThemeProvider attribute="class">
+          <Theme accentColor="violet">
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </Theme>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

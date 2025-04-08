@@ -2,8 +2,6 @@ import { auth, Session } from "@repo/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { PAGE_PATH, PUBLIC_ROUTES } from "./consts";
 
-// Clerk auth
-// export const middleware = clerkMiddleware(async (auth, request) => {
 export async function middleware(request: NextRequest) {
   const { nextUrl } = request;
 
@@ -23,8 +21,6 @@ export async function middleware(request: NextRequest) {
 
   return NextResponse.next();
 }
-// Clerk auth
-// });
 
 export const config = {
   matcher: [

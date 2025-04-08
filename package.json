@@ -2,7 +2,6 @@
   "name": "my-turbo-repo",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
     "check-types": "turbo run check-types",
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -10,6 +9,7 @@
     "postinstall": "pnpm syncpack list-mismatches && pnpm syncpack format",
     "preinstall": "pnpm syncpack list-mismatches || (echo 'Version mismatch detected!' && exit 1)",
     "prepare": "husky",
+    "start": "turbo run build",
     "syncpack-check": "pnpm syncpack list-mismatches"
   },
   "devDependencies": {

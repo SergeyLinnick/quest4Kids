@@ -1,5 +1,6 @@
 export {
   addTask,
+  changeLabelsTask,
   changeStatusTask,
   deleteTask,
   getTasks,

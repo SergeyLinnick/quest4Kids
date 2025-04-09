@@ -3,7 +3,7 @@ import { ITask, TASK_LABELS, TASK_STATUS } from "@repo/api";
 import { ChangeStatusTaskForm } from "../forms/taskForm/ChangeStatusTaskForm";
 import { RemoveTaskForm } from "../forms/taskForm/RemoveTaskForm";
 
-import { TaskLabelsSelect } from "../forms";
+import { ChangeLabelsTaskForm } from "../forms/taskForm/ChangeLabelsTaskForm";
 import styles from "./taskList.module.css";
 
 interface TasksListProps {
@@ -33,18 +33,18 @@ export const TasksList = ({
 
       <Table.Body>
         {tasks.map((task) => {
-          const { status } = task;
+          const { status, id: taskId } = task;
           const isStatusDone = status === TASK_STATUS.DONE.name;
           const doneClassName = isStatusDone ? styles.done : "";
           const isStatusInProgress = status === TASK_STATUS.IN_PROGRESS.name;
 
           const taskLabel = task?.labels?.[0]?.name;
 
-          const values = new FormData();
-          values.set("labels", taskLabel || TASK_LABELS.HOME);
+          const initialValues = new FormData();
+          initialValues.set("labels", taskLabel || TASK_LABELS.HOME);
 
           return (
-            <Table.Row key={task.id} align="center">
+            <Table.Row key={taskId} align="center">
               <Table.RowHeaderCell className={doneClassName}>
                 {task.title}
               </Table.RowHeaderCell>
@@ -62,24 +62,28 @@ export const TasksList = ({
                 </Badge>
               </Table.Cell>
               <Table.Cell>
-                <TaskLabelsSelect isLoading={false} values={values} />
+                <ChangeLabelsTaskForm
+                  taskId={taskId}
+                  childId={childId}
+                  initialValues={initialValues}
+                />
               </Table.Cell>
               <Table.Cell>
                 <Flex gap="2">
                   <ChangeStatusTaskForm
-                    taskId={task.id}
+                    taskId={taskId}
                     childId={childId}
                     status={TASK_STATUS.IN_PROGRESS}
                     isDisabled={isStatusInProgress || isStatusDone}
                   />
                   <ChangeStatusTaskForm
-                    taskId={task.id}
+                    taskId={taskId}
                     childId={childId}
                     status={TASK_STATUS.DONE}
                     isDisabled={isStatusDone}
                   />
                   {!hideDelete && (
-                    <RemoveTaskForm taskId={task.id} childId={childId} />
+                    <RemoveTaskForm taskId={taskId} childId={childId} />
                   )}
                 </Flex>
               </Table.Cell>

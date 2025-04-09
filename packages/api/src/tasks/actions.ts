@@ -100,6 +100,37 @@ export const changeStatusTask = async (
   }
 };
 
+export const changeLabelsTask = async (
+  state: FormState | undefined,
+  formData: FormData,
+): Promise<FormState> => {
+  const errors = new Map<string, string>();
+
+  const taskId = formData?.get?.("taskId")?.toString();
+  const childId = formData?.get?.("childId")?.toString();
+  const label = formData?.get?.("labels") as TaskLabelsName | null;
+
+  const labelsArr = [];
+  if (label) {
+    labelsArr.push(label);
+  }
+
+  if (!taskId) {
+    errors.set("common", "Task ID is required");
+    return { errors };
+  }
+
+  try {
+    await taskService.updateTask(taskId, { labels: labelsArr });
+    revalidatePath(`/kids/${childId}`);
+
+    return { errors: new Map(), success: true };
+  } catch (error) {
+    console.error("Error updating task:", error);
+    throw new Error(`Failed to update task. Please try again later: ${error}`);
+  }
+};
+
 export const getTaskStatistics = async (filters?: {
   [key: string]: string;
 }): Promise<ITaskStatistics[]> => {

@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // output: "standalone",
   images: {
     remotePatterns: [
       {
@@ -14,6 +15,10 @@ const nextConfig = {
       },
     ],
   },
+
+  // env: {
+  //   NEXTAUTH_SECRET: process.env.NEXT_PUBLIC_AUTH_SECRET,
+  // },
   // async rewrites() {
   //   return [
   //     {

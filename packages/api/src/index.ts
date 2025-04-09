@@ -6,6 +6,7 @@ export { swapPoints, swapPointSchema } from "./points";
 export { fetchProfile } from "./profile";
 export {
   addTask,
+  changeLabelsTask,
   changeStatusTask,
   deleteTask,
   getTasks,

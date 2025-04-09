@@ -8,6 +8,7 @@ interface TaskLabelsSelectProps {
   isLoading: boolean;
   values: FormData | undefined;
   errors?: Map<string, string>;
+  onChange?: (value: string) => void;
 }
 
 export const TaskLabelsSelect = ({
@@ -15,6 +16,7 @@ export const TaskLabelsSelect = ({
   isLoading,
   values,
   errors,
+  onChange,
 }: TaskLabelsSelectProps) => {
   const labelsOptions = Object.values(TASK_LABELS).map((item) => ({
     label: item,
@@ -30,6 +32,7 @@ export const TaskLabelsSelect = ({
       name="labels"
       options={labelsOptions}
       classNameTrigger="w-full"
+      onChange={onChange}
     />
   );
 };

@@ -1,4 +1,4 @@
-import { auth } from "@repo/auth";
+import { auth, Session } from "@repo/auth";
 import { getErrorMessage } from "@repo/utils";
 
 const HTTP_STATUS = {
@@ -9,14 +9,15 @@ const HTTP_STATUS = {
   SERVER_ERROR: 500,
 } as const;
 
-interface FetchProps {
+export interface FetchProps {
   url: string;
   method?: string;
   headers?: Record<string, string>;
   body?: string | FormData | URLSearchParams | null;
+  sessionClient?: Session;
 }
 
-class HttpClient {
+export class HttpClient {
   protected async handleError(response: Response): Promise<never> {
     let errorMessage: string;
 
@@ -122,9 +123,17 @@ class AuthHttpClient extends HttpClient {
   private retryCount = 0;
   private maxRetries = 3;
 
-  async fetch<T>({ url, method, headers, ...options }: FetchProps): Promise<T> {
+  async fetch<T>({
+    url,
+    method,
+    headers,
+    sessionClient,
+    ...options
+  }: FetchProps): Promise<T> {
     try {
-      const session = await auth();
+      console.log("sessionClient", sessionClient);
+
+      const session = sessionClient || (await auth());
 
       if (!session?.user?.accessToken) {
         throw new Error("No authentication token available");

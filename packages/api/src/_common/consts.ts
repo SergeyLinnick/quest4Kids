@@ -22,4 +22,8 @@ export const API_PATH = {
   POINTS: {
     SWAP_POINTS: (childId: string) => `/user/${childId}/claim-points`,
   },
+  DASHBOARD: {
+    GET_DASHBOARD_SETTINGS: "/dashboard-settings",
+    UPDATE_DASHBOARD_SETTINGS: "/dashboard-settings",
+  },
 };

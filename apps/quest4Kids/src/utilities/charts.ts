@@ -1,6 +1,5 @@
-import { TASK_STATUS } from "@repo/api";
+import { ITaskStatistics, TASK_STATUS } from "@repo/api";
 import { ChartArea, ChartOptions } from "chart.js";
-import { ITaskStatistics } from "node_modules/@repo/api/src/tasks";
 
 export function createChartGradient(
   ctx: CanvasRenderingContext2D,

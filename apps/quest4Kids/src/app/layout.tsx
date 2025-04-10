@@ -10,6 +10,8 @@ import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
 
 import { Theme } from "@radix-ui/themes";
+import { ApiProvider } from "@repo/api";
+import { SessionProvider } from "@repo/auth";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next";
 
@@ -36,11 +38,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeProvider attribute="class">
-          <Theme accentColor="violet">
-            <NuqsAdapter>{children}</NuqsAdapter>
-          </Theme>
-        </ThemeProvider>
+        <SessionProvider>
+          <ApiProvider>
+            <ThemeProvider attribute="class">
+              <Theme accentColor="violet">
+                <NuqsAdapter>{children}</NuqsAdapter>
+              </Theme>
+            </ThemeProvider>
+          </ApiProvider>
+        </SessionProvider>
       </body>
     </html>
   );

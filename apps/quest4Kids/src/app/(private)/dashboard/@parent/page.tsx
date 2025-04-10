@@ -1,10 +1,12 @@
 import { ROLE } from "@/consts";
 import { generateTaskDataset } from "@/utilities/charts";
-import { getTaskStatistics } from "@repo/api";
+import { fetchDashboardSettings, getTaskStatistics } from "@repo/api";
 import { auth } from "@repo/auth";
 import { notFound } from "next/navigation";
 import { DashboardGrid } from "./DashboardGrid";
 
+import { mapDashboardSettings } from "@/utilities/dashboard";
+import { DashboardSettings } from "./DashboardSettings";
 export default async function DashboardPage() {
   const session = await auth();
 
@@ -12,32 +14,35 @@ export default async function DashboardPage() {
     notFound();
   }
 
-  const statistics = await getTaskStatistics();
+  const [statistics, settings] = await Promise.all([
+    getTaskStatistics(),
+    fetchDashboardSettings(),
+  ]);
 
-  const data = generateTaskDataset(statistics);
+  const taskByChildrenData = generateTaskDataset(statistics);
+  const mappedSettings = mapDashboardSettings(settings);
+
+  const visibilitySettings = mappedSettings.layouts.lg.reduce(
+    (acc, item) => ({
+      ...acc,
+      [item.i]: item.isVisible ?? true,
+    }),
+    {} as Record<string, boolean>,
+  );
 
   return (
-    <>
-      <DashboardGrid data={data} />
-      {/* <Grid columns="1" gap="4" width="auto">
-        <Grid columns="2" gap="4" width="auto">
-          <Card title="Tasks by children">
-            <BarChart data={data} />
-          </Card>
-          <Card>2</Card>
-        </Grid>
-        <Grid columns="3" gap="4" width="auto">
-          <Card>1</Card>
-          <Card>2</Card>
-          <Card>3</Card>
-        </Grid>
-        <Grid columns="4" gap="4" width="auto">
-          <Card>1</Card>
-          <Card>2</Card>
-          <Card>3</Card>
-          <Card>4</Card>
-        </Grid>
-      </Grid> */}
-    </>
+    <div>
+      <div className="flex justify-end">
+        <DashboardSettings
+          settings={mappedSettings}
+          visibilitySettings={visibilitySettings}
+        />
+      </div>
+      <DashboardGrid
+        visibilitySettings={visibilitySettings}
+        settings={mappedSettings}
+        taskByChildrenData={taskByChildrenData}
+      />
+    </div>
   );
 }

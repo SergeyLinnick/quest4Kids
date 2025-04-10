@@ -9,11 +9,12 @@ import {
 interface CardProps {
   children: React.ReactNode;
   title?: string;
+  className?: string;
 }
 
-export const Card = ({ children, title }: CardProps) => {
+export const Card = ({ children, title, className }: CardProps) => {
   return (
-    <CardUI>
+    <CardUI className={className}>
       {title && (
         <Box mb="5">
           <Heading size="4" mb="5">

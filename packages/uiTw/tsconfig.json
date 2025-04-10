@@ -14,7 +14,9 @@
       "@/*": ["./src/*"],
       "@/components/*": ["./src/components/*"],
       "@/ui/*": ["./src/components/ui/*"],
-      "@/layout/*": ["./src/components/layout/*"]
+      "@/layout/*": ["./src/components/layout/*"],
+      "@/icons/*": ["./src/components/icons/*"],
+      "@/lib/*": ["./src/lib/*"]
     }
   }
 }

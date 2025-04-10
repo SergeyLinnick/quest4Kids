@@ -67,7 +67,7 @@ export function BarChart({ data }: { data: CustomChartData }) {
       ref={chartRef}
       options={barChartOptions}
       data={chartData}
-      height={200}
+      height={150}
     />
   );
 }

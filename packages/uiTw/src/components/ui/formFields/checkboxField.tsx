@@ -36,9 +36,6 @@ export const CheckboxField = ({
       control={control}
       name={name}
       render={({ field }) => {
-        console.log("field", field);
-        console.log("field id", id);
-
         return (
           <FormItem
             key={id}

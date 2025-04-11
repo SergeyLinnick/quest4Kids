@@ -11,6 +11,7 @@ export {
   FormField,
   Header,
   Modal,
+  MoveIcon,
   Select,
   SelectContent,
   SelectField,
@@ -23,6 +24,7 @@ export {
   SelectTrigger,
   SelectValue,
   SettingsIcon,
+  WidgetCard,
 } from "./components";
 
 export { cn } from "./lib/utils";

@@ -29,8 +29,6 @@ export const dashboardService = {
       layout: settings,
     };
 
-    console.log("settingsToUpdate", settingsToUpdate);
-
     const options = {
       method: "PUT",
       url: `${api}${API_PATH.DASHBOARD.UPDATE_DASHBOARD_SETTINGS}`,

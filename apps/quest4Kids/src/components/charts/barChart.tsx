@@ -62,12 +62,5 @@ export function BarChart({ data }: { data: CustomChartData }) {
     setChartData(chartData);
   }, [data]);
 
-  return (
-    <Bar
-      ref={chartRef}
-      options={barChartOptions}
-      data={chartData}
-      height={150}
-    />
-  );
+  return <Bar ref={chartRef} options={barChartOptions} data={chartData} />;
 }

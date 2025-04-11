@@ -131,8 +131,6 @@ class AuthHttpClient extends HttpClient {
     ...options
   }: FetchProps): Promise<T> {
     try {
-      console.log("sessionClient", sessionClient);
-
       const session = sessionClient || (await auth());
 
       if (!session?.user?.accessToken) {

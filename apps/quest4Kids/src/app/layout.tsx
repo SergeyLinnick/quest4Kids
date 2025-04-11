@@ -6,8 +6,8 @@ import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import "@repo/ui/globals.css";
 
-import "../../node_modules/react-grid-layout/css/styles.css";
-import "../../node_modules/react-resizable/css/styles.css";
+import "./react-grid-layout.css";
+import "./react-resizable.css";
 
 import { Theme } from "@radix-ui/themes";
 import { ApiProvider } from "@repo/api";

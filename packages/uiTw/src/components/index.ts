@@ -1,6 +1,8 @@
 export { CustomLink } from "./customLink/CustomLink";
+export { MoveIcon } from "./icons/MoveIcon";
 export { SettingsIcon } from "./icons/SettingsIcon";
 export { Header } from "./layout/header/Header";
+export { WidgetCard } from "./layout/widgets/WidgetCard";
 export {
   Badge,
   badgeVariants,

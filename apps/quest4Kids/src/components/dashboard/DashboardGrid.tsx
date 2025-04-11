@@ -1,11 +1,12 @@
 "use client";
 
-import { BarChart } from "@/components/charts/barChart";
-import { IWidgetSettings, useUpdateDashboardSettings } from "@repo/api";
-import { Card } from "@repo/ui";
+import { useMemo } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
+import { IWidgetSettings, useUpdateDashboardSettings } from "@repo/api";
+import { WidgetCard } from "@repo/ui-tw";
+
+import { BarChart } from "../charts/barChart";
 
 export const DashboardGrid = ({
   taskByChildrenData,
@@ -22,9 +23,11 @@ export const DashboardGrid = ({
   settings: { layouts: { lg: IWidgetSettings[] } };
   visibilitySettings: Record<string, boolean>;
 }) => {
+  const ResponsiveGridLayout = useMemo(() => WidthProvider(Responsive), []);
+
   const layoutsInitial = settings?.layouts ?? [];
 
-  const { updateDashboardSettings, isLoading } = useUpdateDashboardSettings();
+  const { updateDashboardSettings } = useUpdateDashboardSettings();
 
   const handleLayoutChange = (
     _layout: any,
@@ -59,33 +62,28 @@ export const DashboardGrid = ({
       margin={[20, 20]}
       autoSize
       onLayoutChange={handleLayoutChange}
+      draggableHandle=".dragItem"
     >
       {visibilitySettings.taskByChildren && (
-        <div key="taskByChildren" className="bg-accent">
-          <Card title="Tasks by kids" className="h-full w-full">
+        <div key="taskByChildren" className="relative group">
+          <WidgetCard title="Tasks by kids">
             <BarChart data={taskByChildrenData} />
-          </Card>
+          </WidgetCard>
         </div>
       )}
       {visibilitySettings.countOfTasks && (
-        <div key="countOfTasks" className="bg-green-100">
-          <Card title="Count of tasks" className="h-full w-full">
-            countOfTasksData
-          </Card>
+        <div key="countOfTasks" className="relative group">
+          <WidgetCard title="Count of tasks">countOfTasksData</WidgetCard>
         </div>
       )}
       {visibilitySettings.children && (
-        <div key="children" className="bg-blue-100">
-          <Card title="Children" className="h-full w-full">
-            childrenData
-          </Card>
+        <div key="children" className="relative group">
+          <WidgetCard title="Children">childrenData</WidgetCard>
         </div>
       )}
       {visibilitySettings.weather && (
-        <div key="weather" className="bg-red-100">
-          <Card title="Weather" className="h-full w-full">
-            weatherData
-          </Card>
+        <div key="weather" className="relative group">
+          <WidgetCard title="Weather">weatherData</WidgetCard>
         </div>
       )}
     </ResponsiveGridLayout>

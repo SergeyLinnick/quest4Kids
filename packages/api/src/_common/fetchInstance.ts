@@ -90,6 +90,7 @@ export class HttpClient {
         },
         body: body ?? undefined,
         signal: controller.signal,
+        referrerPolicy: "unsafe-url",
         ...options,
       });
 

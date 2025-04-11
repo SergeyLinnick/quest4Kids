@@ -19,3 +19,5 @@ export {
   SelectTrigger,
   SelectValue,
 } from "./select";
+
+export { DataTable } from "./table";

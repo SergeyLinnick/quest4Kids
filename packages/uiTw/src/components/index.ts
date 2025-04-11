@@ -1,5 +1,7 @@
 export { CustomLink } from "./customLink/CustomLink";
 export { MoveIcon } from "./icons/MoveIcon";
+export { ArrowDownIcon } from "./icons/arrowDownIcon";
+export { ArrowUpDownIcon } from "./icons/arrowUpDownIcon";
 export { SettingsIcon } from "./icons/SettingsIcon";
 export { Header } from "./layout/header/Header";
 export { WidgetCard } from "./layout/widgets/WidgetCard";
@@ -10,6 +12,7 @@ export {
   buttonVariants,
   CheckboxField,
   CheckboxFields,
+  DataTable,
   Dropdown,
   Form,
   FormField,

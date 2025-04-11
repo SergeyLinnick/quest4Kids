@@ -20,6 +20,7 @@
     "@repo/ui": "workspace:*",
     "@repo/utils": "workspace:*",
     "@tailwindcss/postcss": "^4.0.17",
+    "@tanstack/react-table": "^8.21.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.484.0",

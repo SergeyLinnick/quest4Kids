@@ -2,6 +2,7 @@
 
 import { Heading, Text } from "@radix-ui/themes";
 import { initialState } from "@repo/api";
+import { Button } from "@repo/ui-tw";
 import { useActionState } from "react";
 import { loginUser } from "./actions";
 import styles from "./signin.module.css";
@@ -21,9 +22,9 @@ export function SignIn() {
       <label className={styles.label}>Password</label>
       <input name="password" type="password" className={styles.input} />
 
-      <button type="submit" className={styles.btn}>
-        Sign In
-      </button>
+      <div className="text-center">
+        <Button type="submit">Sign In</Button>
+      </div>
 
       {state?.errors?.size > 0 && (
         <Text color="red">{state?.errors.get("common")}</Text>

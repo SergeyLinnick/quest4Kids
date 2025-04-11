@@ -1,4 +1,6 @@
 export {
+  ArrowDownIcon,
+  ArrowUpDownIcon,
   Badge,
   badgeVariants,
   Button,
@@ -6,6 +8,7 @@ export {
   CheckboxField,
   CheckboxFields,
   CustomLink,
+  DataTable,
   Dropdown,
   Form,
   FormField,
@@ -28,3 +31,5 @@ export {
 } from "./components";
 
 export { cn } from "./lib/utils";
+
+export type { ColumnDef } from "./components/ui/table/index";

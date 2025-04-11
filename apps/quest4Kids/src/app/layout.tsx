@@ -30,6 +30,11 @@ export const metadata: Metadata = {
     "Quest4Kids is a web application where parents can create tasks for children, and children complete them to earn rewards.",
 };
 
+<meta
+  httpEquiv="Content-Security-Policy"
+  content="upgrade-insecure-requests"
+/>;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,6 +42,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <SessionProvider>
           <ApiProvider>

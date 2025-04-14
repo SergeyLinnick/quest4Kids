@@ -1,7 +1,7 @@
 import { Box, Heading } from "@radix-ui/themes";
 import { getTasks } from "@repo/api";
 import Link from "next/link";
-import { TasksList } from "./TasksList";
+import { TasksListTanStack } from "./table/TasksListTanStack";
 
 interface TasksListWrapperProps {
   childId: string;
@@ -31,10 +31,18 @@ export async function TasksListWrapper({
   }
 
   return (
-    <TasksList
-      tasks={tasksData?.data}
-      childId={childId}
-      hideDelete={!isParent}
-    />
+    <>
+      {/* <TasksList
+        tasks={tasksData?.data}
+        childId={childId}
+        hideDelete={!isParent}
+      /> */}
+
+      <TasksListTanStack
+        tasks={tasksData?.data}
+        childId={childId}
+        hideDelete={!isParent}
+      />
+    </>
   );
 }

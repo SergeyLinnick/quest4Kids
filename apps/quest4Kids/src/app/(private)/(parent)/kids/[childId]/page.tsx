@@ -1,6 +1,5 @@
-import { FilterTaskForm } from "@/components/forms/taskForm/FilterTaskForm";
 import { TasksListWrapper } from "@/components/tasks/TasksListWrapper";
-import { Box, Flex, Grid, Heading, Spinner } from "@radix-ui/themes";
+import { Flex, Grid, Heading, Spinner } from "@radix-ui/themes";
 import { fetchChildById } from "@repo/api";
 import { ButtonLink } from "@repo/ui";
 import { Suspense } from "react";
@@ -31,13 +30,16 @@ export default async function ChildPage({
           <ButtonLink href={`/kids/${childId}/add-task`}>Add Task</ButtonLink>
         </Flex>
       </Flex>
-      <Grid columns="1fr 200px" gapX="9" width="100%">
+      <Grid
+        // columns="1fr 200px" gapX="9"
+        width="100%"
+      >
         <Suspense fallback={<Spinner />}>
           <TasksListWrapper childId={childId} status={status} />
         </Suspense>
-        <Box mt="7">
+        {/* <Box mt="7">
           <FilterTaskForm status={status} />
-        </Box>
+        </Box> */}
       </Grid>
     </Flex>
   );

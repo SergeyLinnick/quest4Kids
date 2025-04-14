@@ -36,7 +36,7 @@ export const taskService = {
 
   getTasks: (filters?: { [key: string]: string }): Promise<ITaskResponse> => {
     const searchParams = new URLSearchParams({
-      limit: "20",
+      limit: "50",
     });
 
     if (filters?.status) {

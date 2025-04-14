@@ -15,15 +15,9 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 
-import { Button } from "../button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "../dropdown/components";
-import { Input } from "../formFields/input";
-import { SelectField } from "../select";
+import { DataTableFilter } from "./dataTableFilter";
+import { DataTablePagination } from "./dataTablePagination";
+import { DataTableViewOptions } from "./dataTableViewOptions";
 import {
   Table,
   TableBody,
@@ -33,14 +27,22 @@ import {
   TableRow,
 } from "./table";
 
+interface DataTableFilterConfig {
+  columnId: string;
+  placeholder?: string;
+  className?: string;
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  filter?: DataTableFilterConfig;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  filter,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -70,43 +72,15 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <>
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter by Task Title..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
+        <DataTableFilter
+          table={table}
+          columnId={filter?.columnId}
+          placeholder={filter?.placeholder}
+          className={filter?.className}
         />
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
         <Table>
@@ -159,55 +133,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
 
-      <div className="flex items-center justify-between space-x-2 py-4">
-        <div className="flex-1 text-xs text-muted-foreground">
-          <div>
-            {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
-          </div>
-          <div>
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount()}
-          </div>
-        </div>
-        <div>
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Previous
-            </Button>
-
-            <SelectField
-              name="pagination"
-              label="Page"
-              error={undefined}
-              defaultValue={table.getState().pagination.pageIndex.toString()}
-              onChange={(value) => table.setPageIndex(Number(value))}
-              options={Array.from(
-                { length: table.getPageCount() },
-                (_, index) => ({
-                  label: `${index + 1}`,
-                  value: index.toString(),
-                }),
-              )}
-              classNameTrigger="w-15"
-            />
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Next
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <DataTablePagination table={table} />
+    </>
   );
 }

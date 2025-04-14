@@ -11,6 +11,8 @@ export interface ITask {
     id: string;
     name: string;
   }[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export type ICreateTask = Omit<ITask, "id" | "labels"> & {

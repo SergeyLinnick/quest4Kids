@@ -1,14 +1,21 @@
 export {
   ArrowDownIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ArrowsLeftIcon,
+  ArrowsRightIcon,
   ArrowUpDownIcon,
   Badge,
   badgeVariants,
   Button,
   buttonVariants,
+  Checkbox,
   CheckboxField,
   CheckboxFields,
   CustomLink,
   DataTable,
+  DataTableColumnHeader,
+  DotsIcon,
   Dropdown,
   Form,
   FormField,
@@ -32,4 +39,4 @@ export {
 
 export { cn } from "./lib/utils";
 
-export type { ColumnDef } from "./components/ui/table/index";
+export type { ColumnDef, Row } from "./components/ui/table/index";

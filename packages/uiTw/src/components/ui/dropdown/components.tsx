@@ -12,6 +12,7 @@ export interface IDropdownMenuOption {
   separator?: boolean;
   checkbox?: boolean;
   checked?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 export interface IDropdownMenuGroup {
@@ -300,7 +301,7 @@ function DropdownMenuOption({
 }) {
   return (
     <>
-      <DropdownMenuItem variant={variant} size={size}>
+      <DropdownMenuItem variant={variant} size={size} onClick={option?.onClick}>
         {option.icon}
         {option.label}
       </DropdownMenuItem>

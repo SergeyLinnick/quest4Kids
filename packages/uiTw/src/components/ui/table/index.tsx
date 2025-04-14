@@ -10,5 +10,6 @@ export {
 } from "./table";
 
 export { DataTable } from "./dataTable";
+export { DataTableColumnHeader } from "./dataTableColumnHeader";
 
-export type { ColumnDef } from "@tanstack/react-table";
+export type { ColumnDef, Row } from "@tanstack/react-table";

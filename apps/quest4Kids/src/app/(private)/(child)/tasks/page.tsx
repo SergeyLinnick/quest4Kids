@@ -1,6 +1,5 @@
-import { FilterTaskForm } from "@/components/forms/taskForm/FilterTaskForm";
 import { TasksListWrapper } from "@/components/tasks/TasksListWrapper";
-import { Box, Flex, Grid, Heading, Spinner } from "@radix-ui/themes";
+import { Flex, Grid, Heading, Spinner } from "@radix-ui/themes";
 import { auth } from "@repo/auth";
 import { Suspense } from "react";
 
@@ -26,9 +25,9 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
             isParent={isParent}
           />
         </Suspense>
-        <Box mt="7">
+        {/* <Box mt="7">
           <FilterTaskForm status={status} />
-        </Box>
+        </Box> */}
       </Grid>
     </Flex>
   );

@@ -1,6 +1,6 @@
 import { SignOut } from "@/components";
 import { getMenuItems, PAGE_PATH } from "@/consts";
-import { auth } from "@repo/auth";
+import { auth, SessionProvider } from "@repo/auth";
 import { Avatar, SideBar } from "@repo/ui";
 import { Header } from "@repo/ui-tw";
 import { getUserInitials } from "@repo/utils";
@@ -14,6 +14,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+
   if (!session) return <NotAuthenticated />;
 
   const { user } = session;
@@ -21,7 +22,7 @@ export default async function RootLayout({
   const initials = getUserInitials(user.name);
 
   return (
-    <>
+    <SessionProvider session={session}>
       <Header>
         <SignOut />
         <Link href={PAGE_PATH.PROFILE}>
@@ -32,6 +33,6 @@ export default async function RootLayout({
         <SideBar menuItems={getMenuItems(user.role) || []} />
         <main className={styles.container}>{children}</main>
       </div>
-    </>
+    </SessionProvider>
   );
 }

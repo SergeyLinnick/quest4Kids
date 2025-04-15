@@ -18,19 +18,17 @@ export async function refreshToken(token: any) {
         body: JSON.stringify({ token: token.refreshToken }),
       });
 
-      const responseText = await res.text();
-
-      if (!res.ok) {
-        throw new Error(`Failed to refresh token: ${responseText}`);
+      const refreshed = await res.json();
+      console.log("🔄 refreshed:", refreshed);
+      if (!refreshed.accessToken) {
+        throw new Error(`Failed to refresh token: ${refreshed}`);
       }
-
-      const refreshed = JSON.parse(responseText);
 
       return {
         ...token,
         accessToken: refreshed.accessToken,
-        accessTokenExpires: Date.now() + EXPIRES_IN,
-        refreshToken: refreshed.refreshToken,
+        expiresAt: Date.now() + 60 * 1000, // 1 min,
+        refreshToken: refreshed.refreshToken ?? token.refreshToken,
       };
     })();
 

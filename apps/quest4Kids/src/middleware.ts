@@ -2,12 +2,56 @@ import { auth, Session } from "@repo/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { PAGE_PATH, PUBLIC_ROUTES } from "./consts";
 
+// const sessionCookie =
+//   process.env.NODE_ENV === "production"
+//     ? "__Secure-authjs.session-token"
+//     : "authjs.session-token";
+
 export async function middleware(request: NextRequest) {
   const { nextUrl } = request;
 
   const session: Session | null = await auth();
 
   const accessToken = session?.user?.accessToken;
+
+  // if (expiresAt && expiresAt < Date.now()) {
+  //   console.log("🔴 token expired", refreshToken);
+  //   const res = await fetch(
+  //     `http://quest4kids-api.us-east-1.elasticbeanstalk.com/auth/refresh`,
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ token: refreshToken }),
+  //     },
+  //   );
+
+  //   const refreshed = await res.json();
+  //   console.log("🔄 refreshed:", refreshed.refreshToken);
+
+  //   const response = NextResponse.next();
+
+  //   const newSessionToken = await encode({
+  //     secret:
+  //       process.env.NEXTAUTH_SECRET ||
+  //       "sPjmRIDhHcasTMyjGkqyv3ZtPCtY/BJwZEDczHnJfYQ=",
+  //     token: {
+  //       ...session,
+  //       refreshToken: refreshed.refreshToken,
+  //       expiresAt: Date.now() + 60 * 1000, // 1 min
+  //       accessToken: refreshed.accessToken,
+  //     },
+  //     salt: sessionCookie,
+  //   });
+
+  //   console.log("🔄 newSessionToken:", newSessionToken);
+
+  //   response.cookies.set(sessionCookie, newSessionToken);
+
+  //   return response;
+  // }
+
   const isAuthenticated = !!accessToken;
   const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
 

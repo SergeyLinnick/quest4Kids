@@ -1,4 +1,9 @@
 import NextAuth, { CredentialsSignin } from "next-auth";
+import {
+  decode as decodeJwtToken,
+  encode as encodeJwtToken,
+  getToken as getJwtToken,
+} from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 import { EXPIRES_IN } from "./refreshToken";
 
@@ -31,7 +36,7 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
 
           const login = await loginResponse.json();
 
-          console.log("login ===>", login.accessToken);
+          console.log("login ===>", login.refreshToken);
 
           const profileResponse = await fetch(`${api}/auth/profile`, {
             method: "GET",
@@ -102,7 +107,6 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
       }
 
       // return await refreshToken(token);
-
       return token;
     },
     async session({ session, token }) {
@@ -135,3 +139,7 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
     },
   },
 });
+
+export const getToken = getJwtToken;
+export const encode = encodeJwtToken;
+export const decode = decodeJwtToken;

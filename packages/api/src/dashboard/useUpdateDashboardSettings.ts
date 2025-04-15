@@ -9,7 +9,8 @@ export const useUpdateDashboardSettings = ({
   onSuccess?: () => void;
 } = {}) => {
   // const queryClient = useQueryClient();
-  const session = useSession();
+  const { session } = useSession();
+
   const {
     mutate: updateDashboardSettings,
     isPending: isLoading,

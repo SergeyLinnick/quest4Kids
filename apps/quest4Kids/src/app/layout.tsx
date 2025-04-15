@@ -11,7 +11,6 @@ import "./react-resizable.css";
 
 import { Theme } from "@radix-ui/themes";
 import { ApiProvider } from "@repo/api";
-import { SessionProvider } from "@repo/auth";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next";
 
@@ -43,15 +42,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <SessionProvider>
-          <ApiProvider>
-            <ThemeProvider attribute="class">
-              <Theme accentColor="violet">
-                <NuqsAdapter>{children}</NuqsAdapter>
-              </Theme>
-            </ThemeProvider>
-          </ApiProvider>
-        </SessionProvider>
+        <ApiProvider>
+          <ThemeProvider attribute="class">
+            <Theme accentColor="violet">
+              <NuqsAdapter>{children}</NuqsAdapter>
+            </Theme>
+          </ThemeProvider>
+        </ApiProvider>
       </body>
     </html>
   );

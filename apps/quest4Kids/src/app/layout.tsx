@@ -42,12 +42,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
-      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <SessionProvider>
           <ApiProvider>

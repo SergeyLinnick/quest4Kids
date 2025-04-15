@@ -1,0 +1,30 @@
+# Exclude dependencies and cache directories
+node_modules
+.pnpm
+.pnpm-store
+
+# Exclude environment variable files
+**/.env
+**/.env.*
+**/*.env
+
+# Exclude system/IDE-specific files
+**/.DS_Store
+.vscode
+.idea
+
+# Exclude Git and log files
+**/.git
+.gitignore
+*.log
+
+# Exclude Next.js build artifacts
+.next
+dist
+build
+
+# Exclude documentation and temporary files
+*.md
+*.tmp
+*.swp
+

@@ -33,7 +33,7 @@ export default async function ChildPage({
       </Flex>
       <Grid columns="1fr 200px" gapX="9" width="100%">
         <Suspense fallback={<Spinner />}>
-          <TasksListWrapper childId={childId} status={status} />
+          <TasksListWrapper isDataTable childId={childId} status={status} />
         </Suspense>
         <Box mt="7">
           <FilterTaskForm status={status} />

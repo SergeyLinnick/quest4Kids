@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Select,
@@ -39,11 +39,6 @@ export function SelectField({
   error,
 }: SelectFieldProps) {
   const [selected, setSelected] = useState(defaultValue || "");
-
-  // Sync selected state with defaultValue changes
-  useEffect(() => {
-    setSelected(defaultValue || "");
-  }, [defaultValue]);
 
   const handleChange = (value: string) => {
     setSelected(value);

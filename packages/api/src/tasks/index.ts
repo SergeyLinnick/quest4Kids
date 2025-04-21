@@ -15,3 +15,6 @@ export type {
   TaskStatus,
   TaskStatusName,
 } from "./types";
+
+export { prefetchTasks } from "./queries/prefetchTasks";
+export { useGetTasks } from "./queries/useGetTasks";

@@ -6,19 +6,18 @@ import {
   ITaskResponse,
   ITaskStatistics,
   IUpdateTask,
+  TasksQueryParams,
 } from "./types";
+
+import { Session } from "@repo/auth";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
 
 export const taskService = {
-  addTask: ({
-    title,
-    description,
-    points,
-    status,
-    labels,
-    userId,
-  }: ICreateTask): Promise<ITask> => {
+  addTask: (
+    { title, description, points, status, labels, userId }: ICreateTask,
+    // session: Session,
+  ): Promise<ITask> => {
     const options = {
       method: "POST",
       url: `${api}${API_PATH.TASK.ADD_TASK(userId)}`,
@@ -29,12 +28,16 @@ export const taskService = {
         status,
         labels,
       }),
+      // sessionClient: session ?? null,
     };
 
     return authHttpClient.fetch(options);
   },
 
-  getTasks: (filters?: { [key: string]: string }): Promise<ITaskResponse> => {
+  getTasks: (
+    filters?: TasksQueryParams,
+    session?: Session,
+  ): Promise<ITaskResponse> => {
     const searchParams = new URLSearchParams({
       limit: "50",
     });
@@ -51,6 +54,7 @@ export const taskService = {
     const options = {
       method: "GET",
       url: `${api}${API_PATH.TASK.GET_TASKS}?${params}`,
+      sessionClient: session ?? null,
     };
 
     return authHttpClient.fetch(options);
@@ -65,13 +69,18 @@ export const taskService = {
     return authHttpClient.fetch(options);
   },
 
-  updateTask: (taskId: string, values: IUpdateTask): Promise<ITask> => {
+  updateTask: (
+    taskId: string,
+    values: IUpdateTask,
+    // session: Session,
+  ): Promise<ITask> => {
     const { title, description, points, status, labels } = values;
 
     const options = {
       method: "PATCH",
       url: `${api}${API_PATH.TASK.UPDATE_TASK(taskId)}`,
       body: JSON.stringify({ title, description, points, status, labels }),
+      // sessionClient: session ?? null,
     };
 
     return authHttpClient.fetch(options);

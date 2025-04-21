@@ -38,3 +38,8 @@ export interface ITaskStatistics {
   id: string;
   name: string;
 }
+
+export interface TasksQueryParams {
+  status?: string;
+  childId?: string;
+}

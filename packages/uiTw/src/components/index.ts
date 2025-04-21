@@ -35,4 +35,5 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
+  Skeleton,
 } from "./ui";

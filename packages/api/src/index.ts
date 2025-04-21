@@ -15,9 +15,11 @@ export {
   deleteTask,
   getTasks,
   getTaskStatistics,
+  prefetchTasks,
   TASK_LABELS,
   TASK_POINTS,
   TASK_STATUS,
+  useGetTasks,
 } from "./tasks";
 export type {
   ICreateTask,

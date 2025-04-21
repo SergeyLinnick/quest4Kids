@@ -21,4 +21,5 @@ export {
   SelectValue,
 } from "./select";
 
+export { Skeleton } from "./skeleton";
 export { DataTable, DataTableColumnHeader } from "./table";

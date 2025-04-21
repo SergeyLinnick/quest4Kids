@@ -34,6 +34,7 @@ export {
   SelectTrigger,
   SelectValue,
   SettingsIcon,
+  Skeleton,
   WidgetCard,
 } from "./components";
 

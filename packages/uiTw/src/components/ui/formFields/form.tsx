@@ -1,15 +1,18 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
+
 import {
-  Controller,
-  FormProvider,
-  useFormContext,
-  useFormState,
   type ControllerProps,
   type FieldPath,
   type FieldValues,
 } from "react-hook-form";
+// Fix error - Attempted import error:  is not exported from 'react-hook-form'
+import { FormProvider } from "react-hook-form";
+// Fix error - Attempted import error:  is not exported from 'react-hook-form'
+import { Controller } from "react-hook-form";
+// Fix error - Attempted import error:  is not exported from 'react-hook-form'
+import { useFormContext } from "react-hook-form";
 import { cn } from "../../../lib/utils";
 import { Label } from "./label";
 
@@ -42,8 +45,8 @@ const FormField = <
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
-  const { getFieldState } = useFormContext();
-  const formState = useFormState({ name: fieldContext.name });
+  const { getFieldState, formState } = useFormContext();
+  // const formState = useFormState({ name: fieldContext.name });
   const fieldState = getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {

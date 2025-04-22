@@ -1,6 +1,6 @@
 "use client";
 
-import { ScrollArea } from "@/components/ui";
+import { ScrollArea } from "../../ui/scroll-area";
 import { NotificationItem } from "./NotificationItem";
 
 export const NotificationList = ({

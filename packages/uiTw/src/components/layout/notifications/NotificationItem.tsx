@@ -2,9 +2,8 @@
 
 import { FC } from "react";
 
-import { Avatar } from "@/components/ui";
-
 import { cn } from "../../../lib/utils";
+import { Avatar } from "../../ui/avatar/avatar";
 
 type NotificationItemProps = {
   id: string;

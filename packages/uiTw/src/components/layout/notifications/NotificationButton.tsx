@@ -1,5 +1,5 @@
-import { BellIcon } from "@/components/icons/BellIcon";
-import { Button } from "@/components/ui";
+import { BellIcon } from "../../icons/BellIcon";
+import { Button } from "../../ui/button";
 
 export const NotificationButton = ({
   hasNewNotifications,

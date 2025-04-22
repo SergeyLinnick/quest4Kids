@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 
 import { DashboardContainer } from "@/components/dashboard/DashboardContainer";
 import { mapDashboardSettings } from "@/utilities/dashboard";
+
 export default async function DashboardPage() {
   const session = await auth();
 

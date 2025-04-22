@@ -52,7 +52,7 @@ export const TaskForm = ({ childId, isModal = false }: TaskFormProps) => {
 
             <InputField
               isLoading={isPending}
-              label="Name"
+              label="Description"
               defaultValue={values?.get("description") as string}
               error={errors.get("description")}
               name="description"

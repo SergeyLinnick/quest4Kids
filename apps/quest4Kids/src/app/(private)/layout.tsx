@@ -1,5 +1,8 @@
 import { SignOut } from "@/components";
+import { NotificationsClient } from "@/components/notifications/NotificationsClient";
 import { getMenuItems, PAGE_PATH } from "@/consts";
+import { SocketProvider } from "@/socket-client/SocketProvider";
+import { fetchNotifications } from "@repo/api";
 import { auth, SessionProvider } from "@repo/auth";
 import { Avatar, SideBar } from "@repo/ui";
 import { Header } from "@repo/ui-tw";
@@ -21,18 +24,29 @@ export default async function RootLayout({
 
   const initials = getUserInitials(user.name);
 
+  const isParent = user.role === "parent";
+
+  let notifications: any = [];
+
+  if (isParent) {
+    notifications = await fetchNotifications();
+  }
+
   return (
     <SessionProvider session={session}>
-      <Header>
-        <SignOut />
-        <Link href={PAGE_PATH.PROFILE}>
-          <Avatar fallback={initials} src={user.image} alt={user.name} />
-        </Link>
-      </Header>
-      <div className={styles.mainLayout}>
-        <SideBar menuItems={getMenuItems(user.role) || []} />
-        <main className={styles.container}>{children}</main>
-      </div>
+      <SocketProvider userId={user.id}>
+        <Header>
+          <NotificationsClient notifications={notifications} />
+          <SignOut />
+          <Link href={PAGE_PATH.PROFILE}>
+            <Avatar fallback={initials} src={user.image} alt={user.name} />
+          </Link>
+        </Header>
+        <div className={styles.mainLayout}>
+          <SideBar menuItems={getMenuItems(user.role) || []} />
+          <main className={styles.container}>{children}</main>
+        </div>
+      </SocketProvider>
     </SessionProvider>
   );
 }

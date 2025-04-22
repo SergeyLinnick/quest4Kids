@@ -26,4 +26,9 @@ export const API_PATH = {
     GET_DASHBOARD_SETTINGS: "/dashboard-settings",
     UPDATE_DASHBOARD_SETTINGS: "/dashboard-settings",
   },
+  NOTIFICATIONS: {
+    GET_NOTIFICATIONS: "/notifications",
+    MARK_NOTIFICATION_AS_READ: (notificationId: string) =>
+      `/notifications/${notificationId}/read`,
+  },
 };

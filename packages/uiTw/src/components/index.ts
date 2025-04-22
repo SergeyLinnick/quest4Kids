@@ -5,12 +5,16 @@ export { ArrowRightIcon } from "./icons/arrowRightIcon";
 export { ArrowsLeftIcon } from "./icons/arrowsLeftIcon";
 export { ArrowsRightIcon } from "./icons/arrowsRightIcon";
 export { ArrowUpDownIcon } from "./icons/arrowUpDownIcon";
+export { BellIcon } from "./icons/BellIcon";
 export { DotsIcon } from "./icons/dotsIcon";
 export { MoveIcon } from "./icons/MoveIcon";
 export { SettingsIcon } from "./icons/SettingsIcon";
 export { Header } from "./layout/header/Header";
+export { NotificationButton } from "./layout/notifications/NotificationButton";
+export { NotificationList } from "./layout/notifications/NotificationList";
 export { WidgetCard } from "./layout/widgets/WidgetCard";
 export {
+  Avatar,
   Badge,
   badgeVariants,
   Button,
@@ -24,6 +28,9 @@ export {
   Form,
   FormField,
   Modal,
+  Popover,
+  ScrollArea,
+  ScrollBar,
   Select,
   SelectContent,
   SelectField,

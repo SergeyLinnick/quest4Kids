@@ -3,20 +3,18 @@
 import { useEffect, useState } from "react";
 
 import { useSocketContext } from "@/socket-client/SocketProvider";
-import { useMarkNotificationAsRead } from "@repo/api";
+import {
+  INotification,
+  useGetNotifications,
+  useMarkNotificationAsRead,
+} from "@repo/api";
 import { NotificationButton, NotificationList, Popover } from "@repo/ui-tw";
 
-export const NotificationsClient = ({
-  notifications,
-}: {
-  notifications: any;
-}) => {
+export const NotificationsClient = () => {
   const { messages } = useSocketContext();
 
   // TODO: Use zustand to store the notifications
-  const [allNotifications, setAllNotifications] = useState<any[]>(
-    notifications || [],
-  );
+  const [allNotifications, setAllNotifications] = useState<INotification[]>([]);
 
   useEffect(() => {
     setAllNotifications((prev) => [...messages, ...prev]);
@@ -39,6 +37,12 @@ export const NotificationsClient = ({
   const hasUnreadNotifications = allNotifications.some(
     (notification) => !notification.isRead,
   );
+
+  const { notifications, isLoading } = useGetNotifications();
+
+  useEffect(() => {
+    setAllNotifications(notifications || []);
+  }, [notifications]);
 
   return (
     <Popover

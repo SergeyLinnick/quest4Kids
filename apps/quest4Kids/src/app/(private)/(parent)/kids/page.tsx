@@ -26,14 +26,14 @@ export default async function KidsPage() {
     <>
       <Heading>My Kids</Heading>
 
-      <Grid
-        columns={{ initial: "1", md: "2", lg: "3" }}
-        gap="4"
-        maxWidth="1200px"
-        my="5"
-      >
-        {sortedChildren?.length > 0 ? (
-          sortedChildren?.map((child: IChild) => {
+      {sortedChildren?.length > 0 ? (
+        <Grid
+          columns={{ initial: "1", md: "2", lg: "3" }}
+          gap="4"
+          maxWidth="1200px"
+          my="5"
+        >
+          {sortedChildren?.map((child: IChild) => {
             const id = child.id;
             return (
               <UserCard
@@ -57,15 +57,16 @@ export default async function KidsPage() {
                 </Flex>
               </UserCard>
             );
-          })
-        ) : (
-          <Grid>
-            <Heading>No children found</Heading>
-            <Link href={PAGE_PATH_PARENT.CHILD_NEW}>Add the child</Link>
-          </Grid>
-        )}
-        <AddUserCard href={PAGE_PATH_PARENT.CHILD_NEW} />
-      </Grid>
+          })}
+          <AddUserCard href={PAGE_PATH_PARENT.CHILD_NEW} />
+        </Grid>
+      ) : (
+        <Grid>
+          <Heading>No children found</Heading>
+          <Link href={PAGE_PATH_PARENT.CHILD_NEW}>Add the child</Link>
+          <AddUserCard href={PAGE_PATH_PARENT.CHILD_NEW} />
+        </Grid>
+      )}
     </>
   );
 }

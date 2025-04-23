@@ -8,7 +8,7 @@ export const NotificationButton = ({
 }) => {
   return (
     <div className="relative">
-      <Button variant="ghost" size="icon">
+      <Button variant="ghost" size="icon" as="span">
         <BellIcon />
       </Button>
       {hasNewNotifications && (

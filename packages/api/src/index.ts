@@ -8,6 +8,7 @@ export type { IWidgetSettings } from "./dashboard/types";
 export { useUpdateDashboardSettings } from "./dashboard/useUpdateDashboardSettings";
 export { fetchNotifications } from "./notifications/actions";
 export type { INotification } from "./notifications/types";
+export { useGetNotifications } from "./notifications/useGetNotifications";
 export { useMarkNotificationAsRead } from "./notifications/useMarkNotificationAsRead";
 export { swapPoints, swapPointSchema } from "./points";
 export { fetchProfile } from "./profile";

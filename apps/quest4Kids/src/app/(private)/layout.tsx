@@ -2,12 +2,12 @@ import { SignOut } from "@/components";
 import { NotificationsClient } from "@/components/notifications/NotificationsClient";
 import { getMenuItems, PAGE_PATH } from "@/consts";
 import { SocketProvider } from "@/socket-client/SocketProvider";
-import { fetchNotifications } from "@repo/api";
 import { auth, SessionProvider } from "@repo/auth";
 import { Avatar, SideBar } from "@repo/ui";
-import { Header } from "@repo/ui-tw";
+import { Button, Header } from "@repo/ui-tw";
 import { getUserInitials } from "@repo/utils";
 import Link from "next/link";
+import { Suspense } from "react";
 import styles from "./layout.module.css";
 import NotAuthenticated from "./notAuthenticated";
 
@@ -26,17 +26,21 @@ export default async function RootLayout({
 
   const isParent = user.role === "parent";
 
-  let notifications: any = [];
-
-  if (isParent) {
-    notifications = await fetchNotifications();
-  }
-
   return (
     <SessionProvider session={session}>
       <SocketProvider userId={user.id}>
         <Header>
-          <NotificationsClient notifications={notifications} />
+          <Suspense
+            fallback={
+              <Button
+                size="icon"
+                className="bg-muted-foreground animate-pulse"
+              />
+            }
+          >
+            {isParent && <NotificationsClient />}
+          </Suspense>
+
           <SignOut />
           <Link href={PAGE_PATH.PROFILE}>
             <Avatar fallback={initials} src={user.image} alt={user.name} />

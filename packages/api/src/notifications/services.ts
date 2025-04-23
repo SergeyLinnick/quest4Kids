@@ -10,10 +10,15 @@ export const notificationsService = {
    * Get the notifications
    * @returns The notifications
    */
-  getNotifications: (): Promise<INotificationResponse[]> => {
+  getNotifications: ({
+    session,
+  }: {
+    session?: any;
+  } = {}): Promise<INotificationResponse[]> => {
     const options = {
       method: "GET",
       url: `${api}${API_PATH.NOTIFICATIONS.GET_NOTIFICATIONS}`,
+      sessionClient: session || null,
     };
     return authHttpClient.fetch(options);
   },

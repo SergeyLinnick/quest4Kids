@@ -3,16 +3,13 @@ import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 
 import {
+  Controller,
+  FormProvider,
+  useFormContext,
   type ControllerProps,
   type FieldPath,
   type FieldValues,
 } from "react-hook-form";
-// Fix error - Attempted import error:  is not exported from 'react-hook-form'
-import { FormProvider } from "react-hook-form";
-// Fix error - Attempted import error:  is not exported from 'react-hook-form'
-import { Controller } from "react-hook-form";
-// Fix error - Attempted import error:  is not exported from 'react-hook-form'
-import { useFormContext } from "react-hook-form";
 import { cn } from "../../../lib/utils";
 import { Label } from "./label";
 

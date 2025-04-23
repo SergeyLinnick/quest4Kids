@@ -1,3 +1,4 @@
+import { Session } from "@repo/auth";
 import { API_PATH } from "../_common/consts";
 import { authHttpClient } from "../_common/fetchInstance";
 import { INotificationResponse } from "./types";
@@ -23,7 +24,7 @@ export const notificationsService = {
    */
   markNotificationAsRead: (
     notificationId: string,
-    session: any,
+    session: Session,
   ): Promise<INotificationResponse> => {
     const options = {
       method: "PATCH",

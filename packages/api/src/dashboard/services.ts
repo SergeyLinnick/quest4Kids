@@ -1,3 +1,4 @@
+import { Session } from "@repo/auth";
 import { API_PATH } from "../_common/consts";
 import { authHttpClient } from "../_common/fetchInstance";
 import { IWidgetSettings } from "./types";
@@ -23,7 +24,7 @@ export const dashboardService = {
    */
   updateDashboardSettings: (
     settings: IWidgetSettings[],
-    session: any,
+    session: Session,
   ): Promise<IWidgetSettings[]> => {
     const settingsToUpdate = {
       layout: settings,

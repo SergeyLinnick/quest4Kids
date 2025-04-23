@@ -1,4 +1,4 @@
-import { auth, Session } from "@repo/auth";
+import { auth, Session, signOut } from "@repo/auth";
 import { getErrorMessage } from "@repo/utils";
 
 const HTTP_STATUS = {
@@ -37,6 +37,7 @@ export class HttpClient {
         console.error(
           `Fetch: Unauthorized (401): ${errorMessage || "Unauthorized, logging out"}`,
         );
+        signOut();
         throw new Error(`Fetch: Unauthorized (401): ${errorMessage}`);
 
       case HTTP_STATUS.NOT_FOUND:
@@ -154,7 +155,10 @@ class AuthHttpClient extends HttpClient {
       ) {
         this.retryCount++;
         // Add logic to refresh the token here
-        return this.fetch({ url, method, headers, ...options });
+        // If refresh fails, call signOut()
+        signOut();
+        throw new Error("Session expired. Signed out.");
+        // return this.fetch({ url, method, headers, ...options });
       }
       this.retryCount = 0;
       throw error;

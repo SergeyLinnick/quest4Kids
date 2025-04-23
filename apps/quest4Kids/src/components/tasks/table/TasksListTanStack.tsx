@@ -1,7 +1,7 @@
 "use client";
 
 import { ITask, useGetTasks } from "@repo/api";
-import { Button, DataTable, Skeleton } from "@repo/ui-tw";
+import { Button, DataTable } from "@repo/ui-tw";
 import { columns } from "./columns";
 
 interface TasksListTanStackProps {
@@ -13,13 +13,13 @@ export const TasksListTanStack = ({
   status,
   childId,
 }: TasksListTanStackProps) => {
-  const { data, isLoading, refetch, error } = useGetTasks({
+  const { data, isFetching, refetch, error } = useGetTasks({
     status,
     childId,
   }) as {
     data: { data: ITask[] };
     refetch: () => void;
-    isLoading: boolean;
+    isFetching: boolean;
     error: unknown;
   };
 
@@ -27,19 +27,17 @@ export const TasksListTanStack = ({
 
   return (
     <div className="table-fixed w-full">
-      {isLoading ? (
-        <Skeleton className="w-full h-150" />
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data?.data ?? []}
-          filter={{
-            columnId: "title",
-            placeholder: "Filter by Task Title...",
-            className: "max-w-sm",
-          }}
-        />
-      )}
+      <DataTable
+        columns={columns}
+        data={data?.data ?? []}
+        isLoading={isFetching}
+        filter={{
+          columnId: "title",
+          placeholder: "Filter by Task Title...",
+          className: "max-w-sm",
+        }}
+      />
+
       <Button variant="secondary" size="sm" onClick={refetch}>
         Refetch
       </Button>

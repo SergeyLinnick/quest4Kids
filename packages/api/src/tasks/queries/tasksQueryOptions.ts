@@ -6,7 +6,7 @@ import { TasksQueryParams } from "../types";
 
 export function tasksQueryOptions(filters: TasksQueryParams, session: Session) {
   return queryOptions({
-    queryKey: ["tasksListQuery"] as const,
+    queryKey: ["tasksListQuery", filters],
     queryFn: () => {
       return taskService.getTasks(filters, session);
     },

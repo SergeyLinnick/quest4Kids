@@ -24,6 +24,7 @@ export {
   CheckboxFields,
   DataTable,
   DataTableColumnHeader,
+  DataTableError,
   Dropdown,
   Form,
   FormField,

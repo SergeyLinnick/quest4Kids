@@ -38,9 +38,10 @@ export const taskService = {
     filters?: TasksQueryParams,
     session?: Session,
   ): Promise<ITaskResponse> => {
-    const searchParams = new URLSearchParams({
-      limit: "50",
-    });
+
+    const searchParams = new URLSearchParams();
+    searchParams.set("limit", filters?.limit ?? "10");
+    searchParams.set("offset", filters?.offset ?? "0");
 
     if (filters?.status) {
       searchParams.set("status", filters.status);

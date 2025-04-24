@@ -6,3 +6,4 @@ export {
   PUBLIC_ROUTES,
 } from "./pagePath";
 export { ROLE } from "./roles";
+export { LIMIT } from "./table";

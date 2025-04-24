@@ -34,18 +34,30 @@ interface DataTableFilterConfig {
   className?: string;
 }
 
+interface DataTableMeta {
+  limit: number;
+  offset: number;
+  total: number;
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  meta: DataTableMeta;
   isLoading: boolean;
   filter?: DataTableFilterConfig;
+  pageIndex?: number;
+  setPageIndex?: (page: number) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
-  data,
+  data = [],
+  meta = { limit: 1, offset: 0, total: 0 },
   isLoading,
   filter,
+  pageIndex = 0,
+  setPageIndex,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -140,7 +152,12 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      <DataTablePagination table={table} />
+      <DataTablePagination
+        table={table}
+        meta={meta}
+        pageIndex={pageIndex}
+        setPageIndex={setPageIndex ?? (() => {})}
+      />
     </>
   );
 }

@@ -17,6 +17,7 @@ export {
   CustomLink,
   DataTable,
   DataTableColumnHeader,
+  DataTableError,
   DotsIcon,
   Dropdown,
   Form,

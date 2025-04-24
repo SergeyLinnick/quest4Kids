@@ -17,6 +17,7 @@ interface SelectFieldProps {
   isLoading?: boolean;
   options: { label: string; value: string }[];
   defaultValue?: string;
+  value?: string;
   onChange?: (value: string) => void;
   disabled?: boolean;
   classNameTrigger?: string;
@@ -33,6 +34,7 @@ export function SelectField({
   placeholder = "Select an option",
   options,
   defaultValue,
+  value,
   onChange,
   disabled,
   classNameTrigger,
@@ -40,9 +42,11 @@ export function SelectField({
 }: SelectFieldProps) {
   const [selected, setSelected] = useState(defaultValue || "");
 
-  const handleChange = (value: string) => {
-    setSelected(value);
-    onChange?.(value);
+  const actualValue = value !== undefined ? value : selected;
+
+  const handleChange = (val: string) => {
+    setSelected(val);
+    onChange?.(val);
   };
 
   return (
@@ -59,7 +63,7 @@ export function SelectField({
       ) : (
         <>
           <Select
-            value={selected}
+            value={actualValue}
             onValueChange={handleChange}
             disabled={disabled}
           >
@@ -77,7 +81,7 @@ export function SelectField({
           {error && <p className="text-destructive text-sm">{error}</p>}
         </>
       )}
-      <input type="hidden" name={name} value={selected} />
+      <input type="hidden" name={name} value={actualValue} />
     </>
   );
 }

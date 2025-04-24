@@ -22,7 +22,25 @@ export type ICreateTask = Omit<ITask, "id" | "labels"> & {
 export type IUpdateTask = Partial<ICreateTask>;
 
 export type ITaskResponse = {
-  data: ITask[];
+  data: {
+    id: string;
+    title: string;
+    description: string;
+    points: number;
+    status: TaskStatusName;
+    userId: string;
+    labels: {
+      id: string;
+      name: string;
+    }[];
+    createdAt?: string;
+    updatedAt?: string;
+  }[];
+  meta: {
+    limit: number;
+    offset: number;
+    total: number;
+  };
 };
 
 export type TaskStatus = (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
@@ -42,4 +60,6 @@ export interface ITaskStatistics {
 export interface TasksQueryParams {
   status?: string;
   childId?: string;
+  limit?: string;
+  offset?: string;
 }

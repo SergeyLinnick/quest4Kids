@@ -157,7 +157,6 @@ class AuthHttpClient extends HttpClient {
         // Add logic to refresh the token here
         // If refresh fails, call signOut()
         signOut();
-        throw new Error("Session expired. Signed out.");
         // return this.fetch({ url, method, headers, ...options });
       }
       this.retryCount = 0;

@@ -16,8 +16,9 @@ export const TasksListTanStack = ({
   childId,
 }: TasksListTanStackProps) => {
   const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(LIMIT);
 
-  const offset = pageIndex * LIMIT;
+  const offset = pageIndex * pageSize;
 
   const {
     data: tasksData,
@@ -27,7 +28,7 @@ export const TasksListTanStack = ({
   } = useGetTasks({
     status,
     childId,
-    limit: String(LIMIT),
+    limit: String(pageSize),
     offset: String(offset),
   });
 
@@ -38,7 +39,7 @@ export const TasksListTanStack = ({
       <DataTable
         columns={columns}
         data={tasksData?.data ?? []}
-        meta={tasksData?.meta ?? { limit: 0, offset: 0, total: 0 }}
+        meta={tasksData?.meta ?? { limit: 1, offset: 0, total: 0 }}
         isLoading={isFetching}
         filter={{
           columnId: "title",
@@ -47,6 +48,8 @@ export const TasksListTanStack = ({
         }}
         pageIndex={pageIndex}
         setPageIndex={setPageIndex}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
       />
 
       <Button variant="secondary" size="sm" onClick={() => refetch()}>

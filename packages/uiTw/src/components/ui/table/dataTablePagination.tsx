@@ -11,6 +11,8 @@ interface DataTablePaginationProps<TData> {
   table: Table<TData>;
   pageIndex: number;
   setPageIndex: (page: number) => void;
+  pageSize: number;
+  setPageSize: (size: number) => void;
   meta: {
     limit: number;
     offset: number;
@@ -22,11 +24,12 @@ export function DataTablePagination<TData>({
   table,
   pageIndex,
   setPageIndex,
+  pageSize,
+  setPageSize,
   meta,
 }: DataTablePaginationProps<TData>) {
-  const limit = meta?.limit;
   const total = meta?.total;
-  const pageCount = Math.ceil(total / limit) || 1;
+  const pageCount = Math.ceil(total / pageSize) || 1;
 
   const pageSizeOptions = [10, 20, 30, 40, 50].map((size) => ({
     label: `${size}`,
@@ -45,10 +48,8 @@ export function DataTablePagination<TData>({
             name="pageSize"
             label="Rows per page"
             options={pageSizeOptions}
-            value={pageIndex.toString()}
-            onChange={(value) => {
-              table.setPageSize(Number(value));
-            }}
+            value={pageSize.toString()}
+            onChange={(value) => setPageSize(Number(value))}
             classNameTrigger="h-8 w-[70px]"
             error={undefined}
           />

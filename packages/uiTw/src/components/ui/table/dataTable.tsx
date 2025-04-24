@@ -8,7 +8,6 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
@@ -48,6 +47,8 @@ interface DataTableProps<TData, TValue> {
   filter?: DataTableFilterConfig;
   pageIndex?: number;
   setPageIndex?: (page: number) => void;
+  pageSize?: number;
+  setPageSize?: (size: number) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -58,6 +59,8 @@ export function DataTable<TData, TValue>({
   filter,
   pageIndex = 0,
   setPageIndex,
+  pageSize = 10,
+  setPageSize,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -70,20 +73,27 @@ export function DataTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+    manualPagination: true,
+    pageCount: Math.ceil(meta.total / pageSize) || 1,
     state: {
+      pagination: { pageIndex, pageSize },
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
     },
+
+    // onPaginationChange: (updater) => {
+    // handle pagination changes
+    // },
+
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
   });
 
   return (
@@ -157,6 +167,8 @@ export function DataTable<TData, TValue>({
         meta={meta}
         pageIndex={pageIndex}
         setPageIndex={setPageIndex ?? (() => {})}
+        pageSize={pageSize}
+        setPageSize={setPageSize ?? (() => {})}
       />
     </>
   );

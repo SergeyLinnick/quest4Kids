@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import { cn } from "../../../lib/utils";
 import { Avatar } from "../../ui/avatar/avatar";
@@ -24,12 +24,17 @@ export const NotificationItem: FC<NotificationItemProps> = ({
   onClick,
   isRead = true,
 }) => {
+  const [read, setIsRead] = useState(isRead);
+
   const handleClick = () => {
-    onClick?.(id);
+    if (!read) {
+      onClick?.(id);
+      setIsRead(true);
+    }
   };
 
   const unreadClass =
-    !isRead &&
+    !read &&
     "bg-orange-100 dark:bg-orange-900 hover:bg-orange-200 dark:hover:bg-orange-800";
 
   return (

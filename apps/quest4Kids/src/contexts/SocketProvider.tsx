@@ -5,6 +5,9 @@ import { io, Socket } from "socket.io-client";
 
 import { INotification } from "@repo/api";
 import { mapNotification } from "@repo/utils";
+
+const socketUrl = process.env.NEXT_PUBLIC_API_URL;
+
 interface SocketContextType {
   socket: Socket | null;
   isConnected: boolean;
@@ -22,7 +25,7 @@ const SocketContext = createContext<SocketContextType>({
 interface Props {
   userId: string;
   children: React.ReactNode;
-  onNotification?: (data: INotification) => void;
+  onNotification?: (notification: INotification) => void;
 }
 
 export const SocketProvider = ({ userId, children, onNotification }: Props) => {
@@ -33,7 +36,7 @@ export const SocketProvider = ({ userId, children, onNotification }: Props) => {
   useEffect(() => {
     if (!userId) return;
 
-    const socket = io("http://quest4kids-api.us-east-1.elasticbeanstalk.com", {
+    const socket = io(socketUrl, {
       query: { userId },
       transports: ["websocket"],
     });

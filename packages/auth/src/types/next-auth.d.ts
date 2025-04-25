@@ -10,6 +10,7 @@ declare module "next-auth" {
     refreshToken?: string;
     image?: string;
     expiresAt?: number;
+    unreadNotificationCount?: number;
   }
 
   interface Session {

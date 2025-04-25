@@ -40,4 +40,12 @@ export const notificationsService = {
     };
     return authHttpClient.fetch(options);
   },
+  getUnreadNotificationCount: (session: Session): Promise<any> => {
+    const options = {
+      method: "GET",
+      url: `${api}${API_PATH.AUTH.PROFILE}`,
+      sessionClient: session,
+    };
+    return authHttpClient.fetch(options);
+  },
 };

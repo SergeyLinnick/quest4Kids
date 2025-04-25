@@ -18,8 +18,8 @@ export const useMarkNotificationAsRead = (onSuccess?: any) => {
         session,
       );
     },
-    onSuccess: (_, notificationId) => {
-      onSuccess?.(notificationId);
+    onSuccess: () => {
+      onSuccess?.();
     },
     onError: (error) => {
       console.error("Error marking notification as read:", error);

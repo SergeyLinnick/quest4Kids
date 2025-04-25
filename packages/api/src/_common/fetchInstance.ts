@@ -37,7 +37,7 @@ export class HttpClient {
         console.error(
           `Fetch: Unauthorized (401): ${errorMessage || "Unauthorized, logging out"}`,
         );
-        signOut();
+        signOut({ redirectTo: "/login", redirect: true });
         throw new Error(`Fetch: Unauthorized (401): ${errorMessage}`);
 
       case HTTP_STATUS.NOT_FOUND:

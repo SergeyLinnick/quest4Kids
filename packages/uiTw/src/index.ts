@@ -43,7 +43,9 @@ export {
   SelectValue,
   SettingsIcon,
   Skeleton,
+  Toaster,
   WidgetCard,
+  toast,
 } from "./components";
 
 export { cn } from "./lib/utils";

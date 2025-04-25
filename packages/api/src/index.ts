@@ -9,6 +9,7 @@ export { useUpdateDashboardSettings } from "./dashboard/useUpdateDashboardSettin
 export { fetchNotifications } from "./notifications/actions";
 export type { INotification } from "./notifications/types";
 export { useGetNotifications } from "./notifications/useGetNotifications";
+export { useGetUnreadNotificationsCount } from "./notifications/useGetUnreadNotificationsCount";
 export { useMarkNotificationAsRead } from "./notifications/useMarkNotificationAsRead";
 export { swapPoints, swapPointSchema } from "./points";
 export { fetchProfile } from "./profile";

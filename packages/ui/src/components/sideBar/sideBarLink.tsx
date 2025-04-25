@@ -1,7 +1,7 @@
 "use client";
 
-import { Link } from "@radix-ui/themes";
 import clsx from "clsx";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import styles from "./sideBar.module.css";

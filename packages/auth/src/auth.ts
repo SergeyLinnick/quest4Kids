@@ -5,6 +5,7 @@ import {
   getToken as getJwtToken,
 } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
+
 import { EXPIRES_IN } from "./refreshToken";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
@@ -36,7 +37,7 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
 
           const login = await loginResponse.json();
 
-          console.log("login ===>", login.refreshToken);
+          console.log("login ===>", login.accessToken);
 
           const profileResponse = await fetch(`${api}/auth/profile`, {
             method: "GET",
@@ -70,6 +71,7 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
             email: profile.email,
             name: profile.name,
             role: profile.role,
+            unreadNotificationCount: profile.unreadNotificationCount,
             accessToken: login.accessToken,
             refreshToken: login.refreshToken,
             image: avatar || "",

@@ -1,60 +1,58 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { useSocketContext } from "@/socket-client/SocketProvider";
+import { SocketProviderWrapper } from "@/contexts/SocketProviderWrapper";
+import { useNotificationStore } from "@/store/notificationStore";
 import {
   INotification,
-  useGetNotifications,
+  useGetUnreadNotificationsCount,
   useMarkNotificationAsRead,
 } from "@repo/api";
-import { NotificationButton, NotificationList, Popover } from "@repo/ui-tw";
+import { NotificationButton, Popover, toast } from "@repo/ui-tw";
+
+import { NotificationListClient } from "./NotificationListClient";
 
 export const NotificationsClient = () => {
-  const { messages } = useSocketContext();
+  const unreadCount = useNotificationStore((s) => s.unreadCount);
+  const increment = useNotificationStore.getState().increment;
+  const decrement = useNotificationStore.getState().decrement;
+  const setCount = useNotificationStore((s) => s.setCount);
 
-  // TODO: Use zustand to store the notifications
-  const [allNotifications, setAllNotifications] = useState<INotification[]>([]);
+  const { unreadNotificationsCount, isSuccess } =
+    useGetUnreadNotificationsCount();
+
+  const { markNotificationAsRead } = useMarkNotificationAsRead(decrement);
 
   useEffect(() => {
-    setAllNotifications((prev) => [...messages, ...prev]);
-  }, [messages]);
+    if (isSuccess && unreadNotificationsCount?.unreadCount !== undefined) {
+      setCount(unreadNotificationsCount.unreadCount);
+    }
+  }, [isSuccess, unreadNotificationsCount, setCount]);
 
-  const markNotificationIsRead = (notificationId: string) => {
-    setAllNotifications((prev) =>
-      prev.map((notification) =>
-        notification.id === notificationId
-          ? { ...notification, isRead: true, isNew: false }
-          : notification,
-      ),
-    );
+  const handleNotification = (notification: INotification) => {
+    increment();
+    toast(notification.title, {
+      description: notification.date,
+      action: {
+        label: "Read",
+        onClick: () => markNotificationAsRead(notification.id),
+      },
+    });
   };
 
-  const { markNotificationAsRead } = useMarkNotificationAsRead(
-    markNotificationIsRead,
-  );
-
-  const hasUnreadNotifications = allNotifications.some(
-    (notification) => !notification.isRead,
-  );
-
-  const { notifications, isLoading } = useGetNotifications();
-
-  useEffect(() => {
-    setAllNotifications(notifications || []);
-  }, [notifications]);
-
   return (
-    <Popover
-      size="lg"
-      content={
-        <NotificationList
-          notifications={allNotifications.slice(0, 20)}
-          onNotificationClick={markNotificationAsRead}
-        />
-      }
-    >
-      <NotificationButton hasNewNotifications={hasUnreadNotifications} />
-    </Popover>
+    <SocketProviderWrapper onNotification={handleNotification}>
+      <Popover
+        size="lg"
+        content={
+          <NotificationListClient
+            markNotificationAsRead={markNotificationAsRead}
+          />
+        }
+      >
+        <NotificationButton count={unreadCount} />
+      </Popover>
+    </SocketProviderWrapper>
   );
 };

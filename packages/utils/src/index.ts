@@ -1,3 +1,4 @@
+export { formatDistanceToNow } from "./date/formatDate";
 export { getTimeDifference } from "./dateTime";
 export { getErrorMessage } from "./errors";
 export { PasswordResolver } from "./forms/index";

@@ -1,7 +1,8 @@
-import { useSession } from "@repo/auth";
 import { useQuery } from "@tanstack/react-query";
 
+import { useSession } from "@repo/auth";
 import { mapNotifications } from "@repo/utils";
+
 import { notificationsService } from "./services";
 import { INotification, INotificationResponse } from "./types";
 
@@ -12,21 +13,15 @@ export const useGetNotifications = () => {
     data: notifications,
     isFetching: isLoading,
     error,
+    refetch: fetchNotifications,
+    isSuccess,
   } = useQuery<INotificationResponse[], Error, INotification[]>({
     queryKey: ["notifications"],
-    queryFn: () => {
-      return notificationsService.getNotifications({ session });
-    },
-    enabled: !!session,
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    // refetchInterval: 1000 * 60 * 5, // 5 minutes
-    // refetchOnWindowFocus: false,
-    // refetchOnMount: false,
-    // refetchOnReconnect: false,
-    select: (data) => {
-      return mapNotifications(data);
-    },
+    queryFn: () => notificationsService.getNotifications({ session }),
+    enabled: !!session?.user?.id,
+    retry: 1,
+    select: mapNotifications,
   });
 
-  return { notifications, isLoading, error };
+  return { notifications, isLoading, error, fetchNotifications, isSuccess };
 };

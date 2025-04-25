@@ -9,6 +9,7 @@ import "@repo/ui/globals.css";
 import "./react-grid-layout.css";
 import "./react-resizable.css";
 
+import { ToasterClient } from "@/components/toaster/toasterClient";
 import { Theme } from "@radix-ui/themes";
 import { ApiProvider } from "@repo/api";
 import { ThemeProvider } from "next-themes";
@@ -41,6 +42,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class">
             <Theme accentColor="violet">
               <NuqsAdapter>{children}</NuqsAdapter>
+              <ToasterClient />
             </Theme>
           </ThemeProvider>
         </ApiProvider>

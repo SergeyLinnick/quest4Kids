@@ -1,6 +1,6 @@
 "use client";
 
-import { LoaderIcon } from "@/components/icons/LoaderIcon";
+import { LoaderIcon } from "../../icons/LoaderIcon";
 import { ScrollArea } from "../../ui/scroll-area";
 import { NotificationItem } from "./NotificationItem";
 

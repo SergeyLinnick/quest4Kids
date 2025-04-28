@@ -25,4 +25,4 @@ export {
 } from "./select";
 export { Skeleton } from "./skeleton";
 export { toast, Toaster } from "./sonner";
-export { DataTable, DataTableColumnHeader } from "./table";
+export { DataTable, DataTableColumnHeader, DataTableError } from "./table";

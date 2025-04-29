@@ -38,8 +38,13 @@ export const DashboardGrid = ({
         const initialItem = layoutsInitial.lg.find((init) => init.i === item.i);
         return {
           ...item,
+          maxH: initialItem?.maxH ?? 20,
+          maxW: initialItem?.maxW ?? 12,
+          minH: initialItem?.minH ?? 0,
+          minW: initialItem?.minW ?? 0,
+          isDraggable: initialItem?.isDraggable ?? true,
+          isResizable: initialItem?.isResizable ?? true,
           isVisible: initialItem?.isVisible ?? true,
-          isStatic: initialItem?.static ?? false,
         };
       }),
       ...layoutsInitial.lg.filter(

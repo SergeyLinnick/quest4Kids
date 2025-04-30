@@ -41,13 +41,10 @@ export const taskService = {
     const searchParams = new URLSearchParams();
     searchParams.set("limit", filters?.limit ?? "10");
     searchParams.set("offset", filters?.offset ?? "0");
-
-    if (filters?.status) {
-      searchParams.set("status", filters.status);
-    }
-    if (filters?.childId) {
-      searchParams.set("childId", filters.childId);
-    }
+    if (filters?.status) searchParams.set("status", filters.status);
+    if (filters?.childId) searchParams.set("childId", filters.childId);
+    if (filters?.sortBy) searchParams.set("sortBy", filters.sortBy);
+    if (filters?.sortOrder) searchParams.set("sortOrder", filters.sortOrder);
 
     const params = searchParams.toString();
 

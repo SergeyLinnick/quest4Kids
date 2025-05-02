@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-import { INotification } from "@repo/api";
+import { IChatMessage, INotification, INotificationResponse } from "@repo/api";
 import { mapNotification } from "@repo/utils";
 
 const socketUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -51,13 +51,26 @@ export const SocketProvider = ({ userId, children, onNotification }: Props) => {
       console.log("⚠️ Socket disconnected");
     });
 
-    socket.on("notification", (data) => {
+    // Receive notification
+    socket.on("notification", (data: INotificationResponse) => {
       console.log("🔔 Notification:", data);
       const notification = mapNotification(data);
 
       setMessages((prev) => [...prev, notification]);
       onNotification?.(notification);
     });
+
+    // Receive chat message
+    socket.on("chat-message", (data: IChatMessage) => {
+      console.log("💬 Message from:", data);
+      console.log("💬 Text:", data.text);
+    });
+
+    // // Send chat message
+    // socket.emit("send-chat-message", {
+    //   receiverId: "child-user-id",
+    //   content: "Hello!",
+    // });
 
     socketRef.current = socket;
 

@@ -2,8 +2,7 @@
 
 import { INotification } from "@repo/api";
 import { useSession } from "@repo/auth";
-
-import { SocketProvider } from "./SocketProvider";
+import { SocketProvider } from "@repo/chat";
 
 export const SocketProviderWrapper = ({
   children,

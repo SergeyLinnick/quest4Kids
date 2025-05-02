@@ -1,3 +1,4 @@
+export { mapChatMessage, mapChatMessages, mapChatUser, mapChatUsers } from "./chat";
 export { formatDistanceToNow } from "./date/formatDate";
 export { getTimeDifference } from "./dateTime";
 export { getErrorMessage } from "./errors";

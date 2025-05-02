@@ -10,6 +10,7 @@ export const PAGE_PATH = {
   DASHBOARD: "/dashboard",
   ABOUT: "/about",
   PROFILE: "/profile",
+  CHAT: "/chat",
 };
 
 export const PAGE_PATH_PARENT = {

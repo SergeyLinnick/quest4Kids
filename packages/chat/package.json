@@ -1,0 +1,40 @@
+{
+  "name": "@repo/chat",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0"
+  },
+  "dependencies": {
+    "@repo/api": "workspace:*",
+    "@repo/utils": "workspace:*",
+    "react": "^19.0.0",
+    "react-chat-elements": "^12.0.18",
+    "react-dom": "^19.0.0",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22",
+    "@types/react": "19.0.8",
+    "@types/react-dom": "19.0.3",
+    "autoprefixer": "^10.4.20",
+    "clsx": "^2.1.1",
+    "eslint": "^9.20.0",
+    "postcss": "^8.5.3",
+    "postcss-nesting": "^13.0.1",
+    "postcss-preset-env": "^10.1.4",
+    "prettier": "^3.5.0",
+    "typescript": "^5.7.3"
+  },
+  "exports": {
+    "./chat-styles.css": "./src/chat-styles.css",
+    ".": "./src/index.ts"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ]
+}

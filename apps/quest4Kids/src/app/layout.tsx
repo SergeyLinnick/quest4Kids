@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import "@radix-ui/themes/styles.css";
+// import "@repo/chat/chat-styles.css";
 import "@repo/ui/globals.css";
 
 import "./react-grid-layout.css";

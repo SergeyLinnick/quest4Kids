@@ -1,6 +1,6 @@
 import { formatDistanceToNow } from "./date/formatDate";
 
-export const mapNotification = (notification: any) => {
+export const mapNotification = (notification: any): any => {
 	return {
 		id: notification.id,
 		title: notification.message || "",
@@ -10,6 +10,6 @@ export const mapNotification = (notification: any) => {
 	};
 };
 
-export const mapNotifications = (notifications: any) => {
-	return notifications.map((notification: any) => mapNotification(notification));
+export const mapNotifications = (notifications: any[]) => {
+	return notifications.map(notification => mapNotification(notification));
 };

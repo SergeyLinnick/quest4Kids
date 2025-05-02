@@ -36,6 +36,7 @@ export const NotificationsClient = () => {
       description: notification.date,
       action: {
         label: "Read",
+        // TODO: Add decrement
         onClick: () => markNotificationAsRead(notification.id),
       },
     });

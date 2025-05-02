@@ -31,4 +31,8 @@ export const API_PATH = {
     MARK_NOTIFICATION_AS_READ: (notificationId: string) =>
       `/notifications/${notificationId}/read`,
   },
+  CHAT: {
+    GET_CHAT_USERS: "/user/get-online-users",
+    GET_CHAT_MESSAGES: "/messages",
+  },
 };

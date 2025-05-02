@@ -8,7 +8,6 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getSortedRowModel,
   SortingState,
   useReactTable,
   VisibilityState,
@@ -49,6 +48,10 @@ interface DataTableProps<TData, TValue> {
   setPageIndex?: (page: number) => void;
   pageSize?: number;
   setPageSize?: (size: number) => void;
+  sorting: SortingState;
+  setSorting: (
+    updater: SortingState | ((old: SortingState) => SortingState),
+  ) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -61,8 +64,9 @@ export function DataTable<TData, TValue>({
   setPageIndex,
   pageSize = 10,
   setPageSize,
+  sorting,
+  setSorting,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
@@ -74,6 +78,7 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     manualPagination: true,
+    manualSorting: true,
     pageCount: Math.ceil(meta.total / pageSize) || 1,
     state: {
       pagination: { pageIndex, pageSize },
@@ -88,7 +93,6 @@ export function DataTable<TData, TValue>({
     // },
 
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

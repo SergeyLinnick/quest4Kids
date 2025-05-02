@@ -62,4 +62,6 @@ export interface TasksQueryParams {
   childId?: string;
   limit?: string;
   offset?: string;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
 }

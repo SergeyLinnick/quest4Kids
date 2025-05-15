@@ -22,6 +22,7 @@ export const TasksListTanStack = ({
   const [sorting, setSorting] = useState<SortingState>([
     { id: "createdAt", desc: false },
   ]);
+  const [filterValue, setFilterValue] = useState("");
 
   const offset = pageIndex * pageSize;
   const sortBy = sorting[0]?.id;
@@ -39,6 +40,8 @@ export const TasksListTanStack = ({
     offset: String(offset),
     sortBy,
     sortOrder,
+    filter: filterValue,
+    filterBy: "title",
   });
 
   if (error) return <DataTableError error={error} refetch={refetch} />;
@@ -61,6 +64,7 @@ export const TasksListTanStack = ({
         setPageSize={setPageSize}
         sorting={sorting}
         setSorting={setSorting}
+        onFilterChange={setFilterValue}
       />
 
       <Button variant="secondary" size="sm" onClick={() => refetch()}>

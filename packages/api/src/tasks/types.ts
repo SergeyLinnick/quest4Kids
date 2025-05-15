@@ -64,4 +64,6 @@ export interface TasksQueryParams {
   offset?: string;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
+  filter?: string;
+  filterBy?: string;
 }

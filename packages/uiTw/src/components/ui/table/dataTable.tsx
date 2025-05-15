@@ -52,6 +52,7 @@ interface DataTableProps<TData, TValue> {
   setSorting: (
     updater: SortingState | ((old: SortingState) => SortingState),
   ) => void;
+  onFilterChange?: (value: string) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -66,6 +67,7 @@ export function DataTable<TData, TValue>({
   setPageSize,
   sorting,
   setSorting,
+  onFilterChange,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -79,6 +81,7 @@ export function DataTable<TData, TValue>({
     columns,
     manualPagination: true,
     manualSorting: true,
+    manualFiltering: true,
     pageCount: Math.ceil(meta.total / pageSize) || 1,
     state: {
       pagination: { pageIndex, pageSize },
@@ -88,14 +91,18 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
 
-    // onPaginationChange: (updater) => {
-    // handle pagination changes
-    // },
-
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onColumnFiltersChange: (updater) => {
+      setColumnFilters(updater);
+      if (typeof updater === "function") {
+        const newFilters = updater(columnFilters);
+        const filterValue = newFilters.find((f) => f.id === filter?.columnId)
+          ?.value as string;
+        onFilterChange?.(filterValue || "");
+      }
+    },
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
   });

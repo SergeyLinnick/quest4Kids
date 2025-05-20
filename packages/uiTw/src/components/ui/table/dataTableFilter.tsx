@@ -11,7 +11,7 @@ interface DataTableFilterProps<TData> {
   placeholder?: string;
   className?: string;
   filterBy: string;
-  filterFn?: FilterFnOption;
+  filterFn?: FilterFnOption<TData>;
 }
 
 export function DataTableFilter<TData>({
@@ -20,7 +20,7 @@ export function DataTableFilter<TData>({
   placeholder = `Filter by ${columnId}...`,
   className,
   filterBy,
-  filterFn = "contains" as FilterFnOption,
+  filterFn = "contains" as FilterFnOption<TData>,
 }: DataTableFilterProps<TData>) {
   const column = columnId ? table.getColumn?.(columnId) : undefined;
   const [urlFilter, setUrlFilter] = useQueryState(filterBy);

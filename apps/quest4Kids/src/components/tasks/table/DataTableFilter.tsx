@@ -1,17 +1,15 @@
 "use client";
 
-import { FilterFnOption, Table } from "@tanstack/react-table";
+import { Input } from "@repo/ui";
+import { Table } from "@tanstack/react-table";
 import { useQueryState } from "nuqs";
-import React, { useEffect } from "react";
-import { Input } from "../formFields/input";
+import React from "react";
 
 interface DataTableFilterProps<TData> {
   table: Table<TData>;
   columnId: string | undefined;
   placeholder?: string;
   className?: string;
-  filterBy: string;
-  filterFn?: FilterFnOption;
 }
 
 export function DataTableFilter<TData>({
@@ -19,31 +17,16 @@ export function DataTableFilter<TData>({
   columnId,
   placeholder = `Filter by ${columnId}...`,
   className,
-  filterBy,
-  filterFn = "contains" as FilterFnOption,
 }: DataTableFilterProps<TData>) {
   const column = columnId ? table.getColumn?.(columnId) : undefined;
-  const [urlFilter, setUrlFilter] = useQueryState(filterBy);
-
-  useEffect(() => {
-    if (column) {
-      column.columnDef.filterFn = filterFn;
-    }
-  }, [column, filterFn]);
-
-  useEffect(() => {
-    // Sync URL state with column filter state
-    if (urlFilter !== null) {
-      column?.setFilterValue(urlFilter);
-    }
-  }, [urlFilter, column]);
+  const [urlFilter, setUrlFilter] = useQueryState(columnId || "");
 
   if (!column) {
     console.warn(`DataTableFilter: Column with ID "${columnId}" not found.`);
     return null;
   }
 
-  const filterValue = (column.getFilterValue() as string) ?? "";
+  const filterValue = (column.getFilterValue() as string) ?? urlFilter ?? "";
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -53,6 +36,7 @@ export function DataTableFilter<TData>({
 
   return (
     <Input
+      id={columnId || ""}
       placeholder={placeholder}
       value={filterValue}
       onChange={handleFilterChange}

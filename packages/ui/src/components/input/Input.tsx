@@ -5,6 +5,7 @@ export interface InputProps extends React.ComponentPropsWithoutRef<"input"> {
   error?: string;
   disabled?: boolean;
   id: string;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -12,8 +13,15 @@ const Input: React.FC<InputProps> = ({
   error,
   id,
   disabled,
+  onBlur,
   ...props
 }) => {
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    if (onBlur) {
+      onBlur(event);
+    }
+  };
+
   return (
     <div style={{ marginBottom: "16px" }}>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -34,6 +42,7 @@ const Input: React.FC<InputProps> = ({
         <input
           id={id}
           disabled={disabled}
+          onBlur={handleBlur}
           style={{
             padding: "8px 12px",
             border: `1px solid ${error ? "#e63946" : "#ccc"}`,

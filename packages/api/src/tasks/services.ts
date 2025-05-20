@@ -45,8 +45,17 @@ export const taskService = {
     if (filters?.childId) searchParams.set("childId", filters.childId);
     if (filters?.sortBy) searchParams.set("sortBy", filters.sortBy);
     if (filters?.sortOrder) searchParams.set("sortOrder", filters.sortOrder);
-    if (filters?.filter) searchParams.set("filter", filters.filter);
-    if (filters?.filterBy) searchParams.set("filterBy", filters.filterBy);
+
+    if (filters?.filter && filters?.filterBy) {
+      const filterValues = filters.filter.split(",");
+      const filterByValues = filters.filterBy.split(",");
+
+      filterByValues.forEach((filterBy, index) => {
+        if (filterValues[index]) {
+          searchParams.set(filterBy, filterValues[index]);
+        }
+      });
+    }
 
     const params = searchParams.toString();
 

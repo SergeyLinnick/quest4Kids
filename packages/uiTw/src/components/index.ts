@@ -47,3 +47,5 @@ export {
   toast,
   Toaster,
 } from "./ui";
+
+export type { DataTableFilterConfig } from "./ui/table/dataTable.js";

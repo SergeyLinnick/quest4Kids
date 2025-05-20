@@ -5,6 +5,7 @@ import React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
+  FilterFnOption,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -26,10 +27,12 @@ import {
   TableRow,
 } from "./table";
 
-interface DataTableFilterConfig {
+export interface DataTableFilterConfig {
   columnId: string;
   placeholder?: string;
   className?: string;
+  filterBy: string;
+  filterFn?: FilterFnOption<any>;
 }
 
 interface DataTableMeta {
@@ -43,7 +46,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   meta: DataTableMeta;
   isLoading: boolean;
-  filter?: DataTableFilterConfig;
+  filterColumns?: DataTableFilterConfig[];
   pageIndex?: number;
   setPageIndex?: (page: number) => void;
   pageSize?: number;
@@ -52,7 +55,6 @@ interface DataTableProps<TData, TValue> {
   setSorting: (
     updater: SortingState | ((old: SortingState) => SortingState),
   ) => void;
-  onFilterChange?: (value: string) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -60,14 +62,13 @@ export function DataTable<TData, TValue>({
   data = [],
   meta = { limit: 1, offset: 0, total: 0 },
   isLoading,
-  filter,
+  filterColumns = [],
   pageIndex = 0,
   setPageIndex,
   pageSize = 10,
   setPageSize,
   sorting,
   setSorting,
-  onFilterChange,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -75,6 +76,7 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [globalFilter, setGlobalFilter] = React.useState("");
 
   const table = useReactTable({
     data,
@@ -89,33 +91,37 @@ export function DataTable<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
+      globalFilter,
     },
-
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
-    onColumnFiltersChange: (updater) => {
-      setColumnFilters(updater);
-      if (typeof updater === "function") {
-        const newFilters = updater(columnFilters);
-        const filterValue = newFilters.find((f) => f.id === filter?.columnId)
-          ?.value as string;
-        onFilterChange?.(filterValue || "");
-      }
-    },
+    onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onGlobalFilterChange: setGlobalFilter,
+    enableMultiSort: true,
+    enableSorting: true,
+    enableColumnFilters: true,
+    enableGlobalFilter: true,
   });
 
   return (
     <>
-      <div className="flex items-center py-4">
-        <DataTableFilter
-          table={table}
-          columnId={filter?.columnId}
-          placeholder={filter?.placeholder}
-          className={filter?.className}
-        />
+      <div className="flex items-center justify-between py-4">
+        <div className="flex items-center gap-2">
+          {filterColumns.map((column) => (
+            <DataTableFilter
+              key={column.columnId}
+              table={table}
+              columnId={column.columnId}
+              placeholder={column.placeholder}
+              className={column.className}
+              filterBy={column.filterBy}
+              filterFn={column.filterFn}
+            />
+          ))}
+        </div>
         <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
@@ -126,18 +132,16 @@ export function DataTable<TData, TValue>({
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
-                      </TableHead>
-                    );
-                  })}
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
+                    </TableHead>
+                  ))}
                 </TableRow>
               ))}
             </TableHeader>

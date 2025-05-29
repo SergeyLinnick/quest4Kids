@@ -69,4 +69,4 @@ jobs:
               -e NEXTAUTH_SECRET="${{ secrets.NEXTAUTH_SECRET }}" \
               -e AUTH_TRUST_HOST="${{ secrets.AUTH_TRUST_HOST }}" \
               ${{ secrets.DOCKERHUB_USERNAME }}/nextjs-frontend:\$SHORT_SHA
-              EOF
+EOF

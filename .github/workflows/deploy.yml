@@ -36,7 +36,6 @@ jobs:
 
     steps:
       - name: Set short SHA
-        id: vars
         run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
       - name: Setup SSH
@@ -47,26 +46,24 @@ jobs:
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy Docker container on EC2
-        env:
-          SHORT_SHA: ${{ env.SHORT_SHA }}
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} <<EOF
-            echo "🧹 Cleaning unused Docker data..."
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "
+            echo '🧹 Cleaning unused Docker data...'
             docker system prune -f
 
-            echo "⬇️ Pulling image with tag: \$SHORT_SHA"
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nextjs-frontend:\$SHORT_SHA
+            echo '⬇️ Pulling image with tag: ${{ env.SHORT_SHA }}'
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nextjs-frontend:${{ env.SHORT_SHA }}
 
-            echo "🛑 Stopping old container if exists..."
+            echo '🛑 Stopping old container if exists...'
             docker stop nextjs-frontend || true
             docker rm nextjs-frontend || true
 
-            echo "🚀 Running new container..."
+            echo '🚀 Running new container...'
             docker run -d --restart unless-stopped \
               --name nextjs-frontend \
               -p 3001:3000 \
-              -e NEXT_PUBLIC_API_URL="${{ secrets.NEXT_PUBLIC_API_URL }}" \
-              -e NEXTAUTH_SECRET="${{ secrets.NEXTAUTH_SECRET }}" \
-              -e AUTH_TRUST_HOST="${{ secrets.AUTH_TRUST_HOST }}" \
-              ${{ secrets.DOCKERHUB_USERNAME }}/nextjs-frontend:\$SHORT_SHA
-              EOF
+              -e NEXT_PUBLIC_API_URL='${{ secrets.NEXT_PUBLIC_API_URL }}' \
+              -e NEXTAUTH_SECRET='${{ secrets.NEXTAUTH_SECRET }}' \
+              -e AUTH_TRUST_HOST='${{ secrets.AUTH_TRUST_HOST }}' \
+              ${{ secrets.DOCKERHUB_USERNAME }}/nextjs-frontend:${{ env.SHORT_SHA }}
+          "

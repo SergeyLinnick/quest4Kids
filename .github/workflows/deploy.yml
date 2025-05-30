@@ -49,7 +49,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "
             echo '🧹 Cleaning unused Docker data...'
-            docker system prune -f
+            docker image prune -a -f
 
             echo '⬇️ Pulling image with tag: ${{ env.SHORT_SHA }}'
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nextjs-frontend:${{ env.SHORT_SHA }}

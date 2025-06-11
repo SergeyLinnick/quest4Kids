@@ -9,9 +9,6 @@ interface AddTaskPageProps {
 
 export default async function AddTaskPage({ params }: AddTaskPageProps) {
   const { childId } = await params;
-
-  console.log("childId", childId);
-
   if (!childId) return null;
 
   return (

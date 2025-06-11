@@ -1,8 +1,9 @@
 import { OpenAI } from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error("OPENAI_API_KEY env var is not set");
+}
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function generateTaskDescription(prompt: string) {
   const response = await openai.chat.completions.create({

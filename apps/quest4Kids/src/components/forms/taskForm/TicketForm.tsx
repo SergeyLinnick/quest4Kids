@@ -18,13 +18,11 @@ const ticketSchema = z.object({
     .string()
     .min(1, "Description is required")
     .max(50, "Description must be less than 50 characters"),
-  points: z.string(),
-  status: z.enum(["OPEN", "IN_PROGRESS", "DONE"], {
-    errorMap: () => ({ message: "Invalid status" }),
-  }),
+  status: z.enum(["OPEN", "IN_PROGRESS", "DONE"]),
+  points: z.number().int().positive(),
+  userId: z.string(),
   labels: z.string(),
-  userId: z.string().readonly(),
-});
+}) satisfies z.ZodType;
 
 type TicketFormValues = z.infer<typeof ticketSchema>;
 
@@ -45,7 +43,7 @@ export const TicketForm = ({ childId }: TicketFormProps) => {
     defaultValues: {
       userId: childId,
       labels: TASK_LABELS.HOME,
-      points: "8",
+      points: 8,
       status: TASK_STATUS.OPEN.name,
     },
   });
@@ -58,7 +56,7 @@ export const TicketForm = ({ childId }: TicketFormProps) => {
   const title = watch("title");
 
   const onDescriptionGenerated = (description: string) => {
-    setValue("description", description);
+    setValue("description", description, { shouldValidate: true });
   };
 
   return (

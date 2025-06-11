@@ -6,6 +6,7 @@ export { ArrowsLeftIcon } from "./icons/arrowsLeftIcon";
 export { ArrowsRightIcon } from "./icons/arrowsRightIcon";
 export { ArrowUpDownIcon } from "./icons/arrowUpDownIcon";
 export { BellIcon } from "./icons/BellIcon";
+export { BotIcon } from "./icons/botIcon";
 export { DotsIcon } from "./icons/dotsIcon";
 export { MoveIcon } from "./icons/MoveIcon";
 export { SettingsIcon } from "./icons/SettingsIcon";

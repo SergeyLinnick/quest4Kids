@@ -18,3 +18,4 @@ export type {
 
 export { prefetchTasks } from "./queries/prefetchTasks";
 export { useGetTasks } from "./queries/useGetTasks";
+export { taskSchema } from "./resolver";

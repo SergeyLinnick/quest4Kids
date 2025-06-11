@@ -9,6 +9,7 @@ export {
   Badge,
   badgeVariants,
   BellIcon,
+  BotIcon,
   Button,
   buttonVariants,
   Checkbox,
@@ -43,9 +44,9 @@ export {
   SelectValue,
   SettingsIcon,
   Skeleton,
+  toast,
   Toaster,
   WidgetCard,
-  toast,
 } from "./components";
 
 export { cn } from "./lib/utils";

@@ -35,6 +35,7 @@ export {
   TASK_LABELS,
   TASK_POINTS,
   TASK_STATUS,
+  taskSchema,
   useGetTasks,
 } from "./tasks";
 export type {

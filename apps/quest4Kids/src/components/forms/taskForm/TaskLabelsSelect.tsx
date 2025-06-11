@@ -6,7 +6,7 @@ import { SelectField } from "@repo/ui-tw";
 interface TaskLabelsSelectProps {
   label?: string;
   isLoading: boolean;
-  values: FormData | undefined;
+  values?: FormData | undefined;
   errors?: Map<string, string>;
   onChange?: (value: string) => void;
 }

@@ -9,13 +9,13 @@ export const taskSchema = z.object({
     .string()
     .min(1, "Description is required")
     .max(50, "Description must be less than 50 characters"),
-  points: z
-    .number()
-    .positive("Points must be a positive number")
-    .int("Points must be an integer"),
-  status: z.enum(["OPEN", "IN_PROGRESS", "DONE"], {
-    errorMap: () => ({ message: "Invalid status" }),
-  }),
-  labels: z.array(z.string()),
-  userId: z.string().readonly(),
+  // points: z
+  //   .number()
+  //   .positive("Points must be a positive number")
+  //   .int("Points must be an integer"),
+  // status: z.enum(["OPEN", "IN_PROGRESS", "DONE"], {
+  //   errorMap: () => ({ message: "Invalid status" }),
+  // }),
+  // labels: z.array(z.string()),
+  // userId: z.string().readonly(),
 });

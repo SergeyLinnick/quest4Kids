@@ -8,6 +8,7 @@ export { ArrowUpDownIcon } from "./icons/arrowUpDownIcon";
 export { BellIcon } from "./icons/BellIcon";
 export { BotIcon } from "./icons/botIcon";
 export { DotsIcon } from "./icons/dotsIcon";
+export { LoaderIcon } from "./icons/LoaderIcon";
 export { MoveIcon } from "./icons/MoveIcon";
 export { SettingsIcon } from "./icons/SettingsIcon";
 export { Header } from "./layout/header/Header";

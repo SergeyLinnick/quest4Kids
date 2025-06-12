@@ -24,6 +24,7 @@ export {
   Form,
   FormField,
   Header,
+  LoaderIcon,
   Modal,
   MoveIcon,
   NotificationButton,

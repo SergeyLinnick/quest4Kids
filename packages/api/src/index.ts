@@ -36,6 +36,7 @@ export {
   TASK_POINTS,
   TASK_STATUS,
   taskSchema,
+  useAddTask,
   useGetTasks,
 } from "./tasks";
 export type {

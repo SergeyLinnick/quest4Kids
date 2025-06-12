@@ -2,8 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Flex, Text } from "@radix-ui/themes";
-import { TASK_LABELS, TASK_POINTS, TASK_STATUS } from "@repo/api";
+import { TASK_LABELS, TASK_POINTS, TASK_STATUS, useAddTask } from "@repo/api";
+import { useSession } from "@repo/auth";
 import { Button } from "@repo/ui";
+import { toast } from "@repo/ui-tw";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Form } from "radix-ui";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -13,13 +16,13 @@ const ticketSchema = z.object({
   title: z
     .string()
     .min(1, "Title is required")
-    .max(20, "Title must be less than 20 characters"),
+    .max(50, "Title must be less than 20 characters"),
   description: z
     .string()
     .min(1, "Description is required")
-    .max(50, "Description must be less than 50 characters"),
+    .max(300, "Description must be less than 300 characters"),
   status: z.enum(["OPEN", "IN_PROGRESS", "DONE"]),
-  points: z.number().int().positive(),
+  points: z.string(),
   userId: z.string(),
   labels: z.string(),
 }) satisfies z.ZodType;
@@ -31,29 +34,63 @@ interface TicketFormProps {
 }
 
 export const TicketForm = ({ childId }: TicketFormProps) => {
+  const { session } = useSession();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialTitle = searchParams.get("title") || "";
+  const initialDescription = searchParams.get("description") || "";
+  const initialPoints = searchParams.get("points") || "8";
+  const initialLabels = searchParams.get("labels") || TASK_LABELS.HOME;
+  const status = searchParams.get("status") || TASK_STATUS.OPEN.name;
+
+  const { addTask, isLoading } = useAddTask(session);
+
   const {
     register,
     handleSubmit,
     watch,
     setValue,
-    formState: { errors, isSubmitting },
+    reset,
+    formState: { errors },
   } = useForm<TicketFormValues>({
     mode: "onChange",
     resolver: zodResolver(ticketSchema),
+    values: {
+      userId: childId,
+      labels: initialLabels,
+      points: initialPoints,
+      status: status as "OPEN" | "IN_PROGRESS" | "DONE",
+      title: initialTitle,
+      description: initialDescription,
+    },
     defaultValues: {
       userId: childId,
       labels: TASK_LABELS.HOME,
-      points: 8,
+      points: "8",
       status: TASK_STATUS.OPEN.name,
     },
   });
 
-  const onSubmit = async (data: TicketFormValues) => {
-    console.log("Ticket data:", data);
-    // TODO: Implement ticket submission
+  const onSubmit = (data: TicketFormValues) => {
+    addTask({
+      ...data,
+      points: Number(data.points),
+      labels: [data.labels],
+    });
+    reset();
+    const params = new URLSearchParams(searchParams);
+    params.delete("title");
+    params.delete("description");
+    params.delete("points");
+    params.delete("labels");
+    params.delete("status");
+    router.replace(`/kids/${childId}`);
+    toast.success("Task created successfully");
   };
 
   const title = watch("title");
+  const description = watch("description");
 
   const onDescriptionGenerated = (description: string) => {
     setValue("description", description, { shouldValidate: true });
@@ -70,7 +107,7 @@ export const TicketForm = ({ childId }: TicketFormProps) => {
               id="title"
               type="text"
               {...register("title")}
-              disabled={isSubmitting}
+              disabled={isLoading}
               className="w-full p-2 border rounded"
             />
             {errors.title && <Text color="red">{errors.title.message}</Text>}
@@ -81,15 +118,16 @@ export const TicketForm = ({ childId }: TicketFormProps) => {
             <textarea
               id="description"
               {...register("description")}
-              disabled={isSubmitting}
+              disabled={isLoading}
               className="w-full p-2 border rounded"
             />
             {errors.description && (
               <Text color="red">{errors.description.message}</Text>
             )}
-            <div className="absolute right-3 bottom-5">
+            <div className="absolute right-2 top-8">
               <DescriptionButton
-                prompt={title}
+                title={title}
+                description={description}
                 onDescriptionGenerated={onDescriptionGenerated}
               />
             </div>
@@ -100,7 +138,7 @@ export const TicketForm = ({ childId }: TicketFormProps) => {
             <select
               id="labels"
               {...register("labels", { required: "Label is required" })}
-              disabled={isSubmitting}
+              disabled={isLoading}
               className="w-full p-2 border rounded"
             >
               {Object.values(TASK_LABELS).map((label) => (
@@ -120,10 +158,8 @@ export const TicketForm = ({ childId }: TicketFormProps) => {
                   <input
                     type="radio"
                     value={points}
-                    {...register("points", {
-                      setValueAs: (value) => Number(value),
-                    })}
-                    disabled={isSubmitting}
+                    {...register("points")}
+                    disabled={isLoading}
                   />
                   {points}
                 </label>
@@ -141,7 +177,7 @@ export const TicketForm = ({ childId }: TicketFormProps) => {
                     type="radio"
                     value={status.name}
                     {...register("status")}
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                   />
                   {status.value}
                 </label>
@@ -150,9 +186,11 @@ export const TicketForm = ({ childId }: TicketFormProps) => {
             {errors.status && <Text color="red">{errors.status.message}</Text>}
           </div>
 
-          <Button isLoading={isSubmitting} type="submit">
-            Submit Ticket
-          </Button>
+          <Form.Submit asChild>
+            <Button type="submit" loading={isLoading} disabled={isLoading}>
+              Create Task
+            </Button>
+          </Form.Submit>
         </Flex>
       </Form.Root>
     </Box>

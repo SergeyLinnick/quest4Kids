@@ -1,22 +1,28 @@
 import { OpenAI } from "openai";
+import { generateTaskDescriptionPrompt } from "./prompts";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY env var is not set");
 }
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-export async function generateTaskDescription(prompt: string) {
+export async function generateTaskDescription(
+  prompt: string,
+  type: "polite" | "professional" | "review",
+) {
+  const systemPrompt = generateTaskDescriptionPrompt[type];
+
   const response = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
-    // model: "gpt-3.5-turbo",
     messages: [
       {
         role: "system",
-        content:
-          "You help parents write fun and clear tasks for children aged 6–12. Keep your answers short (max 300 characters) and concise. Use simple words and short sentences.",
+        content: systemPrompt,
       },
       { role: "user", content: prompt },
     ],
+    max_tokens: 50,
+    temperature: 0.7,
   });
 
   return response.choices[0]?.message.content || "";

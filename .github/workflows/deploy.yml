@@ -24,6 +24,7 @@ jobs:
         run: |
           docker build \
             --build-arg NODE_ENV="local" \
+            --build-arg OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/nextjs-frontend:${{ env.SHORT_SHA }} .
 
       - name: Push image to Docker Hub

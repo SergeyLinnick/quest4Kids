@@ -16,7 +16,7 @@ const api = process.env.NEXT_PUBLIC_API_URL;
 export const taskService = {
   addTask: (
     { title, description, points, status, labels, userId }: ICreateTask,
-    session: Session,
+    session?: Session | null,
   ): Promise<ITask> => {
     const options = {
       method: "POST",

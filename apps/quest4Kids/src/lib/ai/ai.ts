@@ -1,11 +1,9 @@
 import { OpenAI } from "openai";
 import { generateTaskDescriptionPrompt } from "./prompts";
 
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error("OPENAI_API_KEY env var is not set");
-}
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 export async function generateTaskDescription(
   prompt: string,
   type: "polite" | "professional" | "review",

@@ -65,5 +65,6 @@ jobs:
               -e NEXT_PUBLIC_API_URL='${{ secrets.NEXT_PUBLIC_API_URL }}' \
               -e NEXTAUTH_SECRET='${{ secrets.NEXTAUTH_SECRET }}' \
               -e AUTH_TRUST_HOST='${{ secrets.AUTH_TRUST_HOST }}' \
+              -e OPENAI_API_KEY='${{ secrets.OPENAI_API_KEY }}' \
               ${{ secrets.DOCKERHUB_USERNAME }}/nextjs-frontend:${{ env.SHORT_SHA }}
           "

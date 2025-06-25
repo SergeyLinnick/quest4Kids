@@ -1,4 +1,4 @@
-import { AddTaskButton } from "@/components/forms/taskForm/addTaskButton";
+import { AddAiTaskPopover } from "@/components/forms/taskForm/addAiTaskPopover";
 import { FilterTaskForm } from "@/components/forms/taskForm/FilterTaskForm";
 import { TasksListWrapper } from "@/components/tasks/TasksListWrapper";
 import { Box, Flex, Grid, Heading, Spinner } from "@radix-ui/themes";
@@ -30,7 +30,7 @@ export default async function ChildPage({
             Edit {childName}
           </ButtonLink>
           <ButtonLink href={`/kids/${childId}/add-task`}>Add Task</ButtonLink>
-          <AddTaskButton childId={childId} />
+          <AddAiTaskPopover childId={childId} />
         </Flex>
       </Flex>
       <Grid columns="1fr 200px" gapX="9" width="100%">

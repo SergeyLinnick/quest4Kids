@@ -35,4 +35,8 @@ export const API_PATH = {
     GET_CHAT_USERS: "/user/get-online-users",
     GET_CHAT_MESSAGES: "/messages",
   },
+  AI_AGENT: {
+    GENERATE_TASK: "/tasks/generate",
+    GENERATE_DESCRIPTION: "/ai/generate-description",
+  },
 };

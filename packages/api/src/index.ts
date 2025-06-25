@@ -1,5 +1,6 @@
 export { initialState } from "./_common/types";
 export type { Error, FormState } from "./_common/types";
+export { useAiAgent } from "./aiAgent/useAiAgent";
 export type {
   IChatMessage,
   IChatMessageResponse,

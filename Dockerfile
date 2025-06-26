@@ -1,6 +1,7 @@
 # 1. Build stage
 FROM node:20-alpine AS builder
 ARG OPENAI_API_KEY
+ARG NEXT_PUBLIC_API_URL
 
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@8.15.4 --activate

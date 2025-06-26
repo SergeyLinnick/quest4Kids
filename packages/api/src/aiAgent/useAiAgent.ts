@@ -1,6 +1,8 @@
 "use client";
 
 import { useSession } from "@repo/auth";
+import { toast } from "@repo/ui-tw";
+
 import { useMutation } from "@tanstack/react-query";
 import { aiAgentService } from "./services";
 import { AgentPayload, AgentResult } from "./types";
@@ -19,7 +21,11 @@ export const useAiAgent = (onSuccess?: (data: any) => void) => {
       console.error("Error generating task:", error);
     },
     onSuccess: (data) => {
-      onSuccess?.(data);
+      if (data?.error) {
+        toast.error(data.error);
+      } else {
+        onSuccess?.(data);
+      }
     },
   });
 

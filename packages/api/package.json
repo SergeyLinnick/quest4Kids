@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@repo/auth": "workspace:*",
+    "@repo/ui-tw": "workspace:*",
     "@repo/utils": "workspace:*",
     "@tanstack/react-query": "^5.72.1",
     "next": "^15.1.6",

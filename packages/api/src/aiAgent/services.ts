@@ -11,18 +11,22 @@ export const aiAgentService = {
     input,
     session,
   }: AgentPayload & { session?: Session }): Promise<AgentResult> => {
-    let path: string;
-    switch (type) {
-      case "task":
-        path = API_PATH.AI_AGENT.GENERATE_TASK;
-        break;
-      default:
-        path = API_PATH.AI_AGENT.GENERATE_DESCRIPTION;
-    }
+    // let path: string;
+    // switch (type) {
+    //   case "task":
+    //     path = API_PATH.AI_AGENT.GENERATE_TASK;
+    //     break;
+    //   default:
+    //     path = API_PATH.AI_AGENT.GENERATE_DESCRIPTION;
+    // }
+
+    const url = `${api}${API_PATH.AI_AGENT.GENERATE_TASK}`;
+
+    console.log("url", url);
 
     const options = {
       method: "POST",
-      url: `${api}${path}`,
+      url,
       body: JSON.stringify({ prompt: input }),
       sessionClient: session ?? null,
     };

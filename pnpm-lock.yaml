@@ -165,6 +165,9 @@ importers:
       '@repo/auth':
         specifier: workspace:*
         version: link:../auth
+      '@repo/ui-tw':
+        specifier: workspace:*
+        version: link:../uiTw
       '@repo/utils':
         specifier: workspace:*
         version: link:../utils

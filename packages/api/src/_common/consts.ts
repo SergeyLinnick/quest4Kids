@@ -37,6 +37,6 @@ export const API_PATH = {
   },
   AI_AGENT: {
     GENERATE_TASK: "/tasks/generate",
-    GENERATE_DESCRIPTION: "/ai/generate-description",
+    GENERATE_DESCRIPTION: "/tasks/generate-description",
   },
 };

@@ -1,24 +1,25 @@
-import { Button } from "@radix-ui/themes";
-import { signOut } from "@repo/auth";
-import styles from "./signOut.module.css";
+"use client";
+import { signOut } from "next-auth/react";
+import type { FC } from "react";
 
-export function SignOut() {
+export const SignOut: FC = () => {
+  const handleSignOut = async () => {
+    try {
+      await signOut({
+        callbackUrl: "/signin",
+        redirect: true,
+      });
+    } catch (error) {
+      console.error("Sign out error:", error);
+    }
+  };
+
   return (
-    <form
-      action={async () => {
-        "use server";
-        await signOut({ redirectTo: "/", redirect: true });
-      }}
+    <button
+      onClick={handleSignOut}
+      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-200 cursor-pointer"
     >
-      <Button
-        type="submit"
-        className={styles.headerButton}
-        size="2"
-        variant="outline"
-        color="violet"
-      >
-        Sign Out
-      </Button>
-    </form>
+      Sign out
+    </button>
   );
-}
+};

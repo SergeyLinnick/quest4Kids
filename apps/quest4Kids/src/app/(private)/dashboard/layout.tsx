@@ -1,6 +1,7 @@
 import { ROLE } from "@/consts";
 import { RoleType } from "@/types";
-import { auth } from "@repo/auth";
+import { authOptions } from "@repo/auth";
+import { getServerSession } from "next-auth";
 
 type DashboardLayoutProps = {
   parent: React.ReactNode;
@@ -11,7 +12,7 @@ export default async function DashboardLayout({
   parent,
   child,
 }: DashboardLayoutProps) {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
   const role: RoleType = session?.user?.role;
 
   return role === ROLE.PARENT ? parent : child;

@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { useSession } from "@repo/auth";
 import { mapChatUsers } from "@repo/utils";
+import { useSession } from "next-auth/react";
 
 import { chatService } from "./services";
 import { IChatUser, IChatUserResponse } from "./types";
 
 export const useGetChatUsers = () => {
-  const { session } = useSession();
+  const { data: session } = useSession();
 
   const {
     data: chatUsers,

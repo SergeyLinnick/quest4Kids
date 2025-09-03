@@ -3,9 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Flex, Text } from "@radix-ui/themes";
 import { TASK_LABELS, TASK_POINTS, TASK_STATUS, useAddTask } from "@repo/api";
-import { useSession } from "@repo/auth";
 import { Button } from "@repo/ui";
 import { toast } from "@repo/ui-tw";
+import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Form } from "radix-ui";
 import { useForm } from "react-hook-form";
@@ -34,7 +34,7 @@ interface TicketFormProps {
 }
 
 export const TicketForm = ({ childId }: TicketFormProps) => {
-  const { session } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
 

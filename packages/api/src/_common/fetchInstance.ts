@@ -1,5 +1,6 @@
-import { auth, Session, signOut } from "@repo/auth";
+import { authOptions } from "@repo/auth";
 import { getErrorMessage } from "@repo/utils";
+import { getServerSession, Session } from "next-auth";
 
 const HTTP_STATUS = {
   UNAUTHORIZED: 401,
@@ -37,7 +38,7 @@ export class HttpClient {
         console.error(
           `Fetch: Unauthorized (401): ${errorMessage || "Unauthorized, logging out"}`,
         );
-        signOut({ redirectTo: "/login", redirect: true });
+        // signOut({ callbackUrl: "/signin", redirect: true });
         throw new Error(`Fetch: Unauthorized (401): ${errorMessage}`);
 
       case HTTP_STATUS.NOT_FOUND:
@@ -132,18 +133,15 @@ class AuthHttpClient extends HttpClient {
     ...options
   }: FetchProps): Promise<T> {
     try {
-      const session = sessionClient || (await auth());
-
-      if (!session?.user?.accessToken) {
-        throw new Error("No authentication token available");
-      }
+      const session = sessionClient || (await getServerSession(authOptions));
+      console.log("(********************************", session?.accessToken);
 
       return await super.fetch<T>({
         url,
         method,
         headers: {
           ...headers,
-          Authorization: `Bearer ${session.user.accessToken}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
         ...options,
       });
@@ -156,7 +154,7 @@ class AuthHttpClient extends HttpClient {
         this.retryCount++;
         // Add logic to refresh the token here
         // If refresh fails, call signOut()
-        signOut();
+        // signOut();
         // return this.fetch({ url, method, headers, ...options });
       }
       this.retryCount = 0;

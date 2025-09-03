@@ -4,7 +4,7 @@
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
-			"env": ["NEXT_PUBLIC_API_URL", "REACT_APP_API_URL", "API_URL"],
+			"env": ["NEXT_PUBLIC_API_URL", "REACT_APP_API_URL", "API_URL", "SESSION_SECRET", "SESSION_DURATION"],
 			"inputs": ["$TURBO_DEFAULT$", ".env*", ".env.local"],
 			"outputs": [".next/**", "!.next/cache/**"]
 		},
@@ -23,6 +23,17 @@
 		}
 	},
 
-	"globalEnv": ["NEXT_PUBLIC_API_URL", "REACT_APP_API_URL", "API_URL", "OPENAI_API_KEY"],
+	"globalEnv": [
+		"NEXT_PUBLIC_API_URL",
+		"REACT_APP_API_URL",
+		"API_URL",
+		"OPENAI_API_KEY",
+		"ZITADEL_POST_LOGOUT_URL",
+		"ZITADEL_DOMAIN",
+		"ZITADEL_CLIENT_ID",
+		"ZITADEL_CLIENT_SECRET",
+		"SESSION_SECRET",
+		"SESSION_DURATION"
+	],
 	"globalDependencies": [".env"]
 }

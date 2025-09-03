@@ -9,14 +9,14 @@ import {
   TasksQueryParams,
 } from "./types";
 
-import { Session } from "@repo/auth";
+import { Session } from "next-auth";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
 
 export const taskService = {
   addTask: (
     { title, description, points, status, labels, userId }: ICreateTask,
-    session?: Session | null,
+    session: Session,
   ): Promise<ITask> => {
     const options = {
       method: "POST",
@@ -28,7 +28,7 @@ export const taskService = {
         status,
         labels,
       }),
-      sessionClient: session ?? null,
+      sessionClient: session || undefined,
     };
 
     return authHttpClient.fetch(options);
@@ -62,7 +62,7 @@ export const taskService = {
     const options = {
       method: "GET",
       url: `${api}${API_PATH.TASK.GET_TASKS}?${params}`,
-      sessionClient: session ?? null,
+      sessionClient: session || undefined,
     };
 
     return authHttpClient.fetch(options);

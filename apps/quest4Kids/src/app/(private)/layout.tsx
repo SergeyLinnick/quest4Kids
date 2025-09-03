@@ -1,10 +1,11 @@
 import { SignOut } from "@/components";
 import { NotificationsClient } from "@/components/notifications/NotificationsClient";
 import { getMenuItems, PAGE_PATH } from "@/consts";
-import { auth, SessionProvider } from "@repo/auth";
+import { authOptions, SessionProvider } from "@repo/auth";
 import { Avatar, SideBar } from "@repo/ui";
 import { Header } from "@repo/ui-tw";
 import { getUserInitials } from "@repo/utils";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 import styles from "./layout.module.css";
 import NotAuthenticated from "./notAuthenticated";
@@ -14,7 +15,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
   if (!session) return <NotAuthenticated />;
 

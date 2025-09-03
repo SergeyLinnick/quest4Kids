@@ -1,4 +1,4 @@
-import { Session } from "@repo/auth";
+import { Session } from "next-auth";
 import { API_PATH } from "../_common/consts";
 import { authHttpClient } from "../_common/fetchInstance";
 import { IChatMessageResponse, IChatUserResponse } from "./types";
@@ -18,7 +18,7 @@ export const chatService = {
     const options = {
       method: "GET",
       url: `${api}${API_PATH.CHAT.GET_CHAT_USERS}`,
-      sessionClient: session || null,
+      sessionClient: session,
     };
     return authHttpClient.fetch(options);
   },
@@ -37,7 +37,7 @@ export const chatService = {
     const options = {
       method: "GET",
       url: `${api}${API_PATH.CHAT.GET_CHAT_MESSAGES}?withUserId=${withUserId}`,
-      sessionClient: session || null,
+      sessionClient: session,
     };
     return authHttpClient.fetch(options);
   },

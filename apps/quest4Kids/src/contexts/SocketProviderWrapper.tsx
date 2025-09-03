@@ -1,8 +1,8 @@
 "use client";
 
 import { INotification } from "@repo/api";
-import { useSession } from "@repo/auth";
 import { SocketProvider } from "@repo/chat";
+import { useSession } from "next-auth/react";
 
 export const SocketProviderWrapper = ({
   children,
@@ -11,7 +11,7 @@ export const SocketProviderWrapper = ({
   children: React.ReactNode;
   onNotification?: (notification: INotification) => void;
 }) => {
-  const { session } = useSession();
+  const { data: session } = useSession();
 
   if (!session?.user?.id) return children;
 

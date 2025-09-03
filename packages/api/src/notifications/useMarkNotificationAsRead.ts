@@ -1,10 +1,10 @@
-import { useSession } from "@repo/auth";
 import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import { notificationsService } from "./services";
 import { INotificationResponse } from "./types";
 
 export const useMarkNotificationAsRead = (onSuccess?: any) => {
-  const { session } = useSession();
+  const { data: session } = useSession();
 
   const {
     mutate: markNotificationAsRead,

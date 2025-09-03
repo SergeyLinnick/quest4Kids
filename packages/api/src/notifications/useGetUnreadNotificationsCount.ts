@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { useSession } from "@repo/auth";
+import { useSession } from "next-auth/react";
 
 import { notificationsService } from "./services";
 
 export const useGetUnreadNotificationsCount = () => {
-  const { session } = useSession();
+  const { data: session } = useSession();
 
   const {
     data: unreadNotificationsCount,

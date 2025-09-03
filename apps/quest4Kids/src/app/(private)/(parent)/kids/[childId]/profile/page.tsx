@@ -3,8 +3,9 @@ import { ROLE } from "@/consts";
 import { RoleType } from "@/types";
 import { Box, Heading } from "@radix-ui/themes";
 import { fetchAvatar, fetchChildById } from "@repo/api";
-import { auth } from "@repo/auth";
+import { authOptions } from "@repo/auth";
 import { AccountAge } from "@repo/ui";
+import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 
 interface AddTaskPageProps {
@@ -23,7 +24,7 @@ export default async function ChildProfilePage({ params }: AddTaskPageProps) {
 
   if (!childId) return notFound();
 
-  const session = await auth();
+  const session = await getServerSession(authOptions);
   const currentUserRole: RoleType = session?.user?.role;
   const isParentRole = currentUserRole === ROLE.PARENT;
 

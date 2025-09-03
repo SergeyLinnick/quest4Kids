@@ -1,4 +1,4 @@
-import { Session } from "@repo/auth";
+import { Session } from "next-auth";
 import { API_PATH } from "../_common/consts";
 import { authHttpClient } from "../_common/fetchInstance";
 import { INotificationResponse } from "./types";
@@ -18,7 +18,7 @@ export const notificationsService = {
     const options = {
       method: "GET",
       url: `${api}${API_PATH.NOTIFICATIONS.GET_NOTIFICATIONS}`,
-      sessionClient: session || null,
+      sessionClient: session,
     };
     return authHttpClient.fetch(options);
   },

@@ -2,7 +2,7 @@
 
 import { PAGE_PATH } from "@/consts";
 import type { FormState } from "@repo/api";
-import { AuthError, signIn } from "@repo/auth";
+// import { AuthError, signIn } from "@repo/auth";
 import { redirect } from "next/navigation";
 
 const api = process.env.NEXT_PUBLIC_API_URL;
@@ -47,16 +47,16 @@ export async function loginUser(
   formData: FormData,
 ): Promise<FormState> {
   const errors = new Map<string, string>();
-  try {
-    await signIn("credentials", {
-      redirect: false,
-      ...Object.fromEntries(formData),
-    });
-  } catch (error) {
-    if (error instanceof AuthError) {
-      errors.set("common", "Failed to sign in. Please check your credentials.");
-      return { errors };
-    }
-  }
+  // try {
+  //   await signIn("credentials", {
+  //     redirect: false,
+  //     ...Object.fromEntries(formData),
+  //   });
+  // } catch (error) {
+  //   if (error instanceof AuthError) {
+  //     errors.set("common", "Failed to sign in. Please check your credentials.");
+  //     return { errors };
+  //   }
+  // }
   redirect(PAGE_PATH.DASHBOARD);
 }

@@ -1,7 +1,8 @@
 import { FilterTaskForm } from "@/components/forms/taskForm/FilterTaskForm";
 import { TasksListWrapper } from "@/components/tasks/TasksListWrapper";
 import { Box, Flex, Grid, Heading, Spinner } from "@radix-ui/themes";
-import { auth } from "@repo/auth";
+import { authOptions } from "@repo/auth";
+import { getServerSession } from "next-auth";
 import { Suspense } from "react";
 
 interface TasksPageProps {
@@ -9,7 +10,7 @@ interface TasksPageProps {
 }
 
 export default async function TasksPage({ searchParams }: TasksPageProps) {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
   const childId: string = session?.user?.id;
   const isParent = session?.user?.role === "parent";
 

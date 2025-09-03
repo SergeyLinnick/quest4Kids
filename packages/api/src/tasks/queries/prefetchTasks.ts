@@ -1,5 +1,5 @@
-import type { Session } from "@repo/auth";
 import { QueryClient } from "@tanstack/react-query";
+import type { Session } from "next-auth";
 import { TasksQueryParams } from "../types";
 import { tasksQueryOptions } from "./tasksQueryOptions";
 

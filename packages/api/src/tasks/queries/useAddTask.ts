@@ -1,5 +1,5 @@
-import { Session } from "@repo/auth";
 import { useMutation } from "@tanstack/react-query";
+import { Session } from "next-auth";
 import { taskService } from "../services";
 import type { ICreateTask, ITask } from "../types";
 

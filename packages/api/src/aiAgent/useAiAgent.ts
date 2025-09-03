@@ -1,14 +1,14 @@
 "use client";
 
-import { useSession } from "@repo/auth";
 import { toast } from "@repo/ui-tw";
+import { useSession } from "next-auth/react";
 
 import { useMutation } from "@tanstack/react-query";
 import { aiAgentService } from "./services";
 import { AgentPayload, AgentResult } from "./types";
 
 export const useAiAgent = (onSuccess?: (data: any) => void) => {
-  const { session } = useSession();
+  const { data: session } = useSession();
   const {
     mutate: generate,
     isPending: isLoading,

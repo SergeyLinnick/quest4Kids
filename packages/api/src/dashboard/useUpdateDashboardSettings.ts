@@ -1,5 +1,5 @@
-import { useSession } from "@repo/auth";
 import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import { dashboardService } from "./services";
 import { IWidgetSettings } from "./types";
 
@@ -9,7 +9,7 @@ export const useUpdateDashboardSettings = ({
   onSuccess?: () => void;
 } = {}) => {
   // const queryClient = useQueryClient();
-  const { session } = useSession();
+  const { data: session } = useSession();
 
   const {
     mutate: updateDashboardSettings,
@@ -17,6 +17,9 @@ export const useUpdateDashboardSettings = ({
     error,
   } = useMutation<IWidgetSettings[], Error, IWidgetSettings[]>({
     mutationFn: (settings: IWidgetSettings[]) => {
+      if (!session) {
+        throw new Error("No session available");
+      }
       return dashboardService.updateDashboardSettings(settings, session);
     },
     // onSuccess: (data) => {

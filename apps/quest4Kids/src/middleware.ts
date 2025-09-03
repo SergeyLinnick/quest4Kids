@@ -1,4 +1,4 @@
-import { auth, Session } from "@repo/auth";
+import { getSession } from "next-auth/react";
 import { NextResponse, type NextRequest } from "next/server";
 import { PAGE_PATH, PUBLIC_ROUTES } from "./consts";
 
@@ -10,9 +10,22 @@ import { PAGE_PATH, PUBLIC_ROUTES } from "./consts";
 export async function middleware(request: NextRequest) {
   const { nextUrl } = request;
 
-  const session: Session | null = await auth();
+  // const token = await getToken({
+  //   req: request,
+  //   secret: process.env.SESSION_SECRET,
+  // });
 
-  const accessToken = session?.user?.accessToken;
+  // const accessToken = token?.accessToken as string | undefined;
+
+  const requestForNextAuth = {
+    headers: {
+      cookie: request.headers.get("cookie") || undefined,
+    },
+  };
+
+  const session = await getSession({ req: requestForNextAuth });
+
+  // console.log("token middleware ####======>", session);
 
   // if (expiresAt && expiresAt < Date.now()) {
   //   console.log("🔴 token expired", refreshToken);
@@ -52,11 +65,11 @@ export async function middleware(request: NextRequest) {
   //   return response;
   // }
 
-  const isAuthenticated = !!accessToken;
+  const isAuthenticated = !!session?.accessToken;
   const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
 
   if (isAuthenticated && isPublicRoute) {
-    return NextResponse.redirect(new URL(PAGE_PATH.DASHBOARD, request.url));
+    return NextResponse.redirect(new URL("/user-data", request.url));
   }
 
   if (!isAuthenticated && !isPublicRoute) {

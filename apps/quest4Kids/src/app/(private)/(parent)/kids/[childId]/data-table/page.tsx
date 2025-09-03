@@ -2,13 +2,14 @@ import { FilterTaskForm } from "@/components/forms/taskForm/FilterTaskForm";
 import { TasksListTanStack } from "@/components/tasks/table/TasksListTanStack";
 import { Box, Flex, Grid, Heading } from "@radix-ui/themes";
 import { fetchChildById, prefetchTasks } from "@repo/api";
-import { auth } from "@repo/auth";
+import { authOptions } from "@repo/auth";
 import { ButtonLink } from "@repo/ui";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { getServerSession } from "next-auth";
 
 interface ChildPageProps {
   params: Promise<{ childId: string }>;
@@ -25,7 +26,7 @@ export default async function DataTablePage({
   const childData = await fetchChildById(childId);
   const childName = childData?.name;
 
-  const session = await auth();
+  const session = await getServerSession(authOptions);
   const queryClient = new QueryClient();
   await prefetchTasks(queryClient, { childId, status }, session);
 

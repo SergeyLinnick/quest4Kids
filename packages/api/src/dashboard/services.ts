@@ -1,4 +1,4 @@
-import { Session } from "@repo/auth";
+import { Session } from "next-auth";
 import { API_PATH } from "../_common/consts";
 import { authHttpClient } from "../_common/fetchInstance";
 import { IWidgetSettings } from "./types";

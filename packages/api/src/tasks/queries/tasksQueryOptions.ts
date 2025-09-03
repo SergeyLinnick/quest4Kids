@@ -1,4 +1,4 @@
-import type { Session } from "@repo/auth";
+import type { Session } from "next-auth";
 
 import { queryOptions } from "@tanstack/react-query";
 import { taskService } from "../services";

@@ -1,6 +1,9 @@
-import { SessionProvider as SessionProviderNextAuth } from "next-auth/react";
+"use client";
 
-export const SessionProvider = ({
+import { SessionProvider as SessionProviderNextAuth } from "next-auth/react";
+import React from "react";
+
+export function SessionProvider({
   children,
   session,
   basePath,
@@ -8,10 +11,10 @@ export const SessionProvider = ({
   children: React.ReactNode;
   session?: any;
   basePath?: string;
-}) => {
+}) {
   return (
     <SessionProviderNextAuth session={session} basePath={basePath}>
       {children}
     </SessionProviderNextAuth>
   );
-};
+}

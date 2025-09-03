@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { useSession } from "@repo/auth";
 import { mapNotifications } from "@repo/utils";
+import { useSession } from "next-auth/react";
 
 import { notificationsService } from "./services";
 import { INotification, INotificationResponse } from "./types";
 
 export const useGetNotifications = () => {
-  const { session } = useSession();
+  const { data: session } = useSession();
 
   const {
     data: notifications,
@@ -18,7 +18,7 @@ export const useGetNotifications = () => {
   } = useQuery<INotificationResponse[], Error, INotification[]>({
     queryKey: ["notifications"],
     queryFn: () => notificationsService.getNotifications({ session }),
-    enabled: !!session?.user?.id,
+    enabled: Boolean((session as any)?.user?.id),
     retry: 1,
     select: mapNotifications,
   });

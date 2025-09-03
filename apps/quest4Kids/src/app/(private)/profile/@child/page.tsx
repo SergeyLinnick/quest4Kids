@@ -4,13 +4,14 @@ import { ROLE } from "@/consts";
 import { RoleType } from "@/types";
 import { Box, Heading, Text } from "@radix-ui/themes";
 import { fetchAvatar, fetchProfile } from "@repo/api";
-import { auth } from "@repo/auth";
+import { authOptions } from "@repo/auth";
+import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 
 export default async function ProfilePage() {
   const childRole: RoleType = ROLE.CHILD;
 
-  const session = await auth();
+  const session = await getServerSession(authOptions);
   const userId = session?.user.id;
   const currentUserRole = session?.user?.role;
 

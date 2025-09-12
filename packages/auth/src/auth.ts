@@ -5,11 +5,59 @@ import ZitadelProvider from "next-auth/providers/zitadel";
 import * as oidc from "openid-client";
 import { ZITADEL_SCOPES } from "./scopes";
 
-const DOMAIN = process.env.ZITADEL_DOMAIN || "https://q4k-auth.venturisoft.com";
-const CLIENT_ID = process.env.ZITADEL_CLIENT_ID || "335510874452221485";
-const CLIENT_SECRET =
-  process.env.ZITADEL_CLIENT_SECRET ||
-  "Kon2lMPwf5qQWeC6nCQcWs1VYTZX2GvtqwbJPMM1azciQxbNoq4BLRFHXpn3PPXJ";
+/**
+ * Fetches user data directly from ZITADEL UserInfo endpoint
+ *
+ * This function calls ZITADEL's UserInfo endpoint directly to get extended user
+ * information including roles and custom attributes.
+ *
+ * @param accessToken - The user's access token for authentication
+ * @returns Promise containing user data with role and other attributes
+ */
+async function fetchUserData(accessToken: string): Promise<{
+  sub?: string;
+  email?: string;
+  name?: string;
+  role?: string;
+  picture?: string;
+  [key: string]: any;
+}> {
+  try {
+    const zitadelDomain =
+      process.env.ZITADEL_DOMAIN || "https://q4k-auth.venturisoft.com";
+
+    const response = await fetch(`${zitadelDomain}/oidc/v1/userinfo`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `Failed to fetch user data: ${response.status} - ${errorText}`,
+      );
+    }
+
+    const userData = await response.json();
+    return userData;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    // Return fallback data if API call fails
+    return {
+      sub: "unknown",
+      email: "unknown@example.com",
+      name: "Unknown User",
+      role: "user",
+      picture: undefined,
+    };
+  }
+}
+
+const DOMAIN = process.env.ZITADEL_DOMAIN;
+const CLIENT_ID = process.env.ZITADEL_CLIENT_ID;
+const CLIENT_SECRET = process.env.ZITADEL_CLIENT_SECRET;
 
 /**
  * Automatically refreshes an expired access token using the refresh token.
@@ -49,9 +97,9 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
 
   try {
     const config = await oidc.discovery(
-      new URL(DOMAIN),
-      CLIENT_ID,
-      CLIENT_SECRET,
+      new URL(DOMAIN as string),
+      CLIENT_ID as string,
+      CLIENT_SECRET as string,
     );
 
     const tokenEndpointResponse = await oidc.refreshTokenGrant(
@@ -113,9 +161,9 @@ export async function buildLogoutUrl(
   idToken: string,
 ): Promise<{ url: string; state: string }> {
   const config = await oidc.discovery(
-    new URL(DOMAIN),
-    CLIENT_ID,
-    CLIENT_SECRET,
+    new URL(DOMAIN as string),
+    CLIENT_ID as string,
+    CLIENT_SECRET as string,
   );
 
   const state = randomUUID();
@@ -168,6 +216,15 @@ declare module "next-auth/jwt" {
     expiresAt?: number;
     /** Error flag set when token refresh fails */
     error?: string;
+    /** Extended user data from our API */
+    userData?: {
+      sub?: string;
+      email?: string;
+      name?: string;
+      role?: string;
+      picture?: string;
+      [key: string]: any;
+    };
   }
 }
 
@@ -209,9 +266,9 @@ declare module "next-auth/jwt" {
 export const authOptions: NextAuthOptions = {
   providers: [
     ZitadelProvider({
-      issuer: DOMAIN,
-      clientId: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
+      issuer: DOMAIN as string,
+      clientId: CLIENT_ID as string,
+      clientSecret: CLIENT_SECRET as string,
       authorization: {
         params: {
           scope: ZITADEL_SCOPES,
@@ -355,7 +412,12 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account, user }) {
       // console.log("############################# JWT CALLBACK START ---");
 
-      if (account && user) {
+      if (account && user && account.access_token) {
+        // Fetch extended user data from ZITADEL
+        const userData = await fetchUserData(account.access_token);
+
+        console.log("############################# userData", userData);
+
         return {
           ...token,
           idToken: account.id_token,
@@ -367,8 +429,12 @@ export const authOptions: NextAuthOptions = {
           // Force first refresh 2 minutes after initial login
           expiresAt: Date.now() + 2 * 60 * 1000, // 2 minutes
           error: undefined,
+          // Store user data from API
+          userData: userData,
         };
       }
+
+      // If we have userData in token but no account/user, return token as is
       return token;
       //  if (Date.now() < (token.expiresAt as number)) {
       // Check if token is expired or about to expire (within 30 seconds)
@@ -409,6 +475,19 @@ export const authOptions: NextAuthOptions = {
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
       session.error = token.error;
+
+      // Add user data from ZITADEL to the session
+      if (token.userData) {
+        session.user = {
+          ...session.user,
+          id: token.userData.sub || session.user?.id,
+          email: token.userData.email || session.user?.email,
+          name: token.userData.name || session.user?.name,
+          role: token.userData.role || session.user?.role,
+          image: token.userData.picture || session.user?.image,
+        };
+      }
+
       return session;
     },
   },

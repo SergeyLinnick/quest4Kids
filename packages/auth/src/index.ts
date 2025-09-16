@@ -1,13 +1,6 @@
-export { AuthError, CredentialsSignin } from "next-auth";
-export {
-  auth,
-  decode,
-  encode,
-  getToken,
-  handlers,
-  signIn,
-  signOut,
-} from "./auth";
+export { AuthError, CredentialsSignin } from "@auth/core/errors";
+export { makeAuthConfig } from "./nextauth-config";
 export { SessionProvider } from "./SessionProvider";
-export type { JWT, Session, User } from "./types";
 export { useSession } from "./useSession";
+export type { Session, User, JWT } from "./types";
+export * from "./client";

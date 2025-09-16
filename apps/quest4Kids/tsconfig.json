@@ -12,14 +12,16 @@
       "@/components/*": ["./src/components/*"],
       "@/core/*": ["./src/core/*"],
       "@/lib/utils": ["./src/lib/utils"]
-    }
+    },
+    "types": ["node"]
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "next-env.d.ts",
     "next.config.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/types/**/*.d.ts"
   ],
   "exclude": ["node_modules"]
 }

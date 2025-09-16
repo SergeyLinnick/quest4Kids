@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { useSession } from "@repo/auth";
+import { useSession } from "@repo/auth/client";
 import { mapNotifications } from "@repo/utils";
 
 import { notificationsService } from "./services";
 import { INotification, INotificationResponse } from "./types";
 
 export const useGetNotifications = () => {
-  const { session } = useSession();
+  const { data: session } = useSession();
 
   const {
     data: notifications,

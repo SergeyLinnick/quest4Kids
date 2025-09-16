@@ -1,16 +1,18 @@
 import { ROLE } from "@/consts";
 import { generateTaskDataset } from "@/utilities/charts";
 import { fetchDashboardSettings, getTaskStatistics } from "@repo/api";
-import { auth } from "@repo/auth";
+import { auth } from '@repo/auth/server';
 import { notFound } from "next/navigation";
 
 import { DashboardContainer } from "@/components/dashboard/DashboardContainer";
 import { mapDashboardSettings } from "@/utilities/dashboard";
+import { RoleType } from "@/types";
 
 export default async function DashboardPage() {
   const session = await auth();
+  console.log('session', session);
 
-  if (session?.user?.role !== ROLE.PARENT) {
+  if ((session?.user as any)?.role !== ROLE.PARENT) {
     notFound();
   }
 

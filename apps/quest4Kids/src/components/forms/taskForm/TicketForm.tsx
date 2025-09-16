@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Flex, Text } from "@radix-ui/themes";
 import { TASK_LABELS, TASK_POINTS, TASK_STATUS, useAddTask } from "@repo/api";
-import { useSession } from "@repo/auth";
+import { useSession } from "@repo/auth/client";
 import { Button } from "@repo/ui";
 import { toast } from "@repo/ui-tw";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -34,7 +34,7 @@ interface TicketFormProps {
 }
 
 export const TicketForm = ({ childId }: TicketFormProps) => {
-  const { session } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -44,7 +44,7 @@ export const TicketForm = ({ childId }: TicketFormProps) => {
   const initialLabels = searchParams.get("labels") || TASK_LABELS.HOME;
   const status = searchParams.get("status") || TASK_STATUS.OPEN.name;
 
-  const { addTask, isLoading } = useAddTask(session);
+  const { addTask, isLoading } = useAddTask(session!);
 
   const {
     register,

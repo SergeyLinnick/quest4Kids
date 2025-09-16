@@ -23,6 +23,16 @@
 		}
 	},
 
-	"globalEnv": ["NEXT_PUBLIC_API_URL", "REACT_APP_API_URL", "API_URL", "OPENAI_API_KEY"],
-	"globalDependencies": [".env"]
+	"globalEnv": [
+		"NEXT_PUBLIC_API_URL",
+		"REACT_APP_API_URL",
+		"API_URL",
+		"OPENAI_API_KEY",
+		"AUTH_SECRET",
+		"NEXTAUTH_URL",
+		"ZITADEL_ISSUER",
+		"ZITADEL_CLIENT_ID",
+		"ZITADEL_CLIENT_SECRET"
+	],
+	"globalDependencies": [".env", ".env.local"]
 }

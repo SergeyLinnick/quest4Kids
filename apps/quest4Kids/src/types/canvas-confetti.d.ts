@@ -2,7 +2,7 @@ declare module "canvas-confetti" {
   function confetti(options?: {
     particleCount?: number;
     spread?: number;
-    [key: string]: any;
+    [key: string]: unknown;
   }): Promise<void>;
   export default confetti;
 }

@@ -1,14 +1,8 @@
-import { authOptions } from "@repo/auth";
-import NextAuth from "next-auth";
-
-const { auth } = NextAuth(authOptions);
+'use server';
+import { auth } from '@repo/auth/server';
 
 export const requireAuth = async () => {
-  const session = auth(authOptions);
-
-  if (!session) {
-    throw new Error("Not authenticated");
-  }
-
+  const session = await auth();
+  if (!session) throw new Error('Not authenticated');
   return session;
 };

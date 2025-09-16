@@ -1,4 +1,4 @@
-import { auth, Session, signOut } from "@repo/auth";
+import { Session, signOut } from "@repo/auth";
 import { getErrorMessage } from "@repo/utils";
 
 const HTTP_STATUS = {
@@ -132,9 +132,9 @@ class AuthHttpClient extends HttpClient {
     ...options
   }: FetchProps): Promise<T> {
     try {
-      const session = sessionClient || (await auth());
+      const session = sessionClient;
 
-      if (!session?.user?.accessToken) {
+      if (!(session?.user as any)?.accessToken) {
         throw new Error("No authentication token available");
       }
 
@@ -143,7 +143,7 @@ class AuthHttpClient extends HttpClient {
         method,
         headers: {
           ...headers,
-          Authorization: `Bearer ${session.user.accessToken}`,
+          Authorization: `Bearer ${(session!.user as any).accessToken}`,
         },
         ...options,
       });

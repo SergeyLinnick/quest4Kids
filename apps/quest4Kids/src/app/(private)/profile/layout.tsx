@@ -1,6 +1,6 @@
 import { ROLE } from "@/consts";
 import { RoleType } from "@/types";
-import { auth } from "@repo/auth";
+import { auth } from '@repo/auth/server';
 
 type ProfileLayoutProps = {
   parent: React.ReactNode;
@@ -12,7 +12,7 @@ export default async function ProfileLayout({
   child,
 }: ProfileLayoutProps) {
   const session = await auth();
-  const role: RoleType = session?.user?.role;
+  const role: RoleType = (session?.user as any)?.role;
 
   return role === ROLE.PARENT ? parent : child;
 }
